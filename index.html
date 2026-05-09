@@ -440,11 +440,180 @@
       color: #1a7a4a; direction: rtl; text-align: right;
     }
 
+    /* Cookie help visual */
+    .cookie-help {
+      background: #fffbf0;
+      border: 2px solid #f59e0b;
+      border-radius: 16px;
+      padding: 14px 12px;
+      text-align: center;
+      direction: rtl;
+      margin-top: 4px;
+    }
+    .cookie-help-title {
+      font-size: 0.95rem; font-weight: 700;
+      color: #92400e; margin-bottom: 12px;
+    }
+    .cookie-groups {
+      display: flex; flex-wrap: wrap;
+      gap: 8px; justify-content: center;
+      margin-bottom: 10px;
+    }
+    .cookie-group {
+      background: #fef3c7;
+      border: 2px dashed #f59e0b;
+      border-radius: 10px;
+      padding: 6px 8px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 1px;
+      font-size: 1.25rem; line-height: 1.3;
+    }
+    .cookie-total {
+      font-size: 1rem; font-weight: 800;
+      color: #92400e; margin-top: 4px;
+    }
+    body.fun-mode .cookie-help {
+      background: rgba(251,191,36,0.1);
+      border-color: rgba(251,191,36,0.5);
+    }
+    body.fun-mode .cookie-group { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.45); }
+    body.fun-mode .cookie-help-title, body.fun-mode .cookie-total { color: #fbbf24; }
+
     /* ---------- FOOTER ---------- */
+    @property --footer-angle {
+      syntax: '<angle>'; initial-value: 0deg; inherits: false;
+    }
+    #footer-wrap {
+      position: fixed; bottom: 14px; left: 20px; z-index: 50;
+      border-radius: 52px;
+    }
+    #footer-wrap::before {
+      content: ''; pointer-events: none;
+      position: absolute; inset: -2px; border-radius: 52px;
+      padding: 1.5px;
+      background: conic-gradient(from var(--footer-angle),
+        transparent 0%, transparent 28%,
+        #a78bfa 40%, #ffffff 50%, #a78bfa 60%,
+        transparent 72%, transparent 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      animation: footer-run 2.5s linear infinite;
+    }
+    @keyframes footer-run { to { --footer-angle: 360deg; } }
     #footer {
-      position: fixed; bottom: 14px; left: 20px;
-      font-size: 0.78rem; color: #bbb; z-index: 50;
-      font-weight: 500;
+      display: block; border-radius: 50px;
+      font-family: 'Rubik', sans-serif; font-size: 0.8rem; font-weight: 700;
+      color: #6c63ff; cursor: pointer; user-select: none;
+      padding: 7px 16px; white-space: nowrap;
+      background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(167,139,250,0.12));
+      border: 1px solid rgba(108,99,255,0.18);
+      backdrop-filter: blur(8px); transition: all 0.25s;
+    }
+    #footer:hover { transform: scale(1.04); background: linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.22)); }
+
+    /* ---- Bio popup ---- */
+    #bio-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(4,4,18,0.82); backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    #bio-overlay.open { opacity: 1; visibility: visible; }
+    .bio-border {
+      padding: 2px; border-radius: 28px;
+      background: linear-gradient(135deg,#6c63ff,#f06292,#26c6da,#a78bfa);
+      box-shadow: 0 0 60px rgba(108,99,255,0.55), 0 0 120px rgba(167,139,250,0.2);
+      animation: bio-border-shift 5s ease-in-out infinite alternate;
+      transform: scale(0.82); opacity: 0;
+      transition: transform 0.45s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+    }
+    #bio-overlay.open .bio-border { transform: scale(1); opacity: 1; }
+    @keyframes bio-border-shift {
+      0%   { background: linear-gradient(135deg,#6c63ff,#f06292,#26c6da,#a78bfa); }
+      50%  { background: linear-gradient(270deg,#f06292,#26c6da,#a78bfa,#6c63ff); }
+      100% { background: linear-gradient(45deg, #26c6da,#a78bfa,#6c63ff,#f06292); }
+    }
+    .bio-card {
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg,#0c0c26 0%,#13102e 55%,#091622 100%);
+      border-radius: 26px; padding: 38px 32px 30px;
+      max-width: 440px; width: 100%; text-align: center;
+    }
+    .bio-card::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: linear-gradient(rgba(108,99,255,0.045) 1px,transparent 1px),
+                        linear-gradient(90deg,rgba(108,99,255,0.045) 1px,transparent 1px);
+      background-size: 32px 32px;
+    }
+    .bio-card::after {
+      content:''; position:absolute; left:0; right:0; height:2px; top:0;
+      background: linear-gradient(90deg,transparent,rgba(108,99,255,0.7),rgba(167,139,250,0.9),rgba(38,198,218,0.7),transparent);
+      animation: bio-scan 4s ease-in-out infinite;
+    }
+    @keyframes bio-scan {
+      0%   { top:0%;   opacity:0; }
+      8%   { opacity:1; }
+      92%  { opacity:1; }
+      100% { top:100%; opacity:0; }
+    }
+    .bio-close {
+      position:absolute; top:14px; right:14px; z-index:3;
+      width:30px; height:30px; border-radius:50%; cursor:pointer;
+      background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.14);
+      color:rgba(255,255,255,0.55); font-size:0.9rem; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+      transition:all 0.2s;
+    }
+    .bio-close:hover { background:rgba(255,255,255,0.14); color:#fff; transform:scale(1.15) rotate(90deg); }
+    .bio-avatar {
+      position:relative; z-index:1;
+      width:82px; height:82px; border-radius:50%;
+      background: linear-gradient(135deg,#6c63ff,#a78bfa);
+      color:#fff; font-size:2.1rem; font-weight:900;
+      font-family:'Secular One',sans-serif;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 16px;
+      animation:avatar-glow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes avatar-glow {
+      from { box-shadow:0 0 0 3px rgba(108,99,255,0.35), 0 0 24px rgba(108,99,255,0.45); }
+      to   { box-shadow:0 0 0 5px rgba(167,139,250,0.5), 0 0 44px rgba(167,139,250,0.65); }
+    }
+    .bio-name {
+      position:relative; z-index:1;
+      font-family:'Secular One',sans-serif; font-size:1.8rem; font-weight:900;
+      background:linear-gradient(135deg,#a78bfa,#f9a8d4,#67e8f9);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      margin-bottom:5px;
+    }
+    .bio-role {
+      position:relative; z-index:1;
+      font-size:0.75rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+      color:rgba(167,139,250,0.65); margin-bottom:22px;
+    }
+    .bio-text {
+      position:relative; z-index:1;
+      font-family:'Rubik',sans-serif; font-size:0.93rem; line-height:1.75;
+      color:rgba(255,255,255,0.72); text-align:right; direction:ltr;
+      border-left:2px solid rgba(108,99,255,0.45); padding-left:14px;
+      margin-bottom:22px; text-align:left;
+    }
+    .bio-tags {
+      position:relative; z-index:1;
+      display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:20px;
+    }
+    .bio-tag {
+      padding:5px 13px; border-radius:20px; font-size:0.78rem; font-weight:600;
+      font-family:'Rubik',sans-serif;
+      background:rgba(108,99,255,0.15); border:1.5px solid rgba(108,99,255,0.35);
+      color:rgba(200,185,255,0.88); transition:all 0.2s;
+    }
+    .bio-tag:hover { background:rgba(108,99,255,0.28); border-color:rgba(167,139,250,0.65); }
+    .bio-built {
+      position:relative; z-index:1;
+      font-size:0.75rem; color:rgba(255,255,255,0.25); font-family:'Rubik',sans-serif;
     }
 
     /* ---------- ENGLISH MENU SCREEN ---------- */
@@ -466,10 +635,10 @@
       background: #fafafa; cursor: pointer;
       font-family: 'Rubik', sans-serif; font-size: 1.05rem; font-weight: 700;
       color: #555; display: flex; align-items: center; gap: 14px;
-      transition: all 0.2s; text-align: right; direction: rtl;
+      transition: all 0.2s; text-align: right; direction: ltr;
     }
     .eng-opt-btn .opt-icon { font-size: 2rem; flex-shrink: 0; }
-    .eng-opt-btn .opt-text { display: flex; flex-direction: column; align-items: flex-end; }
+    .eng-opt-btn .opt-text { display: flex; flex-direction: column; align-items: flex-end; flex: 1; }
     .eng-opt-btn .opt-name { font-size: 1.1rem; font-weight: 800; }
     .eng-opt-btn .opt-desc { font-size: 0.78rem; font-weight: 400; color: #aaa; margin-top: 2px; }
     .eng-opt-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
@@ -477,6 +646,112 @@
     .eng-opt-btn.abc .opt-desc { color: #a78bfa; }
     .eng-opt-btn.soon   { opacity: 0.55; cursor: default; }
     .eng-opt-btn.soon:hover { transform: none; box-shadow: none; }
+
+    /* ---------- HEBREW MENU / EXERCISES ---------- */
+    #hebrew-menu-screen { padding-top: 72px; }
+    .subject-btn.selected-hebrew { border-color: #26c6da; background: #e0f7fa; color: #006064; box-shadow: 0 4px 16px rgba(38,198,218,0.3); }
+
+    .heb-letter-display {
+      font-size: 5.5rem; font-weight: 900; color: var(--primary);
+      font-family: 'Secular One', sans-serif;
+      margin: 8px 0 4px;
+      text-shadow: 2px 4px 16px rgba(108,99,255,0.25);
+      line-height: 1;
+    }
+    .heb-letter-question { font-size: 1rem; color: #888; margin-bottom: 20px; direction: rtl; }
+    .heb-pic-opts { display: flex; gap: 10px; justify-content: center; margin-bottom: 14px; }
+    .heb-pic-btn {
+      flex: 1; max-width: 110px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 14px 6px; border: 3px solid #e0e0e0; border-radius: 18px;
+      background: #fafafa; cursor: pointer;
+      font-family: 'Rubik', sans-serif; font-size: 0.82rem; font-weight: 700;
+      color: #555; transition: all 0.2s; direction: rtl;
+    }
+    .heb-pic-btn .hpic { font-size: 2.6rem; line-height: 1.1; }
+    .heb-pic-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+    .heb-pic-btn.hpic-ok { border-color: #43e97b; background: #f0fff6; color: #1a7a4a; }
+    .heb-pic-btn.hpic-no { border-color: #ff6584; background: #fff0f3; color: #c0392b; }
+    .heb-letter-feedback {
+      min-height: 38px; padding: 9px 14px; border-radius: 12px;
+      font-size: 0.9rem; font-weight: 600; direction: rtl; text-align: right;
+      margin-bottom: 10px; display: none;
+    }
+    .hc-number-label { font-size: 0.95rem; color: #888; direction: rtl; margin-top: 4px; }
+    .hc-number {
+      font-size: 5rem; font-weight: 900; color: var(--primary);
+      font-family: 'Secular One', sans-serif; line-height: 1;
+      margin: 2px 0 16px;
+      text-shadow: 2px 4px 16px rgba(108,99,255,0.25);
+    }
+    .hc-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 14px; width: 100%;
+    }
+    .hc-opt {
+      border: 3px solid #e0e0e0; border-radius: 18px;
+      background: #fafafa; cursor: pointer;
+      padding: 12px 8px; min-height: 90px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; font-family: 'Rubik', sans-serif;
+    }
+    .hc-opt:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); border-color: #a78bfa; }
+    .hc-opt.hc-ok { border-color: #43e97b; background: #f0fff6; }
+    .hc-opt.hc-no { border-color: #ff6584; background: #fff0f3; }
+    .hc-emojis { font-size: 1.6rem; line-height: 1.5; word-break: break-all; text-align: center; display: block; }
+
+    /* ---------- HEBREW SYLLABLE EXERCISE ---------- */
+    .hs-level-badge {
+      display: inline-block; padding: 3px 14px; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 700; font-family: 'Rubik', sans-serif;
+      margin-bottom: 8px; letter-spacing: 0.5px;
+    }
+    .hs-level-badge.lv1 { background:#f0fff6; color:#1a7a4a; border:1.5px solid #43e97b; }
+    .hs-level-badge.lv2 { background:#fff8e1; color:#e65100; border:1.5px solid #ffa726; }
+    .hs-level-badge.lv3 { background:#fce4ec; color:#b71c1c; border:1.5px solid #ef5350; }
+    .hs-emoji { font-size: 4.5rem; line-height: 1; margin: 6px 0; }
+    .hs-word  { font-size: 2.4rem; font-weight: 900; color: #2d3436; direction: rtl;
+                font-family: 'Secular One', sans-serif; margin-bottom: 6px; }
+    .hs-question { font-size: 1rem; color: #888; direction: rtl; margin-bottom: 12px; }
+    .hs-count-opts { display: flex; gap: 12px; justify-content: center; margin-bottom: 14px; }
+    .hs-cnt-btn {
+      width: 62px; height: 62px; border-radius: 16px;
+      border: 3px solid #e0e0e0; background: #fafafa;
+      font-size: 1.9rem; font-weight: 900; color: #555;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Secular One', sans-serif;
+    }
+    .hs-cnt-btn:hover:not(:disabled) { transform: translateY(-3px); border-color: #a78bfa; box-shadow: 0 4px 14px rgba(108,99,255,0.2); }
+    .hs-cnt-btn.hs-ok { border-color: #43e97b; background: #f0fff6; color: #1a7a4a; }
+    .hs-cnt-btn.hs-no { border-color: #ff6584; background: #fff0f3; color: #c0392b; }
+    .hs-split-opts { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 14px; }
+    .hs-split-btn {
+      width: 100%; padding: 13px 20px; border-radius: 14px;
+      border: 2.5px solid #e0e0e0; background: #fafafa;
+      font-size: 1.25rem; font-weight: 700; color: #333;
+      font-family: 'Secular One', sans-serif; direction: rtl;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+      letter-spacing: 1px;
+    }
+    .hs-split-btn:hover:not(:disabled) { border-color: #a78bfa; background: #f5f3ff; transform: translateY(-1px); }
+    .hs-split-btn.hs-ok { border-color: #43e97b; background: #f0fff6; color: #1a7a4a; }
+    .hs-split-btn.hs-no { border-color: #ff6584; background: #fff0f3; color: #c0392b; }
+    .hs-tiles { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 14px 0 6px; }
+    .hs-tile {
+      padding: 10px 22px; border-radius: 14px;
+      font-size: 1.7rem; font-weight: 900; color: #fff;
+      font-family: 'Secular One', sans-serif; direction: rtl;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      animation: hs-pop 0.35s cubic-bezier(.34,1.56,.64,1) both;
+      cursor: pointer; user-select: none;
+    }
+    @keyframes hs-pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .hs-tile:nth-child(1) { background: linear-gradient(135deg,#6c63ff,#a78bfa); animation-delay: 0s; }
+    .hs-tile:nth-child(2) { background: linear-gradient(135deg,#f06292,#f48fb1); animation-delay: 0.1s; }
+    .hs-tile:nth-child(3) { background: linear-gradient(135deg,#26c6da,#4dd0e1); animation-delay: 0.2s; }
+    .hs-tile:nth-child(4) { background: linear-gradient(135deg,#66bb6a,#a5d6a7); animation-delay: 0.3s; }
+    .hs-tile:nth-child(5) { background: linear-gradient(135deg,#ffa726,#ffcc80); animation-delay: 0.4s; }
+    .hs-tile:nth-child(6) { background: linear-gradient(135deg,#ab47bc,#ce93d8); animation-delay: 0.5s; }
 
     /* ---------- ABC SCREEN ---------- */
     #abc-screen { padding-top: 72px; }
@@ -613,9 +888,11 @@
        FUN MODE – FUTURISTIC DESIGN
        ==================================================== */
 
-    /* Toggle button */
-    #theme-toggle {
+    /* Options dropdown menu */
+    #options-menu {
       position: fixed; top: 16px; right: 16px; z-index: 9999;
+    }
+    #options-trigger {
       display: flex; align-items: center; gap: 8px;
       padding: 9px 18px;
       background: rgba(255,255,255,0.85);
@@ -627,10 +904,63 @@
       color: #555;
       box-shadow: 0 4px 16px rgba(0,0,0,0.1);
       backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       white-space: nowrap;
     }
-    #theme-toggle:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(108,99,255,0.25); }
+    #options-trigger:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(108,99,255,0.25); }
+    #options-dropdown {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 10px;
+      background: rgba(255,255,255,0.97);
+      border: 2px solid rgba(108,99,255,0.18);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      backdrop-filter: blur(14px);
+      min-width: 160px;
+      opacity: 0;
+      transform: scaleY(0.8) translateY(-10px);
+      transform-origin: top right;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34,1.5,0.64,1);
+    }
+    #options-dropdown.open {
+      opacity: 1;
+      transform: scaleY(1) translateY(0);
+      pointer-events: auto;
+    }
+    #options-trigger.open { box-shadow: 0 6px 22px rgba(108,99,255,0.25); }
+    .opt-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 14px;
+      background: transparent;
+      border: 1.5px solid rgba(108,99,255,0.14);
+      border-radius: 40px;
+      cursor: pointer;
+      font-family: 'Rubik', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      color: #555;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      width: 100%;
+      text-align: right;
+    }
+    .opt-item:hover { background: rgba(108,99,255,0.07); border-color: rgba(108,99,255,0.3); }
+    #home-item { display: none; }
+    #home-item.visible { display: flex; }
+    #music-item.music-on {
+      border-color: rgba(67,233,123,0.7);
+      box-shadow: 0 0 14px rgba(67,233,123,0.35);
+      color: #1a7a4a;
+    }
+    #music-note { display: inline-block; transition: transform 0.3s; }
+    #music-item.music-on #music-note { animation: note-dance 0.55s ease-in-out infinite alternate; }
+    @keyframes note-dance {
+      from { transform: translateY(0) rotate(-10deg) scale(1); }
+      to   { transform: translateY(-5px) rotate(10deg) scale(1.2); }
+    }
     .toggle-switch {
       width: 36px; height: 20px;
       background: #ccc;
@@ -638,6 +968,7 @@
       position: relative;
       transition: background 0.3s;
       flex-shrink: 0;
+      margin-right: auto;
     }
     .toggle-knob {
       position: absolute; top: 3px; left: 3px;
@@ -647,11 +978,23 @@
       transition: left 0.3s, box-shadow 0.3s;
       box-shadow: 0 1px 4px rgba(0,0,0,0.25);
     }
-    body.fun-mode #theme-toggle {
+    body.fun-mode #options-trigger {
       background: rgba(255,255,255,0.08);
       border-color: rgba(167,139,250,0.4);
       color: #e2d9f3;
       box-shadow: 0 0 20px rgba(168,85,247,0.4), 0 4px 16px rgba(0,0,0,0.4);
+    }
+    body.fun-mode #options-dropdown {
+      background: rgba(18,10,38,0.95);
+      border-color: rgba(167,139,250,0.35);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    body.fun-mode .opt-item { border-color: rgba(167,139,250,0.22); color: #e2d9f3; }
+    body.fun-mode .opt-item:hover { background: rgba(167,139,250,0.14); border-color: rgba(167,139,250,0.5); }
+    body.fun-mode #music-item.music-on {
+      border-color: rgba(52,211,153,0.6);
+      box-shadow: 0 0 18px rgba(52,211,153,0.5);
+      color: #6ee7b7;
     }
     body.fun-mode .toggle-switch { background: linear-gradient(135deg,#7c3aed,#db2777); }
     body.fun-mode .toggle-knob { left: 19px; box-shadow: 0 0 8px rgba(219,39,119,0.6); }
@@ -776,6 +1119,27 @@
     body.fun-mode .eng-opt-btn:hover { background: rgba(255,255,255,0.11) !important; transform: translateY(-5px) scale(1.03) !important; box-shadow: 0 0 30px rgba(167,139,250,0.5) !important; }
     body.fun-mode .opt-name { color: #fff !important; }
     body.fun-mode .opt-desc { color: rgba(255,255,255,0.65) !important; }
+    body.fun-mode .subject-btn.selected-hebrew { background: linear-gradient(135deg,rgba(6,182,212,0.35),rgba(20,184,166,0.35)) !important; border-color:#67e8f9 !important; box-shadow:0 0 28px rgba(103,232,249,0.5) !important; }
+    body.fun-mode .heb-pic-btn { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.14) !important; color: #fff !important; }
+    body.fun-mode .heb-pic-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12) !important; border-color: #a78bfa !important; }
+    body.fun-mode .heb-pic-btn.hpic-ok { background: rgba(52,211,153,0.25) !important; border-color:#34d399 !important; }
+    body.fun-mode .heb-pic-btn.hpic-no { background: rgba(248,113,113,0.25) !important; border-color:#f87171 !important; }
+    body.fun-mode .heb-letter-display { color: #a78bfa !important; text-shadow: 0 0 30px rgba(167,139,250,0.6) !important; }
+    body.fun-mode .hc-number { color: #a78bfa !important; text-shadow: 0 0 30px rgba(167,139,250,0.6) !important; }
+    body.fun-mode .hc-opt { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.14) !important; }
+    body.fun-mode .hc-opt:hover:not(:disabled) { background: rgba(255,255,255,0.12) !important; border-color: #a78bfa !important; }
+    body.fun-mode .hc-opt.hc-ok { background: rgba(52,211,153,0.25) !important; border-color:#34d399 !important; }
+    body.fun-mode .hc-opt.hc-no { background: rgba(248,113,113,0.25) !important; border-color:#f87171 !important; }
+    body.fun-mode .hs-cnt-btn { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.18) !important; color: #fff !important; }
+    body.fun-mode .hs-cnt-btn:hover:not(:disabled) { border-color: #a78bfa !important; background: rgba(167,139,250,0.2) !important; }
+    body.fun-mode .hs-cnt-btn.hs-ok { background: rgba(52,211,153,0.3) !important; border-color:#34d399 !important; }
+    body.fun-mode .hs-cnt-btn.hs-no { background: rgba(248,113,113,0.3) !important; border-color:#f87171 !important; }
+    body.fun-mode .hs-split-btn { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.18) !important; color: #e2d9f3 !important; }
+    body.fun-mode .hs-split-btn:hover:not(:disabled) { border-color: #a78bfa !important; background: rgba(167,139,250,0.15) !important; }
+    body.fun-mode .hs-split-btn.hs-ok { background: rgba(52,211,153,0.3) !important; border-color:#34d399 !important; color:#6ee7b7 !important; }
+    body.fun-mode .hs-split-btn.hs-no { background: rgba(248,113,113,0.3) !important; border-color:#f87171 !important; }
+    body.fun-mode .hs-word { color: #e2d9f3 !important; }
+    body.fun-mode .hs-level-badge { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.2) !important; color: rgba(255,255,255,0.7) !important; }
 
     /* Word picture */
     body.fun-mode .wp-emoji-card { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.14) !important; }
@@ -817,7 +1181,8 @@
     body.fun-mode #greeting-banner { background: linear-gradient(135deg,rgba(124,58,237,0.9),rgba(219,39,119,0.9)) !important; backdrop-filter:blur(12px) !important; box-shadow: 0 4px 30px rgba(124,58,237,0.5) !important; }
 
     /* Footer */
-    body.fun-mode #footer { color: rgba(255,255,255,0.3) !important; }
+    body.fun-mode #footer-wrap::before { background: conic-gradient(from var(--footer-angle), transparent 0%, transparent 28%, #f9a8d4 40%, #ffffff 50%, #67e8f9 60%, transparent 72%, transparent 100%) !important; }
+    body.fun-mode #footer { background: rgba(167,139,250,0.12) !important; color: #c4b5fd !important; border-color: rgba(167,139,250,0.2) !important; }
 
     /* Fun BG elements */
     .fun-orb {
@@ -873,12 +1238,22 @@
 </head>
 <body>
 
-<!-- Fun mode toggle -->
-<button id="theme-toggle" onclick="toggleTheme()">
-  <span>✨</span>
-  <span>מצב כיף</span>
-  <div class="toggle-switch"><div class="toggle-knob"></div></div>
-</button>
+<!-- Options dropdown menu -->
+<div id="options-menu">
+  <button id="options-trigger" onclick="toggleOptionsMenu()">⚙️ אפשרויות <span id="options-arrow" style="display:inline-block;transition:transform 0.25s ease">▾</span></button>
+  <div id="options-dropdown">
+    <button id="home-item" class="opt-item" onclick="showScreen('welcome-screen'); closeOptionsMenu()">🏠 בית</button>
+    <button id="music-item" class="opt-item" onclick="toggleMusic()">
+      <span id="music-note">🎵</span>
+      <span>מוזיקה</span>
+    </button>
+    <button id="theme-item" class="opt-item" onclick="toggleTheme()">
+      <span>✨</span>
+      <span>מצב כיף</span>
+      <div class="toggle-switch"><div class="toggle-knob"></div></div>
+    </button>
+  </div>
+</div>
 
 <!-- Fun mode animated background -->
 <div id="fun-bg"></div>
@@ -905,35 +1280,19 @@
     <div class="subject-label">מה תרצה לתרגל?</div>
     <div class="subject-options">
       <button class="subject-btn" id="subj-math" onclick="selectSubject('math')">
-        <span class="subj-icon">🔢</span>
+        <img src="math.png" alt="מתמטיקה" class="subj-icon" style="width:5.08rem;height:5.08rem;object-fit:contain;border-radius:8px;" />
         <span class="subj-name">מתמטיקה</span>
       </button>
       <button class="subject-btn" id="subj-english" onclick="selectSubject('english')">
-        <span class="subj-icon">🔤</span>
+        <img src="english.png" alt="אנגלית" class="subj-icon" style="width:5.08rem;height:5.08rem;object-fit:contain;border-radius:8px;" />
         <span class="subj-name">אנגלית</span>
+      </button>
+      <button class="subject-btn" id="subj-hebrew" onclick="selectSubject('hebrew')">
+        <img src="hebrew.png" alt="עברית" class="subj-icon" style="width:5.08rem;height:5.08rem;object-fit:contain;border-radius:8px;" />
+        <span class="subj-name">עברית</span>
       </button>
     </div>
 
-    <div id="diff-section" style="display:none">
-      <div class="difficulty-label">בחר רמת קושי:</div>
-      <div class="diff-options">
-        <button class="diff-btn selected-easy" id="diff-easy" onclick="selectDiff('easy')">
-          <span class="diff-icon">🌱</span>
-          <span class="diff-name">קל</span>
-          <span class="diff-desc">חיבור וחיסור בלבד</span>
-        </button>
-        <button class="diff-btn" id="diff-medium" onclick="selectDiff('medium')">
-          <span class="diff-icon">⚡</span>
-          <span class="diff-name">בינוני</span>
-          <span class="diff-desc">כפל וחילוק – ספרות בודדות ועשרות</span>
-        </button>
-        <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">
-          <span class="diff-icon">🔥</span>
-          <span class="diff-name">קשה</span>
-          <span class="diff-desc">כפל עם 3–4 ספרות</span>
-        </button>
-      </div>
-    </div>
 
   </div>
 </div>
@@ -1038,6 +1397,226 @@
   </div>
 </div>
 
+<!-- ======== MATH MENU SCREEN ======== -->
+<div class="screen" id="math-menu-screen">
+  <div class="card">
+    <span style="font-size:3.5rem">🔢</span>
+    <div class="english-menu-title">לומדים מתמטיקה!</div>
+    <div class="english-menu-sub">בחר רמת קושי</div>
+    <div class="english-options">
+      <button class="eng-opt-btn" style="border-color:#66bb6a;background:#f1f8e9;color:#2e7d32" onclick="selectDiff('easy')">
+        <span class="opt-icon">🌱</span>
+        <span class="opt-text">
+          <span class="opt-name">קל</span>
+          <span class="opt-desc">חיבור וחיסור בלבד</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#ffa726;background:#fff8e1;color:#e65100" onclick="selectDiff('medium')">
+        <span class="opt-icon">⚡</span>
+        <span class="opt-text">
+          <span class="opt-name">בינוני</span>
+          <span class="opt-desc">כפל וחילוק – ספרות בודדות ועשרות</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#ef5350;background:#fce4ec;color:#b71c1c" onclick="selectDiff('hard')">
+        <span class="opt-icon">🔥</span>
+        <span class="opt-text">
+          <span class="opt-name">קשה</span>
+          <span class="opt-desc">כפל עם 3–4 ספרות</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== HEBREW MENU SCREEN ======== -->
+<div class="screen" id="hebrew-menu-screen">
+  <div class="card">
+    <span style="font-size:3.5rem">📖</span>
+    <div class="english-menu-title">לומדים עברית!</div>
+    <div class="english-menu-sub">בחר מה תרצה לתרגל</div>
+    <div class="english-options">
+      <button class="eng-opt-btn" style="border-color:#66bb6a;background:#f1f8e9;color:#2e7d32" onclick="startHebMissingWord()">
+        <span class="opt-icon">✏️</span>
+        <span class="opt-text">
+          <span class="opt-name">השלמת מילה חסרה</span>
+          <span class="opt-desc">השלם את המילה החסרה במשפט</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#26c6da;background:#e0f7fa;color:#00838f" onclick="startHebLetter()">
+        <span class="opt-icon">🔡</span>
+        <span class="opt-text">
+          <span class="opt-name">אות ותמונה</span>
+          <span class="opt-desc">בחר את התמונה שמתחילה באות הנתונה</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#a29bfe;background:#f3f0ff;color:#4a3ab5" onclick="startHebCount()">
+        <span class="opt-icon">🔢</span>
+        <span class="opt-text">
+          <span class="opt-name">כמותי</span>
+          <span class="opt-desc">בחר את הכמות הנכונה של תמונות</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#f06292;background:#fce4ec;color:#ad1457" onclick="startHebSyllable()">
+        <span class="opt-icon">🗣️</span>
+        <span class="opt-text">
+          <span class="opt-name">הברות</span>
+          <span class="opt-desc">כמה הברות יש במילה? ראה תמונה ונחש</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#7c3aed;background:#f5f3ff;color:#5b21b6" onclick="startHebSounds()">
+        <span class="opt-icon">🔉</span>
+        <span class="opt-text">
+          <span class="opt-name">חלוקה לצלילים</span>
+          <span class="opt-desc">כמה צלילים יש במילה? ראה תמונה ונחש</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== HEBREW MISSING WORD SCREEN ======== -->
+<div class="screen" id="heb-missing-word-screen">
+  <div class="card">
+    <div class="mw-score-strip">
+      <div class="score-chip">✅ <span id="hmw-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="hmw-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="hmw-qnum">1</span> / <span id="hmw-qtotal">40</span></div>
+    </div>
+    <div class="mw-pic" id="hmw-pic"></div>
+    <div class="mw-sentence" id="hmw-sentence" style="direction:rtl;text-align:right"></div>
+    <div class="mw-opts" id="hmw-opts">
+      <div class="mw-opt-row"><button class="mw-opt" id="hmw-opt-0" onclick="checkHebMW(0)"></button></div>
+      <div class="mw-opt-row"><button class="mw-opt" id="hmw-opt-1" onclick="checkHebMW(1)"></button></div>
+      <div class="mw-opt-row"><button class="mw-opt" id="hmw-opt-2" onclick="checkHebMW(2)"></button></div>
+    </div>
+    <div class="mw-feedback" id="hmw-feedback"></div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="hmw-next" onclick="nextHebMW()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('hebrew-menu-screen')" style="margin-top:12px">← חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- ======== HEBREW LETTER SCREEN ======== -->
+<div class="screen" id="heb-letter-screen">
+  <div class="card">
+    <div class="mw-score-strip">
+      <div class="score-chip">✅ <span id="hl-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="hl-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="hl-qnum">1</span></div>
+    </div>
+    <div class="heb-letter-display" id="hl-letter">א</div>
+    <div class="heb-letter-question">איזה ציור מתחיל באות הזאת?</div>
+    <div class="heb-pic-opts" id="hl-opts">
+      <button class="heb-pic-btn" id="hl-opt-0" onclick="checkHebLetter(0)">
+        <span class="hpic" id="hl-pic-0"></span>
+        <span id="hl-word-0"></span>
+      </button>
+      <button class="heb-pic-btn" id="hl-opt-1" onclick="checkHebLetter(1)">
+        <span class="hpic" id="hl-pic-1"></span>
+        <span id="hl-word-1"></span>
+      </button>
+      <button class="heb-pic-btn" id="hl-opt-2" onclick="checkHebLetter(2)">
+        <span class="hpic" id="hl-pic-2"></span>
+        <span id="hl-word-2"></span>
+      </button>
+    </div>
+    <div class="heb-letter-feedback" id="hl-feedback"></div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="hl-next" onclick="nextHebLetter()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('hebrew-menu-screen')" style="margin-top:12px">← חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- ======== HEBREW COUNT SCREEN ======== -->
+<div class="screen" id="heb-count-screen">
+  <div class="card">
+    <div class="mw-score-strip">
+      <div class="score-chip">✅ <span id="hc-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="hc-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="hc-qnum">1</span></div>
+    </div>
+    <div class="hc-number-label">כמה?</div>
+    <div class="hc-number" id="hc-number">3</div>
+    <div class="hc-grid" id="hc-grid">
+      <button class="hc-opt" id="hc-opt-0" onclick="checkHebCount(0)"><span class="hc-emojis" id="hc-emojis-0"></span></button>
+      <button class="hc-opt" id="hc-opt-1" onclick="checkHebCount(1)"><span class="hc-emojis" id="hc-emojis-1"></span></button>
+      <button class="hc-opt" id="hc-opt-2" onclick="checkHebCount(2)"><span class="hc-emojis" id="hc-emojis-2"></span></button>
+      <button class="hc-opt" id="hc-opt-3" onclick="checkHebCount(3)"><span class="hc-emojis" id="hc-emojis-3"></span></button>
+    </div>
+    <div class="heb-letter-feedback" id="hc-feedback"></div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="hc-next" onclick="nextHebCount()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('hebrew-menu-screen')" style="margin-top:10px">← חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- ======== HEBREW SYLLABLE SCREEN ======== -->
+<div class="screen" id="heb-syllable-screen">
+  <div class="card">
+    <div class="mw-score-strip">
+      <div class="score-chip">✅ <span id="hs-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="hs-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="hs-qnum">1</span> / <span id="hs-qtotal">23</span></div>
+    </div>
+    <div class="hs-level-badge lv1" id="hs-level-badge">רמה 1 – בסיסי</div>
+    <div class="hs-emoji" id="hs-emoji">🍎</div>
+    <div class="hs-word" id="hs-word">תַּפּוּחַ</div>
+    <div class="hs-question" id="hs-question">כמה הברות יש במילה?</div>
+    <div class="hs-count-opts" id="hs-count-opts">
+      <button class="hs-cnt-btn" id="hs-cnt-1" onclick="checkHebSylCount(1)">1</button>
+      <button class="hs-cnt-btn" id="hs-cnt-2" onclick="checkHebSylCount(2)">2</button>
+      <button class="hs-cnt-btn" id="hs-cnt-3" onclick="checkHebSylCount(3)">3</button>
+      <button class="hs-cnt-btn" id="hs-cnt-4" onclick="checkHebSylCount(4)">4</button>
+    </div>
+    <div class="hs-split-opts" id="hs-split-opts" style="display:none">
+      <button class="hs-split-btn" id="hs-sp-0" onclick="checkHebSylSplit(0)"></button>
+      <button class="hs-split-btn" id="hs-sp-1" onclick="checkHebSylSplit(1)"></button>
+      <button class="hs-split-btn" id="hs-sp-2" onclick="checkHebSylSplit(2)"></button>
+    </div>
+    <div class="hs-tiles" id="hs-tiles" style="display:none"></div>
+    <div class="heb-letter-feedback" id="hs-feedback"></div>
+    <button class="mw-speak-sentence" id="hs-speak" onclick="speakHebSyl()" style="display:none">🔊 שמע הברות</button>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="hs-next" onclick="nextHebSyl()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('hebrew-menu-screen')" style="margin-top:12px">← חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- ======== HEBREW SOUNDS SCREEN ======== -->
+<div class="screen" id="heb-sounds-screen">
+  <div class="card">
+    <div class="mw-score-strip">
+      <div class="score-chip">✅ <span id="hso-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="hso-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="hso-qnum">1</span> / <span id="hso-qtotal">26</span></div>
+    </div>
+    <div class="hs-level-badge lv1" id="hso-level-badge">רמה 1 – בסיסי</div>
+    <div class="hs-emoji" id="hso-emoji">🐟</div>
+    <div class="hs-word" id="hso-word">דָּג</div>
+    <div class="hs-question">כמה צלילים יש במילה?</div>
+    <div class="hs-count-opts" id="hso-count-opts">
+      <button class="hs-cnt-btn" id="hso-btn-0" onclick="checkHebSound(0)">1</button>
+      <button class="hs-cnt-btn" id="hso-btn-1" onclick="checkHebSound(1)">2</button>
+      <button class="hs-cnt-btn" id="hso-btn-2" onclick="checkHebSound(2)">3</button>
+      <button class="hs-cnt-btn" id="hso-btn-3" onclick="checkHebSound(3)">4</button>
+    </div>
+    <div class="hs-tiles" id="hso-tiles" style="display:none"></div>
+    <div class="heb-letter-feedback" id="hso-feedback"></div>
+    <button class="mw-speak-sentence" id="hso-speak" onclick="speakHebSounds()" style="display:none">🔊 שמע צלילים</button>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="hso-next" onclick="nextHebSound()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('hebrew-menu-screen')" style="margin-top:12px">← חזור לתפריט</button>
+  </div>
+</div>
+
 <!-- ======== WORD PICTURE SCREEN ======== -->
 <div class="screen" id="word-picture-screen">
   <div class="card">
@@ -1126,7 +1705,29 @@
 </div>
 
 <!-- Footer -->
-<div id="footer">Created by Assaf HS</div>
+<div id="footer-wrap">
+  <div id="footer" onclick="openBio()">✦ Created by Assaf HS</div>
+</div>
+
+<!-- Bio Popup -->
+<div id="bio-overlay" onclick="closeBio()">
+  <div class="bio-border">
+    <div class="bio-card" onclick="event.stopPropagation()">
+      <button class="bio-close" onclick="closeBio()">✕</button>
+      <div class="bio-avatar">A</div>
+      <div class="bio-name">Assaf HS</div>
+      <div class="bio-role">Product Manager &nbsp;·&nbsp; Builder</div>
+      <p class="bio-text">Hi, I'm Assaf. I'm a product manager who loves turning ideas into products that people genuinely enjoy using. I enjoy solving complex problems, working with talented people, and building experiences that make a real impact. I'm naturally curious, always looking to learn, improve, and create something meaningful.</p>
+      <div class="bio-tags">
+        <span class="bio-tag">🎯 Product Manager</span>
+        <span class="bio-tag">💡 Problem Solver</span>
+        <span class="bio-tag">🚀 Builder</span>
+        <span class="bio-tag">✨ Creator</span>
+        <span class="bio-tag">🔍 Curious Mind</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 // ===================== STATE =====================
@@ -1301,22 +1902,18 @@ function generateQuestion() {
     opSym  = op === '+' ? '+' : '−';
 
   } else if (selectedDiff === 'medium') {
-    // × and ÷ with 1–2 digit numbers; occasional +/−
-    op = pickOp(['+', '-', '×', '÷'], [1, 1, 4, 3]);
+    // × and ÷ with 1–2 digit numbers only
+    op = pickOp(['×', '÷'], [1, 1]);
     if (op === '×') {
       if (sub === 1) { a = rand(2,6);  b = rand(2,9); }
       else if (sub === 2) { a = rand(3,9);  b = rand(3,9); }
       else                { a = rand(6,12); b = rand(6,12); }
       answer = a * b; opSym = '×';
-    } else if (op === '÷') {
+    } else {
       if (sub === 1) { b = rand(2,5);  answer = rand(2,9);  a = b*answer; }
       else if (sub === 2) { b = rand(2,9);  answer = rand(2,9);  a = b*answer; }
       else                { b = rand(3,12); answer = rand(3,12); a = b*answer; }
       opSym = '÷';
-    } else if (op === '+') {
-      a = rand(10,99); b = rand(10,99); answer = a+b; opSym = '+';
-    } else {
-      a = rand(20,99); b = rand(5,a); answer = a-b; opSym = '−';
     }
 
   } else {
@@ -1419,15 +2016,30 @@ function buildSubHTML(a, b, answer) {
   return _calcWrap(visual, steps, answer);
 }
 
-function buildMultHTML(a, b, answer) {
-  const aS = String(a), bS = String(b), ansS = String(answer);
+function _cookieGroups(numGroups, perGroup) {
+  return Array.from({length: numGroups}, () => {
+    let rows = '';
+    for (let i = 0; i < perGroup; i += 5)
+      rows += `<div>${'🍪'.repeat(Math.min(5, perGroup - i))}</div>`;
+    return `<div class="cookie-group">${rows}</div>`;
+  }).join('');
+}
 
+function buildMultHTML(a, b, answer) {
+  // Cookie visual: a groups of b cookies each
+  if (a <= 12 && b <= 20) {
+    return `<div class="cookie-help">
+      <div class="cookie-help-title">🍪 ${a} קבוצות של ${b} עוגיות כל אחת:</div>
+      <div class="cookie-groups">${_cookieGroups(a, b)}</div>
+      <div class="cookie-total">${a} × ${b} = <strong>${answer}</strong> 🍪</div>
+    </div>`;
+  }
+  // Fallback step-by-step for large numbers
+  const aS = String(a), bS = String(b), ansS = String(answer);
   if (b < 10) {
-    // Single-digit multiplier: digit-by-digit with carries
     const w = Math.max(aS.length, bS.length + 2, ansS.length) + 1;
     const pad = s => s.padStart(w);
     const visual = `${pad(aS)}\n${pad('× ' + bS)}\n${'─'.repeat(w)}\n${pad(ansS)}`;
-
     const digits = aS.split('').reverse().map(Number);
     const steps = [];
     let carry = 0;
@@ -1445,9 +2057,7 @@ function buildMultHTML(a, b, answer) {
     }
     if (carry > 0) steps.push(`נושאים ${carry} לפני כל המספרים`);
     return _calcWrap(visual, steps, answer);
-
   } else {
-    // Two-digit multiplier: partial products
     const b1 = b % 10, b10 = Math.floor(b / 10) * 10;
     const p1 = a * b1, p2 = a * b10;
     const p1S = String(p1), p2S = String(p2);
@@ -1468,67 +2078,49 @@ function buildMultHTML(a, b, answer) {
 }
 
 function buildDivHTML(a, b, answer) {
+  // Cookie visual: b groups of answer cookies each
+  if (b <= 12 && answer <= 20) {
+    return `<div class="cookie-help">
+      <div class="cookie-help-title">🍪 ${a} עוגיות מחולקות ל-${b} קבוצות שוות:</div>
+      <div class="cookie-groups">${_cookieGroups(b, answer)}</div>
+      <div class="cookie-total">כל קבוצה מקבלת <strong>${answer}</strong> 🍪</div>
+    </div>`;
+  }
+  // Fallback step-by-step for large numbers
   const aS = String(a);
   const steps = [];
   let current = 0;
   let quotientParts = [];
-
   for (let i = 0; i < aS.length; i++) {
     current = current * 10 + parseInt(aS[i]);
     const q = Math.floor(current / b);
     const prod = q * b;
     const rem = current - prod;
     quotientParts.push(String(q));
-
-    const place = aS.length - i;
     let s = `שלב ${i+1}: לוקחים ${current} ÷ ${b}`;
-    if (q === 0) {
-      s += ` → ${b} לא נכנס ב-${current}, ממשיכים לספרה הבאה`;
-    } else {
+    if (q === 0) s += ` → ${b} לא נכנס ב-${current}, ממשיכים לספרה הבאה`;
+    else {
       s += ` = ${q} (כי ${q} × ${b} = ${prod})`;
-      if (rem > 0) s += `, נשאר ${rem} → מורידים ספרה הבאה`;
-      else s += `, נשאר 0`;
+      s += rem > 0 ? `, נשאר ${rem} → מורידים ספרה הבאה` : `, נשאר 0`;
     }
     steps.push(s);
     current = rem;
   }
-
-  // Build visual: quotient over dividend
   const quotient = quotientParts.join('');
   const divLine = `${a} ÷ ${b}`;
   const w = Math.max(divLine.length, quotient.length + 2) + 1;
   const pad = s => s.padStart(w);
   const visual = `${pad(divLine)}\n${'─'.repeat(w)}\n${pad('= ' + quotient)}`;
-
   return _calcWrap(visual, steps, answer);
 }
 
 // ===================== GAME FLOW =====================
 function selectSubject(subj) {
   selectedSubject = subj;
-  ['math','english'].forEach(s => {
-    const btn = document.getElementById('subj-' + s);
-    btn.className = 'subject-btn' + (s === subj ? ' selected-' + s : '');
+  ['math','english','hebrew'].forEach(s => {
+    document.getElementById('subj-' + s).className = 'subject-btn' + (s === subj ? ' selected-' + s : '');
   });
-  if (subj === 'english') {
-    startGame();
-  } else {
-    document.getElementById('diff-section').style.display = '';
-  }
-}
-
-function selectDiff(diff) {
-  selectedDiff = diff;
-  ['easy','medium','hard'].forEach(d => {
-    const btn = document.getElementById('diff-' + d);
-    btn.className = 'diff-btn' + (d === diff ? ' selected-' + d : '');
-  });
-  startGame();
-}
-
-function startGame() {
   playerName = document.getElementById('name-input').value.trim();
-
   const banner = document.getElementById('greeting-banner');
   if (playerName) {
     banner.textContent = `שלום ${playerName}! 👋 בהצלחה!`;
@@ -1536,19 +2128,29 @@ function startGame() {
   } else {
     banner.classList.remove('show');
   }
+  if (subj === 'english') showScreen('english-menu-screen');
+  else if (subj === 'hebrew') showScreen('hebrew-menu-screen');
+  else showScreen('math-menu-screen');
+}
 
-  if (selectedSubject === 'english') {
-    showScreen('english-menu-screen');
-  } else {
-    showScreen('question-screen');
-    questionCount = 0; correctCount = 0; wrongCount = 0;
-    loadQuestion();
-  }
+function selectDiff(diff) {
+  selectedDiff = diff;
+  showScreen('question-screen');
+  questionCount = 0; correctCount = 0; wrongCount = 0;
+  loadQuestion();
 }
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  const homeItem = document.getElementById('home-item');
+  if (id === 'welcome-screen') {
+    ['subj-math','subj-english','subj-hebrew'].forEach(s => document.getElementById('subj-'+s).className = 'subject-btn');
+    selectedSubject = '';
+    homeItem.classList.remove('visible');
+  } else {
+    homeItem.classList.add('visible');
+  }
 }
 
 function loadQuestion() {
@@ -1698,8 +2300,7 @@ function restartGame() {
   document.getElementById('score-correct').textContent = '0';
   document.getElementById('score-wrong').textContent  = '0';
   document.getElementById('score-num').textContent    = '1';
-  document.getElementById('diff-section').style.display = 'none';
-  ['subj-math','subj-english'].forEach(id => document.getElementById(id).className = 'subject-btn');
+  ['subj-math','subj-english','subj-hebrew'].forEach(id => document.getElementById(id).className = 'subject-btn');
   showScreen('welcome-screen');
 }
 
@@ -2180,14 +2781,740 @@ function nextMW() {
 }
 
 function speakMWSentence() {
-  const item = mwQueue[mwIdx];
-  const spoken = item.s.replace('___', 'blank');
-  speakEng(spoken);
+  if (!window.speechSynthesis || !mwQueue[mwIdx]) return;
+  const parts = mwQueue[mwIdx].s.split('___');
+  speechSynthesis.cancel();
+  function speakPart(i) {
+    const text = (parts[i] || '').trim().replace(/[,.]$/, '');
+    if (text) {
+      const utt = new SpeechSynthesisUtterance(text);
+      utt.lang = 'en-US'; utt.rate = 0.82; utt.pitch = 1.05;
+      utt.onend = () => { if (i < parts.length - 1) setTimeout(() => speakPart(i + 1), 600); };
+      speechSynthesis.speak(utt);
+    } else if (i < parts.length - 1) {
+      setTimeout(() => speakPart(i + 1), 600);
+    }
+  }
+  speakPart(0);
+}
+
+// ===================== HEBREW EXERCISES =====================
+
+const hebSentenceList = [
+  { s:'הכלב שותה ___',              a:'מים',        d:['חלב','מיץ'],          p:'🐕' },
+  { s:'השמש זורחת ב___',            a:'בוקר',       d:['לילה','ערב'],         p:'☀️' },
+  { s:'הירח זוהר ב___',             a:'לילה',       d:['בוקר','צהריים'],      p:'🌙' },
+  { s:'הדג שוחה ב___',              a:'ים',         d:['שמיים','יער'],        p:'🐟' },
+  { s:'הציפור בונה ___',            a:'קן',         d:['בית','בור'],          p:'🐦' },
+  { s:'הפרפר יושב על ___',          a:'פרח',        d:['אבן','ספר'],          p:'🦋' },
+  { s:'הארנב אוהב לאכול ___',       a:'גזר',        d:['בשר','פסטה'],        p:'🐰' },
+  { s:'הצב הולך ___',               a:'לאט',        d:['מהר','גבוה'],        p:'🐢' },
+  { s:'הפיל הוא בעל חיים ___',      a:'גדול',       d:['קטן','מהיר'],        p:'🐘' },
+  { s:'הדבורה עושה ___',            a:'דבש',        d:['חלב','שוקולד'],      p:'🐝' },
+  { s:'הפרה נותנת ___',             a:'חלב',        d:['ביצים','דבש'],       p:'🐄' },
+  { s:'הנחש נע על ה___',            a:'אדמה',       d:['מים','עצים'],        p:'🐍' },
+  { s:'הגמל שותה מעט ___',          a:'מים',        d:['חלב','מיץ'],          p:'🐪' },
+  { s:'התפוח גדל על ה___',          a:'עץ',         d:['אדמה','גג'],          p:'🍎' },
+  { s:'הרכבת נוסעת על ה___',        a:'פסים',       d:['כביש','מים'],        p:'🚂' },
+  { s:'הכוכבים נראים ב___',         a:'לילה',       d:['בוקר','צהריים'],     p:'⭐' },
+  { s:'הבלון עף ב___',              a:'אוויר',      d:['מים','אש'],           p:'🎈' },
+  { s:'השוקולד הוא ___',            a:'מתוק',       d:['חמוץ','מלוח'],       p:'🍫' },
+  { s:'הלימון הוא ___',             a:'חמוץ',       d:['מתוק','מר'],          p:'🍋' },
+  { s:'החתול ישן על ה___',          a:'ספה',        d:['שולחן','רצפה'],      p:'🐱' },
+  { s:'הגשם יורד מה___',            a:'שמיים',      d:['עצים','הרים'],       p:'🌧️' },
+  { s:'הסוס רץ ב___',               a:'שדה',        d:['ים','בית'],           p:'🐎' },
+  { s:'הילד רוכב על ___',           a:'אופניים',    d:['מכונית','סוס'],      p:'🚲' },
+  { s:'הרופא עובד ב___',            a:'בית חולים',  d:['בית ספר','מכולת'],   p:'👨‍⚕️' },
+  { s:'הילדים לומדים ב___',         a:'בית ספר',    d:['בית חולים','פארק'],  p:'🏫' },
+  { s:'הסנאי אוכל ___',             a:'אגוזים',     d:['עשב','בשר'],         p:'🐿️' },
+  { s:'הדבורה גרה ב___',            a:'כוורת',      d:['גן','בית'],           p:'🍯' },
+  { s:'הברווז שוחה ב___',           a:'בריכה',      d:['חול','אוויר'],       p:'🦆' },
+  { s:'הקוף אוהב לאכול ___',        a:'בננות',      d:['גזר','ביצים'],       p:'🐒' },
+  { s:'הטייס עובד ב___',            a:'מטוס',       d:['אוניה','רכבת'],      p:'✈️' },
+  { s:'הגנן מגדל ___',              a:'פרחים',      d:['ספרים','צעצועים'],   p:'🌸' },
+  { s:'הדייג אוהב ל___',            a:'דוג',        d:['לרוץ','לבשל'],       p:'🎣' },
+  { s:'הים הוא ___',                a:'כחול',       d:['ירוק','אדום'],        p:'🌊' },
+  { s:'בחנוכה מדליקים ___',         a:'חנוכייה',    d:['מנורה','נרות'],      p:'🕎' },
+  { s:'בפסח אוכלים ___',            a:'מצות',       d:['לחם','עוגה'],         p:'🍞' },
+  { s:'בשבת אוכלים ___',            a:'חלה',        d:['פיתה','מצות'],       p:'🥖' },
+  { s:'הגיטרה היא כלי ___',         a:'מוזיקה',     d:['ספורט','ציור'],      p:'🎸' },
+  { s:'הכדורגל הוא ספורט ___',      a:'קבוצתי',     d:['יחידני','מים'],      p:'⚽' },
+  { s:'הנמר מזוהה בנקודות ה___',    a:'שחורות',     d:['צהובות','לבנות'],   p:'🐆' },
+  { s:'הדרקון נושף ___',            a:'אש',         d:['מים','עשן'],          p:'🐉' },
+];
+
+let hmwQueue=[], hmwIdx=0, hmwCorrect=0, hmwWrong=0, hmwAnswered=false, hmwCurrentAnswer='';
+
+function startHebMissingWord() {
+  hmwQueue = [...hebSentenceList].sort(() => Math.random()-0.5);
+  hmwIdx=0; hmwCorrect=0; hmwWrong=0;
+  document.getElementById('hmw-qtotal').textContent = hmwQueue.length;
+  showScreen('heb-missing-word-screen');
+  showHebMWQ();
+}
+
+function showHebMWQ() {
+  if (hmwIdx >= hmwQueue.length) {
+    alert('כל הכבוד! סיימת! ✅ ' + hmwCorrect + ' / ' + hmwQueue.length);
+    showScreen('hebrew-menu-screen'); return;
+  }
+  hmwAnswered = false;
+  const item = hmwQueue[hmwIdx];
+  hmwCurrentAnswer = item.a;
+  document.getElementById('hmw-qnum').textContent = hmwIdx+1;
+  document.getElementById('hmw-score-c').textContent = hmwCorrect;
+  document.getElementById('hmw-score-w').textContent = hmwWrong;
+  document.getElementById('hmw-pic').textContent = item.p||'';
+  document.getElementById('hmw-sentence').innerHTML = item.s.replace('___','<span class="mw-blank">___</span>');
+  const opts = [item.a,...item.d].sort(()=>Math.random()-0.5);
+  for (let i=0;i<3;i++) {
+    const btn=document.getElementById('hmw-opt-'+i);
+    btn.textContent=opts[i]; btn.className='mw-opt'; btn.disabled=false;
+  }
+  const fb=document.getElementById('hmw-feedback');
+  fb.style.display='none'; fb.textContent='';
+  document.getElementById('hmw-next').style.display='none';
+}
+
+function checkHebMW(idx) {
+  if (hmwAnswered) return;
+  hmwAnswered=true;
+  const chosen=document.getElementById('hmw-opt-'+idx).textContent;
+  const correct=chosen===hmwCurrentAnswer;
+  for (let i=0;i<3;i++) {
+    const btn=document.getElementById('hmw-opt-'+i);
+    btn.disabled=true;
+    if (btn.textContent===hmwCurrentAnswer) btn.classList.add('mw-ok');
+    else if (i===idx) btn.classList.add('mw-no');
+  }
+  const full=hmwQueue[hmwIdx].s.replace('___',hmwCurrentAnswer);
+  const fb=document.getElementById('hmw-feedback');
+  if (correct) {
+    hmwCorrect++;
+    fb.style.cssText='display:block;background:#eafaf4;color:#006044;border:1.5px solid #00b894';
+    fb.textContent='✅ כן! '+full;
+    playSuccess();
+  } else {
+    hmwWrong++;
+    fb.style.cssText='display:block;background:#fff0f3;color:#c0392b;border:1.5px solid #ff6584';
+    fb.textContent='❌ המילה הנכונה היא "'+hmwCurrentAnswer+'". '+full;
+    playWrong();
+  }
+  document.getElementById('hmw-score-c').textContent=hmwCorrect;
+  document.getElementById('hmw-score-w').textContent=hmwWrong;
+  document.getElementById('hmw-next').style.display='inline-flex';
+}
+
+function nextHebMW() { hmwIdx++; showHebMWQ(); }
+
+// ---- Hebrew Letter Exercise ----
+
+const hebLetterWords = {
+  'א':[{w:'ארנב',p:'🐰'},{w:'אריה',p:'🦁'},{w:'אבטיח',p:'🍉'},{w:'אופניים',p:'🚲'}],
+  'ב':[{w:'בית',p:'🏠'},{w:'בלון',p:'🎈'},{w:'בננה',p:'🍌'},{w:'ברווז',p:'🦆'}],
+  'ג':[{w:'גמל',p:'🐪'},{w:'גזר',p:'🥕'},{w:'גלידה',p:'🍦'},{w:'גיטרה',p:'🎸'}],
+  'ד':[{w:'דג',p:'🐟'},{w:'דוב',p:'🐻'},{w:'דרקון',p:'🐉'},{w:'דבורה',p:'🐝'}],
+  'ה':[{w:'הר',p:'⛰️'},{w:'הליקופטר',p:'🚁'},{w:'היפופוטם',p:'🦛'}],
+  'ו':[{w:'ורד',p:'🌹'},{w:'וילון',p:'🪟'}],
+  'ז':[{w:'זברה',p:'🦓'},{w:'זאב',p:'🐺'},{w:'זרע',p:'🌱'},{w:'זיתים',p:'🫒'}],
+  'ח':[{w:'חתול',p:'🐱'},{w:'חמניה',p:'🌻'},{w:'חלב',p:'🥛'},{w:'חיפושית',p:'🐞'}],
+  'ט':[{w:'טלפון',p:'📱'},{w:'טיגריס',p:'🐅'},{w:'טבעת',p:'💍'},{w:'טווס',p:'🦚'}],
+  'י':[{w:'ילד',p:'👦'},{w:'ים',p:'🌊'},{w:'יונה',p:'🕊️'},{w:'ירח',p:'🌙'}],
+  'כ':[{w:'כלב',p:'🐕'},{w:'כדור',p:'⚽'},{w:'כוכב',p:'⭐'},{w:'כובע',p:'🎩'}],
+  'ל':[{w:'לב',p:'❤️'},{w:'לחם',p:'🍞'},{w:'לימון',p:'🍋'},{w:'לווייתן',p:'🐋'}],
+  'מ':[{w:'מכונית',p:'🚗'},{w:'מנגו',p:'🥭'},{w:'מחשב',p:'💻'},{w:'מיץ',p:'🧃'}],
+  'נ':[{w:'נמר',p:'🐆'},{w:'נחש',p:'🐍'},{w:'נר',p:'🕯️'},{w:'נסיכה',p:'👸'}],
+  'ס':[{w:'סוס',p:'🐎'},{w:'סנאי',p:'🐿️'},{w:'ספר',p:'📚'},{w:'סירה',p:'⛵'}],
+  'ע':[{w:'עכבר',p:'🐭'},{w:'ענב',p:'🍇'},{w:'עפרון',p:'✏️'},{w:'עגבנייה',p:'🍅'}],
+  'פ':[{w:'פרפר',p:'🦋'},{w:'פיל',p:'🐘'},{w:'פרח',p:'🌸'},{w:'פינגווין',p:'🐧'}],
+  'צ':[{w:'צב',p:'🐢'},{w:'צפרדע',p:'🐸'},{w:'ציפור',p:'🐦'},{w:'צלחת',p:'🍽️'}],
+  'ק':[{w:'קיפוד',p:'🦔'},{w:'קוף',p:'🐒'},{w:'קרנף',p:'🦏'},{w:'קפה',p:'☕'}],
+  'ר':[{w:'רכבת',p:'🚂'},{w:'רובוט',p:'🤖'},{w:'ריצה',p:'🏃'},{w:'רחל',p:'🐑'}],
+  'ש':[{w:'שמש',p:'☀️'},{w:'שוקולד',p:'🍫'},{w:'שועל',p:'🦊'},{w:'שדה',p:'🌾'}],
+  'ת':[{w:'תפוח',p:'🍎'},{w:'תוכי',p:'🦜'},{w:'תנין',p:'🐊'},{w:'תות',p:'🍓'}],
+};
+const hebLetterKeys = Object.keys(hebLetterWords);
+
+let hlQueue=[], hlIdx=0, hlCorrect=0, hlWrong=0, hlAnswered=false, hlCorrectIdx=-1;
+
+function startHebLetter() {
+  hlQueue = [...hebLetterKeys].sort(()=>Math.random()-0.5);
+  hlIdx=0; hlCorrect=0; hlWrong=0;
+  showScreen('heb-letter-screen');
+  showHebLetterQ();
+}
+
+function showHebLetterQ() {
+  if (hlIdx >= hlQueue.length) {
+    alert('כל הכבוד! עברת על כל האותיות! ✅ '+hlCorrect+' / '+hlQueue.length);
+    showScreen('hebrew-menu-screen'); return;
+  }
+  hlAnswered=false;
+  const letter=hlQueue[hlIdx];
+  document.getElementById('hl-letter').textContent=letter;
+  document.getElementById('hl-qnum').textContent=hlIdx+1;
+  document.getElementById('hl-score-c').textContent=hlCorrect;
+  document.getElementById('hl-score-w').textContent=hlWrong;
+
+  const correctPool=hebLetterWords[letter];
+  const correctEntry=correctPool[Math.floor(Math.random()*correctPool.length)];
+
+  const otherLetters=hebLetterKeys.filter(l=>l!==letter);
+  const distLetters=[...otherLetters].sort(()=>Math.random()-0.5).slice(0,2);
+  const distractors=distLetters.map(l=>{
+    const pool=hebLetterWords[l];
+    return pool[Math.floor(Math.random()*pool.length)];
+  });
+
+  const opts=[correctEntry,...distractors].sort(()=>Math.random()-0.5);
+  hlCorrectIdx=opts.indexOf(correctEntry);
+
+  for (let i=0;i<3;i++) {
+    document.getElementById('hl-opt-'+i).className='heb-pic-btn';
+    document.getElementById('hl-opt-'+i).disabled=false;
+    document.getElementById('hl-pic-'+i).textContent=opts[i].p;
+    document.getElementById('hl-word-'+i).textContent=opts[i].w;
+  }
+  const fb=document.getElementById('hl-feedback');
+  fb.style.display='none'; fb.textContent='';
+  document.getElementById('hl-next').style.display='none';
+}
+
+function checkHebLetter(idx) {
+  if (hlAnswered) return;
+  hlAnswered=true;
+  const correct=idx===hlCorrectIdx;
+  for (let i=0;i<3;i++) {
+    document.getElementById('hl-opt-'+i).disabled=true;
+    if (i===hlCorrectIdx) document.getElementById('hl-opt-'+i).classList.add('hpic-ok');
+    else if (i===idx) document.getElementById('hl-opt-'+i).classList.add('hpic-no');
+  }
+  const fb=document.getElementById('hl-feedback');
+  const correctWord=document.getElementById('hl-word-'+hlCorrectIdx).textContent;
+  if (correct) {
+    hlCorrect++;
+    fb.style.cssText='display:block;background:#eafaf4;color:#006044;border:1.5px solid #00b894';
+    fb.textContent='✅ נכון! '+correctWord+' מתחיל ב'+hlQueue[hlIdx];
+    playSuccess();
+  } else {
+    hlWrong++;
+    fb.style.cssText='display:block;background:#fff0f3;color:#c0392b;border:1.5px solid #ff6584';
+    fb.textContent='❌ '+correctWord+' מתחיל ב'+hlQueue[hlIdx];
+    playWrong();
+  }
+  document.getElementById('hl-score-c').textContent=hlCorrect;
+  document.getElementById('hl-score-w').textContent=hlWrong;
+  document.getElementById('hl-next').style.display='inline-flex';
+}
+
+function nextHebLetter() { hlIdx++; showHebLetterQ(); }
+
+// ---- Hebrew Count Exercise ----
+
+const hcEmojiPool = [
+  '🚗','🦁','🍦','🐟','🌸','⭐','🎈','🍎','🐶','🐱',
+  '🦋','🚂','🌙','🍌','🐢','🦆','🍓','🚀','🌈','🐘',
+  '🎸','🍋','🐸','🦊','🌻','🦜','🍕','🏀','🦓','🐝',
+];
+
+let hcCorrectIdx = -1, hcAnswered = false, hcCorrect = 0, hcWrong = 0, hcQNum = 0;
+
+function startHebCount() {
+  hcCorrect = 0; hcWrong = 0; hcQNum = 0;
+  showScreen('heb-count-screen');
+  showHebCountQ();
+}
+
+function showHebCountQ() {
+  hcAnswered = false;
+  hcQNum++;
+  document.getElementById('hc-qnum').textContent = hcQNum;
+  document.getElementById('hc-score-c').textContent = hcCorrect;
+  document.getElementById('hc-score-w').textContent = hcWrong;
+
+  const target = Math.floor(Math.random() * 9) + 1; // 1–9
+  document.getElementById('hc-number').textContent = target;
+
+  // 4 distinct counts: target + 3 others from 1–9
+  const pool = [1,2,3,4,5,6,7,8,9].filter(n => n !== target);
+  const distractors = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+  const counts = [target, ...distractors].sort(() => Math.random() - 0.5);
+  hcCorrectIdx = counts.indexOf(target);
+
+  // 4 distinct emojis (one per option)
+  const emojis = [...hcEmojiPool].sort(() => Math.random() - 0.5).slice(0, 4);
+
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById('hc-opt-' + i);
+    btn.className = 'hc-opt';
+    btn.disabled = false;
+    document.getElementById('hc-emojis-' + i).textContent = emojis[i].repeat(counts[i]);
+  }
+
+  const fb = document.getElementById('hc-feedback');
+  fb.style.display = 'none'; fb.textContent = '';
+  document.getElementById('hc-next').style.display = 'none';
+}
+
+function checkHebCount(idx) {
+  if (hcAnswered) return;
+  hcAnswered = true;
+  const correct = idx === hcCorrectIdx;
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById('hc-opt-' + i);
+    btn.disabled = true;
+    if (i === hcCorrectIdx) btn.classList.add('hc-ok');
+    else if (i === idx) btn.classList.add('hc-no');
+  }
+  const target = document.getElementById('hc-number').textContent;
+  const fb = document.getElementById('hc-feedback');
+  if (correct) {
+    hcCorrect++;
+    fb.style.cssText = 'display:block;background:#eafaf4;color:#006044;border:1.5px solid #00b894';
+    fb.textContent = '✅ נכון! יש ' + target + ' תמונות!';
+    playSuccess();
+  } else {
+    hcWrong++;
+    fb.style.cssText = 'display:block;background:#fff0f3;color:#c0392b;border:1.5px solid #ff6584';
+    fb.textContent = '❌ לא נכון. הכמות הנכונה היא ' + target;
+    playWrong();
+  }
+  document.getElementById('hc-score-c').textContent = hcCorrect;
+  document.getElementById('hc-score-w').textContent = hcWrong;
+  document.getElementById('hc-next').style.display = 'inline-flex';
+}
+
+function nextHebCount() { showHebCountQ(); }
+
+// ---- Hebrew Syllable Exercise ----
+
+const hebSylExercises = [
+  // Level 1 – 2-syllable common words
+  { level:1, p:'👩', w:'אמא',     wn:'אִמָּא',      s:['אִ','מָּא'] },
+  { level:1, p:'📚', w:'ספר',     wn:'סֵפֶר',      s:['סֵ','פֶר'] },
+  { level:1, p:'⚽', w:'כדור',    wn:'כַּדּוּר',   s:['כַּ','דּוּר'] },
+  { level:1, p:'👦', w:'ילד',     wn:'יֶלֶד',      s:['יֶ','לֶד'] },
+  { level:1, p:'🍞', w:'לחם',     wn:'לֶחֶם',      s:['לֶ','חֶם'] },
+  { level:1, p:'🌸', w:'פרח',     wn:'פֶּרַח',     s:['פֶּ','רַח'] },
+  { level:1, p:'🐟', w:'דגים',    wn:'דָּגִים',    s:['דָּ','גִים'] },
+  { level:1, p:'☀️', w:'שמש',     wn:'שֶׁמֶשׁ',    s:['שֶׁ','מֶשׁ'] },
+  { level:1, p:'👨', w:'אבא',     wn:'אַבָּא',     s:['אַ','בָּא'] },
+  { level:1, p:'🥕', w:'גזר',     wn:'גֶּזֶר',     s:['גֶּ','זֶר'] },
+  { level:1, p:'🪟', w:'חלון',    wn:'חַלּוֹן',    s:['חַ','לּוֹן'] },
+  { level:1, p:'🐱', w:'חתול',    wn:'חָתוּל',     s:['חָ','תוּל'] },
+  // Level 2 – 2-3 syllable words
+  { level:2, p:'🍌', w:'בננה',    wn:'בָּנָנָה',   s:['בָּ','נָ','נָה'] },
+  { level:2, p:'🍎', w:'תפוח',    wn:'תַּפּוּחַ',  s:['תַּ','פּוּ','חַ'] },
+  { level:2, p:'🦁', w:'אריה',    wn:'אַרְיֵה',    s:['אַר','יֵ','ה'] },
+  { level:2, p:'💻', w:'מחשב',    wn:'מַחְשֵׁב',   s:['מַח','שֵׁב'] },
+  { level:2, p:'🍦', w:'גלידה',   wn:'גְּלִידָה',  s:['גְּ','לִי','דָה'] },
+  { level:2, p:'✏️', w:'עיפרון',  wn:'עִפָּרוֹן',  s:['עִ','פָּ','רוֹן'] },
+  { level:2, p:'🚗', w:'מכונית',  wn:'מְכוֹנִית',  s:['מְ','כוֹ','נִית'] },
+  { level:2, p:'🪑', w:'שולחן',   wn:'שֻׁלְחָן',   s:['שֻׁל','חָן'] },
+  { level:2, p:'🍋', w:'לימון',   wn:'לִימוֹן',    s:['לִי','מוֹן'] },
+  { level:2, p:'🐰', w:'ארנב',    wn:'אַרְנָב',    s:['אַר','נָב'] },
+  // Level 3 – 3-4 syllable longer words
+  { level:3, p:'🚌', w:'אוטובוס', wn:'אוֹטוֹבּוּס', s:['אוֹ','טוֹ','בּוּס'] },
+  { level:3, p:'👨‍👩‍👧', w:'משפחה', wn:'מִשְׁפָּחָה', s:['מִשְׁ','פָּ','חָה'] },
+  { level:3, p:'🍽️', w:'מסעדה',  wn:'מִסְעָדָה',   s:['מִס','עָ','דָה'] },
+  { level:3, p:'🎒', w:'תרמיל',   wn:'תַּרְמִיל',   s:['תַּר','מִיל'] },
+  { level:3, p:'🍫', w:'שוקולד',  wn:'שׁוֹקוֹלָד',  s:['שׁוֹ','קוֹ','לָד'] },
+  { level:3, p:'📱', w:'טלפון',   wn:'טֶלֶפוֹן',    s:['טֶ','לֶ','פוֹן'] },
+  { level:3, p:'🏫', w:'בית ספר', wn:'בֵּית סֵפֶר', s:['בֵּית','סֵ','פֶר'] },
+];
+
+let hsQueue=[], hsIdx=0, hsCorrect=0, hsWrong=0, hsAnswered=false;
+
+function startHebSyllable() {
+  hsQueue = [...hebSylExercises].sort(() => Math.random()-0.5);
+  hsIdx=0; hsCorrect=0; hsWrong=0;
+  document.getElementById('hs-qtotal').textContent = hsQueue.length;
+  showScreen('heb-syllable-screen');
+  showHebSylQ();
+}
+
+function showHebSylQ() {
+  if (hsIdx >= hsQueue.length) {
+    alert('כל הכבוד! סיימת! ✅ '+hsCorrect+' / '+hsQueue.length);
+    showScreen('hebrew-menu-screen'); return;
+  }
+  hsAnswered = false;
+  const item = hsQueue[hsIdx];
+  const levelLabels = {1:'רמה 1 – בסיסי', 2:'רמה 2 – בינוני', 3:'רמה 3 – מתקדם'};
+  const levelClasses = {1:'lv1', 2:'lv2', 3:'lv3'};
+  const badge = document.getElementById('hs-level-badge');
+  badge.textContent = levelLabels[item.level];
+  badge.className = 'hs-level-badge ' + levelClasses[item.level];
+  document.getElementById('hs-qnum').textContent = hsIdx+1;
+  document.getElementById('hs-score-c').textContent = hsCorrect;
+  document.getElementById('hs-score-w').textContent = hsWrong;
+  document.getElementById('hs-emoji').textContent = item.p;
+  document.getElementById('hs-word').textContent = item.wn;
+  document.getElementById('hs-tiles').style.display = 'none';
+  document.getElementById('hs-tiles').innerHTML = '';
+  document.getElementById('hs-speak').style.display = 'none';
+  document.getElementById('hs-next').style.display = 'none';
+  const fb = document.getElementById('hs-feedback');
+  fb.style.display='none'; fb.textContent='';
+  document.getElementById('hs-question').textContent = 'כמה הברות יש במילה?';
+  document.getElementById('hs-count-opts').style.display = 'flex';
+  document.getElementById('hs-split-opts').style.display = 'none';
+  for (let n=1; n<=4; n++) {
+    const btn = document.getElementById('hs-cnt-'+n);
+    btn.className='hs-cnt-btn'; btn.disabled=false;
+  }
+}
+
+function checkHebSylCount(chosen) {
+  if (hsAnswered) return;
+  hsAnswered = true;
+  const item = hsQueue[hsIdx];
+  const correct = item.s.length;
+  for (let n=1; n<=4; n++) {
+    const btn = document.getElementById('hs-cnt-'+n);
+    btn.disabled=true;
+    if (n===correct) btn.classList.add('hs-ok');
+    else if (n===chosen) btn.classList.add('hs-no');
+  }
+  showHebSylResult(chosen===correct, item);
+}
+
+
+function showHebSylResult(correct, item) {
+  const tilesEl = document.getElementById('hs-tiles');
+  tilesEl.innerHTML = item.s.map(syl => `<span class="hs-tile" onclick="speakHebPart('${syl}')">${syl}</span>`).join('');
+  tilesEl.style.display = 'flex';
+  const fb = document.getElementById('hs-feedback');
+  if (correct) {
+    hsCorrect++;
+    fb.style.cssText='display:block;background:#eafaf4;color:#006044;border:1.5px solid #00b894';
+    fb.textContent = item.s.length===1 ? '✅ נכון! מילה עם הברה אחת!' : `✅ נכון! ${item.s.length} הברות: ${item.s.join(' – ')}`;
+    playSuccess();
+  } else {
+    hsWrong++;
+    fb.style.cssText='display:block;background:#fff0f3;color:#c0392b;border:1.5px solid #ff6584';
+    fb.textContent = `❌ "${item.wn}" מחולק: ${item.s.join(' – ')}`;
+    playWrong();
+  }
+  document.getElementById('hs-score-c').textContent = hsCorrect;
+  document.getElementById('hs-score-w').textContent = hsWrong;
+  document.getElementById('hs-speak').style.display = 'inline-flex';
+  document.getElementById('hs-next').style.display = 'inline-flex';
+}
+
+function nextHebSyl() { hsIdx++; showHebSylQ(); }
+
+function speakHebPart(text) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang='he-IL'; utt.rate=0.75; utt.pitch=1.1;
+  speechSynthesis.speak(utt);
+}
+
+function speakHebSyl() {
+  if (!window.speechSynthesis || !hsQueue[hsIdx]) return;
+  const item = hsQueue[hsIdx];
+  speechSynthesis.cancel();
+  function speakNext(i) {
+    if (i >= item.s.length) return;
+    const utt = new SpeechSynthesisUtterance(item.s[i]);
+    utt.lang='he-IL'; utt.rate=0.7; utt.pitch=1.1;
+    utt.onend = () => setTimeout(() => speakNext(i+1), 500);
+    speechSynthesis.speak(utt);
+  }
+  speakNext(0);
+}
+
+// ===================== HEBREW SOUNDS =====================
+const hebSoundExercises = [
+  // Level 1 (2-3 sounds)
+  { level:1, p:'🐟', w:'דג',    wn:'דָּג',     s:['ד','ג'] },
+  { level:1, p:'✋', w:'יד',    wn:'יָד',      s:['י','ד'] },
+  { level:1, p:'🌳', w:'עץ',    wn:'עֵץ',      s:['ע','צ'] },
+  { level:1, p:'🦷', w:'שן',    wn:'שֵׁן',     s:['ש','נ'] },
+  { level:1, p:'🌊', w:'ים',    wn:'יָם',      s:['י','מ'] },
+  { level:1, p:'👁️', w:'עין',   wn:'עַיִן',    s:['ע','י','נ'] },
+  { level:1, p:'👩', w:'אמא',   wn:'אִמָּא',   s:['א','מ','א'] },
+  { level:1, p:'👨', w:'אבא',   wn:'אַבָּא',   s:['א','ב','א'] },
+  { level:1, p:'☀️', w:'שמש',   wn:'שֶׁמֶשׁ',  s:['ש','מ','ש'] },
+  { level:1, p:'🌸', w:'פרח',   wn:'פֶּרַח',   s:['פ','ר','ח'] },
+  { level:1, p:'🐕', w:'כלב',   wn:'כֶּלֶב',   s:['כ','ל','ב'] },
+  // Level 2 (3-4 sounds)
+  { level:2, p:'👦', w:'ילד',   wn:'יֶלֶד',    s:['י','ל','ד'] },
+  { level:2, p:'🏠', w:'בית',   wn:'בַּיִת',    s:['ב','י','ת'] },
+  { level:2, p:'🥕', w:'גזר',   wn:'גֶּזֶר',    s:['ג','ז','ר'] },
+  { level:2, p:'🌙', w:'ירח',   wn:'יָרֵחַ',    s:['י','ר','ח'] },
+  { level:2, p:'⭐', w:'כוכב',  wn:'כּוֹכָב',   s:['כ','ו','כ','ב'] },
+  { level:2, p:'🐱', w:'חתול',  wn:'חָתוּל',    s:['ח','ת','ו','ל'] },
+  { level:2, p:'⚽', w:'כדור',  wn:'כַּדּוּר',  s:['כ','ד','ו','ר'] },
+  { level:2, p:'🦋', w:'פרפר',  wn:'פַּרְפַּר',  s:['פ','ר','פ','ר'] },
+  { level:2, p:'🍎', w:'תפוח',  wn:'תַּפּוּחַ',  s:['ת','פ','ו','ח'] },
+  { level:2, p:'🐰', w:'ארנב',  wn:'אַרְנָב',    s:['א','ר','נ','ב'] },
+  // Level 3 (5-6 sounds)
+  { level:3, p:'📱', w:'טלפון',  wn:'טֶלֶפוֹן',   s:['ט','ל','פ','ו','נ'] },
+  { level:3, p:'🍋', w:'לימון',  wn:'לִימוֹן',    s:['ל','י','מ','ו','נ'] },
+  { level:3, p:'👨‍👩‍👧', w:'משפחה', wn:'מִשְׁפָּחָה', s:['מ','ש','פ','ח','ה'] },
+  { level:3, p:'🍦', w:'גלידה',  wn:'גְּלִידָה',   s:['ג','ל','י','ד','ה'] },
+  { level:3, p:'🚗', w:'מכונית', wn:'מְכוֹנִית',  s:['מ','כ','ו','נ','י','ת'] },
+  { level:3, p:'✏️', w:'עיפרון', wn:'עִפָּרוֹן',   s:['ע','י','פ','ר','ו','נ'] },
+];
+
+let hsoQueue=[], hsoIdx=0, hsoCorrect=0, hsoWrong=0, hsoAnswered=false, hsoOpts=[];
+
+function startHebSounds() {
+  hsoQueue = [...hebSoundExercises].sort(() => Math.random()-0.5);
+  hsoIdx=0; hsoCorrect=0; hsoWrong=0;
+  document.getElementById('hso-qtotal').textContent = hsoQueue.length;
+  showScreen('heb-sounds-screen');
+  showHebSoundQ();
+}
+
+function getHsoOpts(correct) {
+  const pool = new Set([correct]);
+  for (const delta of [-1, 1, -2, 2]) {
+    if (pool.size >= 4) break;
+    const n = correct + delta;
+    if (n >= 1) pool.add(n);
+  }
+  return [...pool].sort(() => Math.random()-0.5);
+}
+
+function showHebSoundQ() {
+  if (hsoIdx >= hsoQueue.length) {
+    alert('כל הכבוד! סיימת! ✅ '+hsoCorrect+' / '+hsoQueue.length);
+    showScreen('hebrew-menu-screen'); return;
+  }
+  hsoAnswered = false;
+  const item = hsoQueue[hsoIdx];
+  const levelLabels = {1:'רמה 1 – בסיסי', 2:'רמה 2 – בינוני', 3:'רמה 3 – מתקדם'};
+  const levelClasses = {1:'lv1', 2:'lv2', 3:'lv3'};
+  const badge = document.getElementById('hso-level-badge');
+  badge.textContent = levelLabels[item.level];
+  badge.className = 'hs-level-badge ' + levelClasses[item.level];
+  document.getElementById('hso-qnum').textContent = hsoIdx+1;
+  document.getElementById('hso-score-c').textContent = hsoCorrect;
+  document.getElementById('hso-score-w').textContent = hsoWrong;
+  document.getElementById('hso-emoji').textContent = item.p;
+  document.getElementById('hso-word').textContent = item.wn;
+  document.getElementById('hso-tiles').style.display = 'none';
+  document.getElementById('hso-tiles').innerHTML = '';
+  document.getElementById('hso-speak').style.display = 'none';
+  document.getElementById('hso-next').style.display = 'none';
+  const fb = document.getElementById('hso-feedback');
+  fb.style.display='none'; fb.textContent='';
+  hsoOpts = getHsoOpts(item.s.length);
+  for (let i=0; i<4; i++) {
+    const btn = document.getElementById('hso-btn-'+i);
+    btn.textContent = hsoOpts[i];
+    btn.className = 'hs-cnt-btn'; btn.disabled = false;
+  }
+}
+
+function checkHebSound(idx) {
+  if (hsoAnswered) return;
+  hsoAnswered = true;
+  const item = hsoQueue[hsoIdx];
+  const correct = item.s.length;
+  for (let i=0; i<4; i++) {
+    const btn = document.getElementById('hso-btn-'+i);
+    btn.disabled = true;
+    if (hsoOpts[i] === correct) btn.classList.add('hs-ok');
+    else if (i === idx) btn.classList.add('hs-no');
+  }
+  const tilesEl = document.getElementById('hso-tiles');
+  tilesEl.innerHTML = item.s.map(s => `<span class="hs-tile" onclick="speakHebPart('${s}')">${s}</span>`).join('');
+  tilesEl.style.display = 'flex';
+  const fb = document.getElementById('hso-feedback');
+  if (hsoOpts[idx] === correct) {
+    hsoCorrect++;
+    fb.style.cssText='display:block;background:#eafaf4;color:#006044;border:1.5px solid #00b894';
+    fb.textContent = `✅ נכון! ${correct} צלילים: ${item.s.join(' – ')}`;
+    playSuccess();
+  } else {
+    hsoWrong++;
+    fb.style.cssText='display:block;background:#fff0f3;color:#c0392b;border:1.5px solid #ff6584';
+    fb.textContent = `❌ "${item.wn}" – ${correct} צלילים: ${item.s.join(' – ')}`;
+    playWrong();
+  }
+  document.getElementById('hso-score-c').textContent = hsoCorrect;
+  document.getElementById('hso-score-w').textContent = hsoWrong;
+  document.getElementById('hso-speak').style.display = 'inline-flex';
+  document.getElementById('hso-next').style.display = 'inline-flex';
+}
+
+function nextHebSound() { hsoIdx++; showHebSoundQ(); }
+
+function speakHebSounds() {
+  if (!window.speechSynthesis || !hsoQueue[hsoIdx]) return;
+  const item = hsoQueue[hsoIdx];
+  speechSynthesis.cancel();
+  function speakNext(i) {
+    if (i >= item.s.length) return;
+    const utt = new SpeechSynthesisUtterance(item.s[i]);
+    utt.lang='he-IL'; utt.rate=0.7; utt.pitch=1.1;
+    utt.onend = () => setTimeout(() => speakNext(i+1), 500);
+    speechSynthesis.speak(utt);
+  }
+  speakNext(0);
+}
+
+// ===================== BACKGROUND MUSIC =====================
+let musicOn = false;
+let musicACtx = null;
+let musicGainNode = null;
+let musicLoopTimer = null;
+
+// Timing (140 BPM)
+const MBPM = 140;
+const ME = 60 / MBPM / 2;   // eighth note (seconds)
+const MQ = ME * 2;           // quarter note
+const MH = ME * 4;           // half note
+
+// Note frequencies
+const MN = {
+  C3:130.81, F3:174.61, G3:196.00, A3:220.00,
+  C4:261.63, D4:293.66, E4:329.63, G4:392.00, A4:440.00,
+  B4:493.88, C5:523.25, D5:587.33, E5:659.25, F5:698.46,
+  G5:783.99, A5:880.00, B5:987.77, C6:1046.50
+};
+
+// Melody — 4 bars, 8 eighth notes each = 32 eighth notes total
+const MUSIC_MELODY = [
+  [MN.C5,ME],[MN.E5,ME],[MN.G5,ME],[MN.C6,ME],[MN.B5,ME],[MN.A5,ME],[MN.G5,ME],[MN.E5,ME],
+  [MN.F5,ME],[MN.E5,ME],[MN.D5,ME],[MN.C5,ME],[MN.D5,ME],[MN.E5,ME],[MN.F5,ME],[MN.G5,ME],
+  [MN.A5,ME],[MN.G5,ME],[MN.A5,ME],[MN.C6,ME],[MN.B5,ME],[MN.A5,ME],[MN.G5,ME],[MN.F5,ME],
+  [MN.E5,MQ],[MN.D5,MQ],[MN.C5,MH],
+];
+
+// Bass — 4 bars, 4 quarter notes each = 16 quarter notes = 32 eighth notes total
+const MUSIC_BASS = [
+  [MN.C3,MQ],[MN.G3,MQ],[MN.A3,MQ],[MN.G3,MQ],
+  [MN.F3,MQ],[MN.C3,MQ],[MN.G3,MQ],[MN.G3,MQ],
+  [MN.C3,MQ],[MN.G3,MQ],[MN.A3,MQ],[MN.G3,MQ],
+  [MN.C3,MQ],[MN.C3,MQ],[MN.G3,MQ],[MN.C3,MQ],
+];
+
+function toggleMusic() {
+  if (!musicOn) startMusic(); else stopMusic();
+}
+
+function startMusic() {
+  musicOn = true;
+  document.getElementById('music-item').classList.add('music-on');
+  document.getElementById('music-note').textContent = '🎶';
+  if (!musicACtx) musicACtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (musicACtx.state === 'suspended') musicACtx.resume();
+  musicGainNode = musicACtx.createGain();
+  musicGainNode.gain.value = 0.28;
+  musicGainNode.connect(musicACtx.destination);
+  scheduleMusicLoop();
+}
+
+function stopMusic() {
+  musicOn = false;
+  document.getElementById('music-item').classList.remove('music-on');
+  document.getElementById('music-note').textContent = '🎵';
+  if (musicLoopTimer) { clearTimeout(musicLoopTimer); musicLoopTimer = null; }
+  if (musicGainNode) {
+    musicGainNode.gain.setValueAtTime(musicGainNode.gain.value, musicACtx.currentTime);
+    musicGainNode.gain.linearRampToValueAtTime(0, musicACtx.currentTime + 0.4);
+    setTimeout(() => { if (musicGainNode) { musicGainNode.disconnect(); musicGainNode = null; } }, 500);
+  }
+}
+
+function playTone(freq, startT, dur, type, vol) {
+  if (!musicGainNode) return;
+  const osc = musicACtx.createOscillator();
+  const g   = musicACtx.createGain();
+  osc.connect(g); g.connect(musicGainNode);
+  osc.type = type;
+  osc.frequency.value = freq;
+  const rel = Math.min(dur * 0.18, 0.07);
+  g.gain.setValueAtTime(0, startT);
+  g.gain.linearRampToValueAtTime(vol, startT + 0.01);
+  g.gain.setValueAtTime(vol, startT + dur - rel);
+  g.gain.linearRampToValueAtTime(0, startT + dur);
+  osc.start(startT);
+  osc.stop(startT + dur + 0.01);
+}
+
+function playKick(t) {
+  if (!musicGainNode) return;
+  const osc = musicACtx.createOscillator();
+  const g   = musicACtx.createGain();
+  osc.connect(g); g.connect(musicGainNode);
+  osc.frequency.setValueAtTime(110, t);
+  osc.frequency.exponentialRampToValueAtTime(30, t + 0.22);
+  g.gain.setValueAtTime(0.45, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+  osc.start(t); osc.stop(t + 0.26);
+}
+
+function playHihat(t) {
+  if (!musicGainNode) return;
+  const buf  = musicACtx.createBuffer(1, Math.floor(musicACtx.sampleRate * 0.04), musicACtx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+  const src = musicACtx.createBufferSource();
+  src.buffer = buf;
+  const filt = musicACtx.createBiquadFilter();
+  filt.type = 'highpass'; filt.frequency.value = 9000;
+  const g = musicACtx.createGain();
+  src.connect(filt); filt.connect(g); g.connect(musicGainNode);
+  g.gain.setValueAtTime(0.055, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+  src.start(t); src.stop(t + 0.045);
+}
+
+function scheduleMusicLoop() {
+  if (!musicOn || !musicGainNode) return;
+  const t0 = musicACtx.currentTime + 0.05;
+
+  // Melody (square wave — chiptune)
+  let t = t0;
+  for (const [freq, dur] of MUSIC_MELODY) {
+    playTone(freq, t, dur * 0.88, 'square', 0.1);
+    t += dur;
+  }
+
+  // Bass (triangle — warm)
+  t = t0;
+  for (const [freq, dur] of MUSIC_BASS) {
+    playTone(freq, t, dur * 0.75, 'triangle', 0.09);
+    t += dur;
+  }
+
+  // Percussion: kick on beats 1&3, hihat every quarter note
+  for (let q = 0; q < 16; q++) {
+    const qt = t0 + q * MQ;
+    if (q % 2 === 0) playKick(qt);
+    playHihat(qt);
+    playHihat(qt + ME); // offbeat eighth hihat
+  }
+
+  const loopDur = MUSIC_MELODY.reduce((s, [, d]) => s + d, 0);
+  musicLoopTimer = setTimeout(scheduleMusicLoop, (loopDur - 0.15) * 1000);
 }
 
 // ===================== FUN MODE =====================
 let funModeOn = false;
 let funBgInterval = null;
+
+function toggleOptionsMenu() {
+  const open = document.getElementById('options-dropdown').classList.toggle('open');
+  document.getElementById('options-trigger').classList.toggle('open');
+  document.getElementById('options-arrow').style.transform = open ? 'rotate(180deg)' : '';
+}
+function closeOptionsMenu() {
+  document.getElementById('options-dropdown').classList.remove('open');
+  document.getElementById('options-trigger').classList.remove('open');
+  document.getElementById('options-arrow').style.transform = '';
+}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('options-menu');
+  if (menu && !menu.contains(e.target)) closeOptionsMenu();
+});
 
 function toggleTheme() {
   funModeOn = !funModeOn;
@@ -2256,6 +3583,12 @@ function clearFunBg() {
 }
 
 // ===================== INIT =====================
+(function() { funModeOn = true; document.body.classList.add('fun-mode'); initFunBg(); })();
+
+// ---- Bio popup ----
+function openBio()  { document.getElementById('bio-overlay').classList.add('open'); }
+function closeBio() { document.getElementById('bio-overlay').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBio(); });
 </script>
 </body>
 </html>
