@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learning is Fun - לומדים מתמטיקה!</title>
+  <title>Learning is Fun - לומדים עם אבון</title>
   <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -349,6 +349,33 @@
     .stars { font-size: 2.5rem; margin-bottom: 12px; }
 
     /* ---------- DIFFICULTY PICKER ---------- */
+    /* ---------- SUBJECT PICKER ---------- */
+    .subject-label {
+      font-size: 1rem; font-weight: 600; color: #555;
+      margin: 20px 0 10px;
+    }
+    .subject-options {
+      display: flex; gap: 14px; justify-content: center;
+      margin-bottom: 10px;
+    }
+    .subject-btn {
+      flex: 1; max-width: 180px;
+      padding: 18px 10px;
+      border: 3px solid #e0e0e0;
+      border-radius: 18px;
+      background: #fafafa;
+      cursor: pointer;
+      font-family: 'Rubik', sans-serif;
+      font-size: 0.95rem; font-weight: 600; color: #555;
+      transition: all 0.2s;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .subject-btn .subj-icon { font-size: 2.2rem; }
+    .subject-btn .subj-name { font-size: 1.05rem; font-weight: 700; }
+    .subject-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+    .subject-btn.selected-math   { border-color: #6c63ff; background: #f5f5ff; color: #6c63ff; box-shadow: 0 4px 16px rgba(108,99,255,0.3); }
+    .subject-btn.selected-english { border-color: #43e97b; background: #f0fff6; color: #1a7a4a; box-shadow: 0 4px 16px rgba(67,233,123,0.3); }
+
     .difficulty-label {
       font-size: 1rem; font-weight: 600; color: #555;
       margin: 20px 0 10px;
@@ -420,6 +447,421 @@
       font-weight: 500;
     }
 
+    /* ---------- ENGLISH MENU SCREEN ---------- */
+    #english-menu-screen { padding-top: 72px; }
+    .english-menu-title {
+      font-family: 'Secular One', sans-serif;
+      font-size: 1.6rem; color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .english-menu-sub {
+      color: #888; font-size: 0.95rem; margin-bottom: 28px;
+    }
+    .english-options {
+      display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px;
+    }
+    .eng-opt-btn {
+      width: 100%; padding: 18px 20px;
+      border: 3px solid #e0e0e0; border-radius: 18px;
+      background: #fafafa; cursor: pointer;
+      font-family: 'Rubik', sans-serif; font-size: 1.05rem; font-weight: 700;
+      color: #555; display: flex; align-items: center; gap: 14px;
+      transition: all 0.2s; text-align: right; direction: rtl;
+    }
+    .eng-opt-btn .opt-icon { font-size: 2rem; flex-shrink: 0; }
+    .eng-opt-btn .opt-text { display: flex; flex-direction: column; align-items: flex-end; }
+    .eng-opt-btn .opt-name { font-size: 1.1rem; font-weight: 800; }
+    .eng-opt-btn .opt-desc { font-size: 0.78rem; font-weight: 400; color: #aaa; margin-top: 2px; }
+    .eng-opt-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .eng-opt-btn.abc    { border-color: #6c63ff; background: #f5f5ff; color: #6c63ff; }
+    .eng-opt-btn.abc .opt-desc { color: #a78bfa; }
+    .eng-opt-btn.soon   { opacity: 0.55; cursor: default; }
+    .eng-opt-btn.soon:hover { transform: none; box-shadow: none; }
+
+    /* ---------- ABC SCREEN ---------- */
+    #abc-screen { padding-top: 72px; }
+    .abc-progress {
+      font-size: 0.9rem; color: #aaa; margin-bottom: 8px;
+    }
+    .abc-letter-card {
+      background: linear-gradient(135deg, #6c63ff, #a78bfa);
+      border-radius: 28px;
+      padding: 32px 20px;
+      margin: 16px 0 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      box-shadow: 0 8px 32px rgba(108,99,255,0.35);
+    }
+    .abc-capital {
+      font-family: 'Secular One', sans-serif;
+      font-size: 7rem; color: #fff; line-height: 1;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .abc-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); border-radius: 2px; }
+    .abc-lower {
+      font-family: 'Secular One', sans-serif;
+      font-size: 5rem; color: rgba(255,255,255,0.85); line-height: 1;
+    }
+    .abc-speak-btn {
+      margin-top: 4px;
+      background: rgba(255,255,255,0.22);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50px; padding: 10px 24px;
+      color: #fff; font-family: 'Rubik', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .abc-speak-btn:hover { background: rgba(255,255,255,0.35); }
+    .abc-nav { display: flex; gap: 14px; justify-content: center; margin-bottom: 16px; }
+    .btn-abc-nav {
+      flex: 1; max-width: 140px;
+      padding: 14px; border: none; border-radius: 50px;
+      font-family: 'Rubik', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-abc-nav:active { transform: scale(0.95); }
+    .btn-prev { background: #f0f0ff; color: var(--primary); }
+    .btn-next { background: linear-gradient(135deg, var(--primary), #a78bfa); color: #fff; box-shadow: 0 4px 16px rgba(108,99,255,0.35); }
+    .btn-prev:disabled { opacity: 0.3; cursor: default; }
+    .btn-next:disabled { opacity: 0.3; cursor: default; }
+    .btn-back-eng {
+      background: none; border: 2px solid #ddd; border-radius: 50px;
+      padding: 10px 24px; font-family: 'Rubik', sans-serif;
+      font-size: 0.9rem; font-weight: 600; color: #aaa; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-back-eng:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ---------- WORD PICTURE SCREEN ---------- */
+    #word-picture-screen { padding-top: 72px; }
+    .wp-emoji-card {
+      background: linear-gradient(135deg, #ff6584, #ff8e53);
+      border-radius: 24px; padding: 22px 20px 16px;
+      margin: 12px 0 16px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      box-shadow: 0 8px 28px rgba(255,101,132,0.3);
+    }
+    .wp-emoji { font-size: 6.5rem; line-height: 1; }
+    .wp-opts { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+    .wp-opt {
+      width: 100%; padding: 15px 20px;
+      border: 3px solid #e0e0e0; border-radius: 16px;
+      background: #fafafa; cursor: pointer;
+      font-family: 'Rubik', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--text); text-align: center; transition: all 0.15s;
+      letter-spacing: 0.5px;
+    }
+    .wp-opt:not(:disabled):hover { border-color: var(--primary); background: #f5f5ff; }
+    .wp-opt.wp-ok { border-color: #43e97b; background: #f0fff6; color: #1a7a4a; }
+    .wp-opt.wp-no { border-color: #ff6584; background: #fff0f3; color: #c0392b; }
+    .wp-feedback {
+      padding: 10px 14px; border-radius: 12px;
+      font-size: 0.95rem; text-align: center; direction: rtl;
+      display: none; margin-bottom: 4px;
+    }
+
+    /* ---------- MISSING WORD ---------- */
+    #missing-word-screen .card { max-width: 560px; }
+    .mw-pic {
+      font-size: 4rem; text-align: center; margin: 4px 0 8px; line-height: 1;
+    }
+    .mw-sentence {
+      font-size: 1.35rem; line-height: 1.9; text-align: center;
+      direction: ltr; color: #2d2d2d; margin: 6px 0 14px;
+      min-height: 60px;
+    }
+    .mw-blank {
+      display: inline-block;
+      border-bottom: 3px solid #667eea;
+      min-width: 90px; color: #667eea;
+      font-weight: 700; letter-spacing: 2px;
+      padding: 0 6px;
+    }
+    .mw-speak-sentence {
+      background: none; border: 2px solid #a8b4f8;
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 0.9rem; cursor: pointer; color: #667eea;
+      margin-bottom: 14px; display: block; margin-left: auto; margin-right: auto;
+    }
+    .mw-speak-sentence:hover { background: #eef0ff; }
+    .mw-opts { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 12px; }
+    .mw-opt-row {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mw-opt {
+      flex: 1; padding: 12px 14px; border-radius: 14px;
+      border: 2.5px solid #b2bec3; background: #fff;
+      font-size: 1.05rem; font-family: inherit; cursor: pointer;
+      transition: all 0.18s; text-align: left; direction: ltr;
+    }
+    .mw-opt:hover:not(:disabled) { border-color: #667eea; background: #eef0ff; }
+    .mw-speak-word {
+      background: none; border: 2px solid #b2bec3; border-radius: 50%;
+      width: 34px; height: 34px; font-size: 1rem; cursor: pointer;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .mw-speak-word:hover { background: #eef0ff; border-color: #667eea; }
+    .mw-opt.mw-ok { border-color: #00b894; background: #eafaf4; color: #006044; }
+    .mw-opt.mw-no { border-color: #ff6584; background: #fff0f3; color: #c0392b; }
+    .mw-feedback {
+      padding: 10px 14px; border-radius: 12px;
+      font-size: 0.95rem; text-align: center; direction: rtl;
+      display: none; margin-bottom: 4px;
+    }
+    .mw-score-strip { display: flex; justify-content: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+
+    /* ====================================================
+       FUN MODE – FUTURISTIC DESIGN
+       ==================================================== */
+
+    /* Toggle button */
+    #theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 9999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 18px;
+      background: rgba(255,255,255,0.85);
+      border: 2px solid rgba(108,99,255,0.25);
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Rubik', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      color: #555;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    #theme-toggle:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(108,99,255,0.25); }
+    .toggle-switch {
+      width: 36px; height: 20px;
+      background: #ccc;
+      border-radius: 20px;
+      position: relative;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    .toggle-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 14px; height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      transition: left 0.3s, box-shadow 0.3s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    }
+    body.fun-mode #theme-toggle {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(167,139,250,0.4);
+      color: #e2d9f3;
+      box-shadow: 0 0 20px rgba(168,85,247,0.4), 0 4px 16px rgba(0,0,0,0.4);
+    }
+    body.fun-mode .toggle-switch { background: linear-gradient(135deg,#7c3aed,#db2777); }
+    body.fun-mode .toggle-knob { left: 19px; box-shadow: 0 0 8px rgba(219,39,119,0.6); }
+
+    /* Fun background container */
+    #fun-bg {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    body.fun-mode #fun-bg { display: block; }
+
+    /* Body override */
+    body.fun-mode {
+      background: linear-gradient(135deg, #08001e 0%, #1a0040 35%, #001835 65%, #08001e 100%) !important;
+    }
+    body.fun-mode::before, body.fun-mode::after { display: none; }
+    body.fun-mode #bg-symbols { display: none; }
+    body.fun-mode .screen { z-index: 2; }
+
+    /* Card – glassmorphism */
+    body.fun-mode .card {
+      background: rgba(255,255,255,0.06) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+      border: 1px solid rgba(255,255,255,0.14) !important;
+      box-shadow: 0 8px 60px rgba(124,58,237,0.25),
+                  0 0 0 1px rgba(255,255,255,0.06),
+                  inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    }
+
+    /* Headings & text */
+    body.fun-mode h1 {
+      background: linear-gradient(135deg, #f9a8d4 0%, #c084fc 40%, #60a5fa 80%, #34d399 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fm-hue 6s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(192,132,252,0.6));
+    }
+    @keyframes fm-hue { 0%{filter:hue-rotate(0deg) drop-shadow(0 0 12px rgba(192,132,252,0.6))} 100%{filter:hue-rotate(360deg) drop-shadow(0 0 12px rgba(192,132,252,0.6))} }
+
+    body.fun-mode p                 { color: rgba(255,255,255,0.7) !important; }
+    body.fun-mode .subject-label,
+    body.fun-mode .difficulty-label,
+    body.fun-mode .english-menu-title,
+    body.fun-mode .english-menu-sub { color: rgba(255,255,255,0.9) !important; }
+    body.fun-mode .question-text    { color: #fff !important; text-shadow: 0 0 24px rgba(167,139,250,0.9); }
+    body.fun-mode .score-chip       { background: rgba(255,255,255,0.08) !important; color: rgba(255,255,255,0.9) !important; border-color: rgba(255,255,255,0.12) !important; }
+    body.fun-mode .level-badge      { background: rgba(124,58,237,0.35) !important; border-color: rgba(167,139,250,0.4) !important; color: #c4b5fd !important; }
+    body.fun-mode .question-number  { color: rgba(255,255,255,0.55) !important; }
+    body.fun-mode .summary-title    { color: #fff !important; }
+    body.fun-mode .summary-message  { color: rgba(255,255,255,0.8) !important; }
+    body.fun-mode .feedback-msg     { color: rgba(255,255,255,0.9) !important; }
+    body.fun-mode .wp-feedback,
+    body.fun-mode .mw-feedback      { color: rgba(255,255,255,0.9) !important; }
+    body.fun-mode .abc-progress     { color: rgba(255,255,255,0.75) !important; }
+
+    /* Buttons */
+    body.fun-mode .btn-primary {
+      background: linear-gradient(135deg,#7c3aed,#db2777) !important;
+      box-shadow: 0 0 22px rgba(124,58,237,0.55), 0 4px 16px rgba(0,0,0,0.35) !important;
+      animation: fm-glow-btn 2.5s ease-in-out infinite;
+    }
+    @keyframes fm-glow-btn {
+      0%,100% { box-shadow: 0 0 22px rgba(124,58,237,0.55), 0 4px 16px rgba(0,0,0,0.35); }
+      50%     { box-shadow: 0 0 38px rgba(219,39,119,0.75), 0 4px 20px rgba(0,0,0,0.4); }
+    }
+    body.fun-mode .btn-primary:hover { transform: translateY(-4px) scale(1.03) !important; }
+    body.fun-mode .btn-help   { background: linear-gradient(135deg,#0891b2,#0d9488) !important; box-shadow: 0 0 18px rgba(8,145,178,0.45) !important; color:#fff !important; }
+    body.fun-mode .btn-next   { background: linear-gradient(135deg,#059669,#10b981) !important; box-shadow: 0 0 18px rgba(5,150,105,0.45) !important; }
+    body.fun-mode .btn-finish { background: linear-gradient(135deg,#d97706,#f59e0b) !important; box-shadow: 0 0 18px rgba(217,119,6,0.45) !important; }
+    body.fun-mode .btn-restart{ background: linear-gradient(135deg,#7c3aed,#db2777) !important; box-shadow: 0 0 22px rgba(124,58,237,0.5) !important; }
+    body.fun-mode .btn-abc-nav{ background: rgba(255,255,255,0.1) !important; color:#fff !important; border-color:rgba(255,255,255,0.2) !important; }
+    body.fun-mode .btn-abc-nav:hover { background: rgba(124,58,237,0.4) !important; box-shadow: 0 0 18px rgba(124,58,237,0.5) !important; }
+    body.fun-mode .btn-back-eng { color: rgba(255,255,255,0.6) !important; border-color: rgba(255,255,255,0.2) !important; }
+    body.fun-mode .btn-back-eng:hover { background: rgba(255,255,255,0.1) !important; color:#fff !important; }
+    body.fun-mode .mw-speak-sentence { color: #a78bfa !important; border-color: rgba(167,139,250,0.4) !important; }
+    body.fun-mode .mw-speak-sentence:hover { background: rgba(167,139,250,0.15) !important; }
+    body.fun-mode .mw-speak-word { border-color: rgba(255,255,255,0.2) !important; color:#fff !important; }
+    body.fun-mode .abc-speak-btn { background: rgba(124,58,237,0.35) !important; border-color:rgba(167,139,250,0.4) !important; color:#fff !important; }
+
+    /* Inputs */
+    body.fun-mode #name-input,
+    body.fun-mode .answer-input {
+      background: rgba(255,255,255,0.07) !important;
+      border-color: rgba(167,139,250,0.4) !important;
+      color: #fff !important;
+    }
+    body.fun-mode #name-input:focus,
+    body.fun-mode .answer-input:focus {
+      border-color: #a78bfa !important;
+      box-shadow: 0 0 24px rgba(167,139,250,0.4) !important;
+      background: rgba(255,255,255,0.11) !important;
+    }
+    body.fun-mode #name-input::placeholder,
+    body.fun-mode .answer-input::placeholder { color: rgba(255,255,255,0.35) !important; }
+
+    /* Subject & difficulty buttons */
+    body.fun-mode .subject-btn {
+      background: rgba(255,255,255,0.05) !important;
+      border: 2px solid rgba(255,255,255,0.14) !important;
+      color: #fff !important;
+    }
+    body.fun-mode .subject-btn:hover  { background: rgba(255,255,255,0.11) !important; transform: translateY(-5px) scale(1.04) !important; box-shadow: 0 0 28px rgba(167,139,250,0.5) !important; }
+    body.fun-mode .subject-btn.selected-math    { background: linear-gradient(135deg,rgba(37,99,235,0.35),rgba(124,58,237,0.35)) !important; border-color:#60a5fa !important; box-shadow:0 0 28px rgba(96,165,250,0.5) !important; }
+    body.fun-mode .subject-btn.selected-english { background: linear-gradient(135deg,rgba(219,39,119,0.35),rgba(251,146,60,0.35)) !important; border-color:#f9a8d4 !important; box-shadow:0 0 28px rgba(249,168,212,0.5) !important; }
+    body.fun-mode .subj-name { color: #fff !important; }
+    body.fun-mode .subj-icon { filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); }
+
+    body.fun-mode .diff-btn { background: rgba(255,255,255,0.05) !important; border: 2px solid rgba(255,255,255,0.14) !important; color: rgba(255,255,255,0.88) !important; }
+    body.fun-mode .diff-btn:hover { transform: translateY(-4px) !important; box-shadow: 0 0 24px rgba(167,139,250,0.4) !important; }
+    body.fun-mode .diff-btn.selected-easy   { background: linear-gradient(135deg,rgba(5,150,105,0.4),rgba(16,185,129,0.3)) !important; border-color:#34d399 !important; box-shadow:0 0 22px rgba(52,211,153,0.45) !important; }
+    body.fun-mode .diff-btn.selected-medium { background: linear-gradient(135deg,rgba(217,119,6,0.4),rgba(245,158,11,0.3)) !important; border-color:#fbbf24 !important; box-shadow:0 0 22px rgba(251,191,36,0.45) !important; }
+    body.fun-mode .diff-btn.selected-hard   { background: linear-gradient(135deg,rgba(220,38,38,0.4),rgba(239,68,68,0.3)) !important; border-color:#f87171 !important; box-shadow:0 0 22px rgba(248,113,113,0.45) !important; }
+    body.fun-mode .diff-name { color: #fff !important; }
+    body.fun-mode .diff-desc { color: rgba(255,255,255,0.7) !important; }
+
+    /* English menu options */
+    body.fun-mode .eng-opt-btn { background: rgba(255,255,255,0.05) !important; border: 2px solid rgba(255,255,255,0.14) !important; color: #fff !important; }
+    body.fun-mode .eng-opt-btn:hover { background: rgba(255,255,255,0.11) !important; transform: translateY(-5px) scale(1.03) !important; box-shadow: 0 0 30px rgba(167,139,250,0.5) !important; }
+    body.fun-mode .opt-name { color: #fff !important; }
+    body.fun-mode .opt-desc { color: rgba(255,255,255,0.65) !important; }
+
+    /* Word picture */
+    body.fun-mode .wp-emoji-card { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.14) !important; }
+    body.fun-mode .wp-opt { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.18) !important; color: #fff !important; }
+    body.fun-mode .wp-opt:hover:not(:disabled) { border-color: #a78bfa !important; background: rgba(167,139,250,0.15) !important; }
+    body.fun-mode .wp-opt.wp-ok { background: rgba(5,150,105,0.3) !important; border-color:#34d399 !important; color:#6ee7b7 !important; }
+    body.fun-mode .wp-opt.wp-no { background: rgba(220,38,38,0.25) !important; border-color:#f87171 !important; color:#fca5a5 !important; }
+    body.fun-mode .wp-feedback[style*="background:#eafaf4"] { background: rgba(5,150,105,0.2) !important; color:#6ee7b7 !important; border-color:#34d399 !important; }
+    body.fun-mode .wp-feedback[style*="background:#fff0f3"] { background: rgba(220,38,38,0.2) !important; color:#fca5a5 !important; border-color:#f87171 !important; }
+
+    /* ABC */
+    body.fun-mode .abc-letter-card { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.14) !important; }
+    body.fun-mode .abc-capital { color: #fff !important; text-shadow: 0 0 30px rgba(167,139,250,0.8); }
+    body.fun-mode .abc-lower   { color: rgba(255,255,255,0.75) !important; }
+    body.fun-mode .abc-divider { background: rgba(255,255,255,0.15) !important; }
+
+    /* Missing word */
+    body.fun-mode .mw-sentence { color: #fff !important; }
+    body.fun-mode .mw-blank    { border-color: #a78bfa !important; color: #a78bfa !important; }
+    body.fun-mode .mw-opt { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.18) !important; color: #fff !important; }
+    body.fun-mode .mw-opt:hover:not(:disabled) { border-color: #a78bfa !important; background: rgba(167,139,250,0.15) !important; }
+    body.fun-mode .mw-opt.mw-ok { background: rgba(5,150,105,0.3) !important; border-color:#34d399 !important; color:#6ee7b7 !important; }
+    body.fun-mode .mw-opt.mw-no { background: rgba(220,38,38,0.25) !important; border-color:#f87171 !important; color:#fca5a5 !important; }
+
+    /* Summary */
+    body.fun-mode .summary-box { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.14) !important; }
+    body.fun-mode .summary-box .big { color: #fff !important; }
+    body.fun-mode .summary-box .lbl { color: rgba(255,255,255,0.65) !important; }
+    body.fun-mode .stars { filter: drop-shadow(0 0 8px rgba(249,212,35,0.7)); }
+
+    /* Progress bar */
+    body.fun-mode .progress-bar-fill { background: linear-gradient(90deg,#7c3aed,#db2777,#f59e0b) !important; box-shadow: 0 0 12px rgba(124,58,237,0.6) !important; }
+    body.fun-mode .progress-bar-wrap { background: rgba(255,255,255,0.08) !important; }
+
+    /* Explanation box */
+    body.fun-mode .expl-box { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.14) !important; color: rgba(255,255,255,0.88) !important; }
+
+    /* Greeting banner */
+    body.fun-mode #greeting-banner { background: linear-gradient(135deg,rgba(124,58,237,0.9),rgba(219,39,119,0.9)) !important; backdrop-filter:blur(12px) !important; box-shadow: 0 4px 30px rgba(124,58,237,0.5) !important; }
+
+    /* Footer */
+    body.fun-mode #footer { color: rgba(255,255,255,0.3) !important; }
+
+    /* Fun BG elements */
+    .fun-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      animation: fm-orb ease-in-out infinite alternate;
+    }
+    @keyframes fm-orb {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(50px,40px) scale(1.15); }
+    }
+    .fun-star {
+      position: absolute; border-radius: 50%; background: #fff;
+      animation: fm-twinkle ease-in-out infinite;
+    }
+    @keyframes fm-twinkle {
+      0%,100% { opacity:0.08; transform:scale(0.7); }
+      50%     { opacity:1;    transform:scale(1.3); }
+    }
+    .fun-float {
+      position: absolute; bottom: -10%;
+      pointer-events: none; user-select: none;
+      animation: fm-drift linear infinite;
+    }
+    @keyframes fm-drift {
+      0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity:0; }
+      8%   { opacity:0.7; }
+      92%  { opacity:0.5; }
+      100% { transform: translateY(-115vh) rotate(400deg) scale(1.1); opacity:0; }
+    }
+    .fun-shoot {
+      position: absolute;
+      width: 120px; height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0));
+      border-radius: 2px;
+      animation: fm-shoot linear forwards;
+      pointer-events: none;
+    }
+    @keyframes fm-shoot {
+      0%   { transform: translateX(0) translateY(0); opacity:1; }
+      100% { transform: translateX(-400px) translateY(200px); opacity:0; }
+    }
+
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 480px) {
       .card { padding: 28px 20px; }
@@ -430,6 +872,16 @@
   </style>
 </head>
 <body>
+
+<!-- Fun mode toggle -->
+<button id="theme-toggle" onclick="toggleTheme()">
+  <span>✨</span>
+  <span>מצב כיף</span>
+  <div class="toggle-switch"><div class="toggle-knob"></div></div>
+</button>
+
+<!-- Fun mode animated background -->
+<div id="fun-bg"></div>
 
 <!-- Animated background symbols -->
 <div id="bg-symbols"></div>
@@ -444,32 +896,45 @@
 <div class="screen active" id="welcome-screen">
   <div class="card">
     <span class="mascot">🦁</span>
-    <h1>לומדים מתמטיקה!</h1>
-    <p>ברוכים הבאים לאתר המתמטיקה הכי כיף בעולם!</p>
+    <h1>לומדים עם אבון</h1>
+    <p>לומדים בכיף עם אבון</p>
     <div class="input-group">
       <input type="text" id="name-input" placeholder="מה השם שלך?" maxlength="20" autocomplete="off" />
     </div>
 
-    <div class="difficulty-label">בחר רמת קושי:</div>
-    <div class="diff-options">
-      <button class="diff-btn selected-easy" id="diff-easy" onclick="selectDiff('easy')">
-        <span class="diff-icon">🌱</span>
-        <span class="diff-name">קל</span>
-        <span class="diff-desc">חיבור וחיסור בלבד</span>
+    <div class="subject-label">מה תרצה לתרגל?</div>
+    <div class="subject-options">
+      <button class="subject-btn" id="subj-math" onclick="selectSubject('math')">
+        <span class="subj-icon">🔢</span>
+        <span class="subj-name">מתמטיקה</span>
       </button>
-      <button class="diff-btn" id="diff-medium" onclick="selectDiff('medium')">
-        <span class="diff-icon">⚡</span>
-        <span class="diff-name">בינוני</span>
-        <span class="diff-desc">כפל וחילוק – ספרות בודדות ועשרות</span>
-      </button>
-      <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">
-        <span class="diff-icon">🔥</span>
-        <span class="diff-name">קשה</span>
-        <span class="diff-desc">כפל עם 3–4 ספרות</span>
+      <button class="subject-btn" id="subj-english" onclick="selectSubject('english')">
+        <span class="subj-icon">🔤</span>
+        <span class="subj-name">אנגלית</span>
       </button>
     </div>
 
-    <button class="btn btn-primary" onclick="startGame()">בואו נתחיל! 🚀</button>
+    <div id="diff-section" style="display:none">
+      <div class="difficulty-label">בחר רמת קושי:</div>
+      <div class="diff-options">
+        <button class="diff-btn selected-easy" id="diff-easy" onclick="selectDiff('easy')">
+          <span class="diff-icon">🌱</span>
+          <span class="diff-name">קל</span>
+          <span class="diff-desc">חיבור וחיסור בלבד</span>
+        </button>
+        <button class="diff-btn" id="diff-medium" onclick="selectDiff('medium')">
+          <span class="diff-icon">⚡</span>
+          <span class="diff-name">בינוני</span>
+          <span class="diff-desc">כפל וחילוק – ספרות בודדות ועשרות</span>
+        </button>
+        <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">
+          <span class="diff-icon">🔥</span>
+          <span class="diff-name">קשה</span>
+          <span class="diff-desc">כפל עם 3–4 ספרות</span>
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -540,12 +1005,133 @@
   </div>
 </div>
 
+<!-- ======== ENGLISH MENU SCREEN ======== -->
+<div class="screen" id="english-menu-screen">
+  <div class="card">
+    <span style="font-size:3.5rem">🔤</span>
+    <div class="english-menu-title">לומדים אנגלית!</div>
+    <div class="english-menu-sub">בחר מה תרצה לתרגל</div>
+    <div class="english-options">
+      <button class="eng-opt-btn abc" onclick="startABC()">
+        <span class="opt-icon">🔡</span>
+        <span class="opt-text">
+          <span class="opt-name">ABC – האלפבית</span>
+          <span class="opt-desc">לומדים את כל האותיות באנגלית</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#26c6da;background:#e0f7fa;color:#00838f" onclick="startWordPicture()">
+        <span class="opt-icon">🖼️</span>
+        <span class="opt-text">
+          <span class="opt-name">מה המילה?</span>
+          <span class="opt-desc">ראה תמונה ובחר את המילה הנכונה</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#a29bfe;background:#f3f0ff;color:#4a3ab5" onclick="startMissingWord()">
+        <span class="opt-icon">✏️</span>
+        <span class="opt-text">
+          <span class="opt-name">השלם את החסר</span>
+          <span class="opt-desc">השלם את המילה החסרה בביטוי</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== WORD PICTURE SCREEN ======== -->
+<div class="screen" id="word-picture-screen">
+  <div class="card">
+    <div class="score-strip">
+      <div class="score-chip">✅ <span id="wp-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="wp-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="wp-qnum">1</span> / 200</div>
+    </div>
+
+    <div class="wp-emoji-card">
+      <div class="wp-emoji" id="wp-emoji">🐶</div>
+      <button class="abc-speak-btn" onclick="speakCurrentWP()">🔊 שמע שוב</button>
+    </div>
+
+    <div class="wp-opts">
+      <button class="wp-opt" onclick="checkWP(this)"></button>
+      <button class="wp-opt" onclick="checkWP(this)"></button>
+      <button class="wp-opt" onclick="checkWP(this)"></button>
+    </div>
+
+    <div class="wp-feedback" id="wp-feedback"></div>
+
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="wp-next" onclick="nextWP()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('english-menu-screen')" style="margin-top:12px">← חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- ======== ABC SCREEN ======== -->
+<div class="screen" id="abc-screen">
+  <div class="card">
+    <div class="abc-progress">אות <span id="abc-num">1</span> מתוך 26</div>
+
+    <div class="abc-letter-card">
+      <div class="abc-capital" id="abc-capital">A</div>
+      <div class="abc-divider"></div>
+      <div class="abc-lower" id="abc-lower">a</div>
+      <button class="abc-speak-btn" onclick="speakLetter()">🔊 שמע שוב</button>
+    </div>
+
+    <div class="abc-nav">
+      <button class="btn-abc-nav btn-prev" id="abc-prev" onclick="prevLetter()">◀ הקודם</button>
+      <button class="btn-abc-nav btn-next" id="abc-next" onclick="nextLetter()">הבא ▶</button>
+    </div>
+
+    <button class="btn-back-eng" onclick="showScreen('english-menu-screen')">← חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- ======== MISSING WORD SCREEN ======== -->
+<div class="screen" id="missing-word-screen">
+  <div class="card">
+    <div class="mw-score-strip">
+      <div class="score-chip">✅ <span id="mw-score-c">0</span></div>
+      <div class="score-chip">❌ <span id="mw-score-w">0</span></div>
+      <div class="score-chip">📝 <span id="mw-qnum">1</span> / <span id="mw-qtotal">80</span></div>
+    </div>
+
+    <div class="mw-pic" id="mw-pic"></div>
+    <div class="mw-sentence" id="mw-sentence"></div>
+    <button class="mw-speak-sentence" onclick="speakMWSentence()">🔊 שמע את המשפט</button>
+
+    <div class="mw-opts" id="mw-opts">
+      <div class="mw-opt-row">
+        <button class="mw-opt" id="mw-opt-0" onclick="checkMW(0)"></button>
+        <button class="mw-speak-word" onclick="speakEng(document.getElementById('mw-opt-0').textContent)">🔊</button>
+      </div>
+      <div class="mw-opt-row">
+        <button class="mw-opt" id="mw-opt-1" onclick="checkMW(1)"></button>
+        <button class="mw-speak-word" onclick="speakEng(document.getElementById('mw-opt-1').textContent)">🔊</button>
+      </div>
+      <div class="mw-opt-row">
+        <button class="mw-opt" id="mw-opt-2" onclick="checkMW(2)"></button>
+        <button class="mw-speak-word" onclick="speakEng(document.getElementById('mw-opt-2').textContent)">🔊</button>
+      </div>
+    </div>
+
+    <div class="mw-feedback" id="mw-feedback"></div>
+
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn btn-next" id="mw-next" onclick="nextMW()" style="display:none">הבא ▶</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('english-menu-screen')" style="margin-top:12px">← חזור לתפריט</button>
+  </div>
+</div>
+
 <!-- Footer -->
 <div id="footer">Created by Assaf HS</div>
 
 <script>
 // ===================== STATE =====================
 let playerName = '';
+let selectedSubject = '';
 let selectedDiff = 'easy';
 let currentQ = null;
 let questionCount = 0;
@@ -918,32 +1504,46 @@ function buildDivHTML(a, b, answer) {
 }
 
 // ===================== GAME FLOW =====================
+function selectSubject(subj) {
+  selectedSubject = subj;
+  ['math','english'].forEach(s => {
+    const btn = document.getElementById('subj-' + s);
+    btn.className = 'subject-btn' + (s === subj ? ' selected-' + s : '');
+  });
+  if (subj === 'english') {
+    startGame();
+  } else {
+    document.getElementById('diff-section').style.display = '';
+  }
+}
+
 function selectDiff(diff) {
   selectedDiff = diff;
   ['easy','medium','hard'].forEach(d => {
     const btn = document.getElementById('diff-' + d);
     btn.className = 'diff-btn' + (d === diff ? ' selected-' + d : '');
   });
+  startGame();
 }
 
 function startGame() {
-  const input = document.getElementById('name-input').value.trim();
-  if (!input) {
-    document.getElementById('name-input').focus();
-    document.getElementById('name-input').style.borderColor = '#ff6584';
-    setTimeout(()=>document.getElementById('name-input').style.borderColor='',1200);
-    return;
-  }
-  playerName = input;
+  playerName = document.getElementById('name-input').value.trim();
 
-  // Show greeting banner
   const banner = document.getElementById('greeting-banner');
-  banner.textContent = `שלום ${playerName}! 👋 בהצלחה!`;
-  banner.classList.add('show');
+  if (playerName) {
+    banner.textContent = `שלום ${playerName}! 👋 בהצלחה!`;
+    banner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+  }
 
-  showScreen('question-screen');
-  questionCount = 0; correctCount = 0; wrongCount = 0;
-  loadQuestion();
+  if (selectedSubject === 'english') {
+    showScreen('english-menu-screen');
+  } else {
+    showScreen('question-screen');
+    questionCount = 0; correctCount = 0; wrongCount = 0;
+    loadQuestion();
+  }
 }
 
 function showScreen(id) {
@@ -1014,10 +1614,11 @@ function checkAnswer() {
     icon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     icon.style.display = 'inline';
 
+    const n = playerName ? playerName + ' ' : '';
     const msgs = [
-      `מעולה! ${playerName} צודק/ת לגמרי! 🎉`,
-      `וואו! כל הכבוד, ${playerName}! ⭐`,
-      `נהדר! ${playerName} ממש חכם/ה! 🦄`,
+      `מעולה! ${n}צודק/ת לגמרי! 🎉`,
+      `וואו! כל הכבוד${playerName ? ', ' + playerName : ''}! ⭐`,
+      `נהדר! ${n}ממש חכם/ה! 🦄`,
       `פנטסטי! תשובה מושלמת! 🌟`,
       `יפה מאוד! המשיך/י כך! 🚀`
     ];
@@ -1076,10 +1677,11 @@ function showSummary() {
   document.getElementById('s-pct').textContent = pct + '%';
 
   let emoji, stars, title, msg;
-  if (pct >= 90)      { emoji='🏆'; stars='⭐⭐⭐'; title=`כל הכבוד, ${playerName}!`; msg='ביצועים מדהימים! אתה/את ממש אלוף/ה במתמטיקה! 🎉'; }
-  else if (pct >= 70) { emoji='😊'; stars='⭐⭐'; title=`יפה מאוד, ${playerName}!`; msg='עשית עבודה ממש טובה! קצת תרגול עוד ותגיע/י לשלמות! 💪'; }
-  else if (pct >= 50) { emoji='🙂'; stars='⭐'; title=`נסיון טוב, ${playerName}!`; msg='זה בסדר! עם עוד תרגול תשתפר/י בטוח! אל תוותר/י! 📚'; }
-  else                { emoji='💪'; stars=''; title=`ממשיכים להתאמן, ${playerName}!`; msg='לא נורא! המתמטיקה לוקחת זמן. תרגל/י עוד ותראה/י שיפור! 🌱'; }
+  const pn = playerName ? ', ' + playerName : '';
+  if (pct >= 90)      { emoji='🏆'; stars='⭐⭐⭐'; title=`כל הכבוד${pn}!`; msg='ביצועים מדהימים! אתה/את ממש אלוף/ה במתמטיקה! 🎉'; }
+  else if (pct >= 70) { emoji='😊'; stars='⭐⭐'; title=`יפה מאוד${pn}!`; msg='עשית עבודה ממש טובה! קצת תרגול עוד ותגיע/י לשלמות! 💪'; }
+  else if (pct >= 50) { emoji='🙂'; stars='⭐'; title=`נסיון טוב${pn}!`; msg='זה בסדר! עם עוד תרגול תשתפר/י בטוח! אל תוותר/י! 📚'; }
+  else                { emoji='💪'; stars=''; title=`ממשיכים להתאמן${pn}!`; msg='לא נורא! המתמטיקה לוקחת זמן. תרגל/י עוד ותראה/י שיפור! 🌱'; }
 
   document.getElementById('summary-emoji').textContent = emoji;
   document.getElementById('summary-stars').textContent = stars;
@@ -1092,16 +1694,568 @@ function showSummary() {
 
 function restartGame() {
   questionCount = 0; correctCount = 0; wrongCount = 0;
+  selectedSubject = '';
   document.getElementById('score-correct').textContent = '0';
   document.getElementById('score-wrong').textContent  = '0';
   document.getElementById('score-num').textContent    = '1';
+  document.getElementById('diff-section').style.display = 'none';
+  ['subj-math','subj-english'].forEach(id => document.getElementById(id).className = 'subject-btn');
   showScreen('welcome-screen');
 }
 
+// ===================== WORD PICTURE DATA =====================
+const wordList = [
+  // Animals (40)
+  {e:'🐶',w:'dog'},{e:'🐱',w:'cat'},{e:'🐭',w:'mouse'},{e:'🐹',w:'hamster'},
+  {e:'🐰',w:'rabbit'},{e:'🦊',w:'fox'},{e:'🐻',w:'bear'},{e:'🐼',w:'panda'},
+  {e:'🐨',w:'koala'},{e:'🐯',w:'tiger'},{e:'🦁',w:'lion'},{e:'🐮',w:'cow'},
+  {e:'🐷',w:'pig'},{e:'🐸',w:'frog'},{e:'🐵',w:'monkey'},{e:'🐔',w:'chicken'},
+  {e:'🐧',w:'penguin'},{e:'🐦',w:'bird'},{e:'🦆',w:'duck'},{e:'🦅',w:'eagle'},
+  {e:'🦉',w:'owl'},{e:'🦇',w:'bat'},{e:'🐝',w:'bee'},{e:'🦋',w:'butterfly'},
+  {e:'🐢',w:'turtle'},{e:'🐍',w:'snake'},{e:'🐬',w:'dolphin'},{e:'🐳',w:'whale'},
+  {e:'🦈',w:'shark'},{e:'🐙',w:'octopus'},{e:'🦀',w:'crab'},{e:'🐠',w:'fish'},
+  {e:'🦜',w:'parrot'},{e:'🐘',w:'elephant'},{e:'🦒',w:'giraffe'},{e:'🦓',w:'zebra'},
+  {e:'🦘',w:'kangaroo'},{e:'🐊',w:'crocodile'},{e:'🦔',w:'hedgehog'},{e:'🐿️',w:'squirrel'},
+  // Food (40)
+  {e:'🍎',w:'apple'},{e:'🍊',w:'orange'},{e:'🍋',w:'lemon'},{e:'🍇',w:'grapes'},
+  {e:'🍓',w:'strawberry'},{e:'🍒',w:'cherry'},{e:'🍑',w:'peach'},{e:'🍌',w:'banana'},
+  {e:'🍉',w:'watermelon'},{e:'🍍',w:'pineapple'},{e:'🥝',w:'kiwi'},{e:'🍅',w:'tomato'},
+  {e:'🥕',w:'carrot'},{e:'🌽',w:'corn'},{e:'🥦',w:'broccoli'},{e:'🥑',w:'avocado'},
+  {e:'🍆',w:'eggplant'},{e:'🥔',w:'potato'},{e:'🧅',w:'onion'},{e:'🍄',w:'mushroom'},
+  {e:'🍞',w:'bread'},{e:'🧀',w:'cheese'},{e:'🥚',w:'egg'},{e:'🍕',w:'pizza'},
+  {e:'🍔',w:'burger'},{e:'🌮',w:'taco'},{e:'🍜',w:'noodles'},{e:'🍣',w:'sushi'},
+  {e:'🍰',w:'cake'},{e:'🍦',w:'ice cream'},{e:'🍩',w:'donut'},{e:'🍪',w:'cookie'},
+  {e:'🍫',w:'chocolate'},{e:'🍬',w:'candy'},{e:'🧁',w:'cupcake'},{e:'🍿',w:'popcorn'},
+  {e:'🥐',w:'croissant'},{e:'🥞',w:'pancakes'},{e:'🍟',w:'fries'},{e:'🥨',w:'pretzel'},
+  // Vehicles (20)
+  {e:'🚗',w:'car'},{e:'🚌',w:'bus'},{e:'🚲',w:'bicycle'},{e:'✈️',w:'airplane'},
+  {e:'🚀',w:'rocket'},{e:'🚁',w:'helicopter'},{e:'🚢',w:'ship'},{e:'🚂',w:'train'},
+  {e:'🚒',w:'fire truck'},{e:'🚑',w:'ambulance'},{e:'🛵',w:'scooter'},{e:'⛵',w:'sailboat'},
+  {e:'🚜',w:'tractor'},{e:'🚕',w:'taxi'},{e:'🏎️',w:'race car'},{e:'🛶',w:'boat'},
+  {e:'🚓',w:'police car'},{e:'🚚',w:'truck'},{e:'🛸',w:'spaceship'},{e:'🚠',w:'cable car'},
+  // Objects (30)
+  {e:'🏠',w:'house'},{e:'🚪',w:'door'},{e:'🪟',w:'window'},{e:'🛏️',w:'bed'},
+  {e:'🪑',w:'chair'},{e:'📺',w:'TV'},{e:'💻',w:'laptop'},{e:'📱',w:'phone'},
+  {e:'📚',w:'book'},{e:'✏️',w:'pencil'},{e:'✂️',w:'scissors'},{e:'🔑',w:'key'},
+  {e:'💡',w:'lamp'},{e:'🧸',w:'teddy bear'},{e:'🎁',w:'gift'},{e:'🎈',w:'balloon'},
+  {e:'🪞',w:'mirror'},{e:'🛁',w:'bathtub'},{e:'🧹',w:'broom'},{e:'🪣',w:'bucket'},
+  {e:'🎨',w:'paint'},{e:'🧩',w:'puzzle'},{e:'🔭',w:'telescope'},{e:'⏰',w:'alarm clock'},
+  {e:'📷',w:'camera'},{e:'🎮',w:'game controller'},{e:'🧲',w:'magnet'},{e:'🪄',w:'magic wand'},
+  {e:'🎪',w:'circus tent'},{e:'🔬',w:'microscope'},
+  // Nature (20)
+  {e:'🌸',w:'flower'},{e:'🌹',w:'rose'},{e:'🌻',w:'sunflower'},{e:'🌴',w:'tree'},
+  {e:'🌵',w:'cactus'},{e:'🍀',w:'clover'},{e:'🍁',w:'leaf'},{e:'☀️',w:'sun'},
+  {e:'🌙',w:'moon'},{e:'⭐',w:'star'},{e:'❄️',w:'snowflake'},{e:'🌈',w:'rainbow'},
+  {e:'⛄',w:'snowman'},{e:'🌊',w:'wave'},{e:'🏔️',w:'mountain'},{e:'💧',w:'water drop'},
+  {e:'🔥',w:'fire'},{e:'🌧️',w:'rain'},{e:'⚡',w:'lightning'},{e:'🌪️',w:'tornado'},
+  // Clothing (20)
+  {e:'👕',w:'shirt'},{e:'👖',w:'pants'},{e:'👗',w:'dress'},{e:'🧥',w:'coat'},
+  {e:'👒',w:'hat'},{e:'🎩',w:'top hat'},{e:'🧢',w:'cap'},{e:'👟',w:'sneaker'},
+  {e:'🥾',w:'boot'},{e:'🧣',w:'scarf'},{e:'🧤',w:'gloves'},{e:'🧦',w:'socks'},
+  {e:'🩳',w:'shorts'},{e:'👜',w:'handbag'},{e:'🎒',w:'backpack'},{e:'🧳',w:'suitcase'},
+  {e:'👛',w:'wallet'},{e:'💍',w:'ring'},{e:'📿',w:'necklace'},{e:'🕶️',w:'sunglasses'},
+  // Sports (15)
+  {e:'⚽',w:'soccer'},{e:'🏀',w:'basketball'},{e:'🏈',w:'football'},{e:'⚾',w:'baseball'},
+  {e:'🎾',w:'tennis'},{e:'🏐',w:'volleyball'},{e:'🏓',w:'ping pong'},{e:'🏸',w:'badminton'},
+  {e:'🥊',w:'boxing glove'},{e:'🎿',w:'ski'},{e:'🎯',w:'dart'},{e:'🛹',w:'skateboard'},
+  {e:'🛷',w:'sled'},{e:'🤿',w:'diving mask'},{e:'🏹',w:'bow and arrow'},
+  // Body (10)
+  {e:'👀',w:'eyes'},{e:'👂',w:'ear'},{e:'👃',w:'nose'},{e:'👄',w:'lips'},
+  {e:'🦷',w:'tooth'},{e:'🦶',w:'foot'},{e:'👋',w:'hand'},{e:'💪',w:'muscle'},
+  {e:'🧠',w:'brain'},{e:'❤️',w:'heart'},
+  // Instruments (5)
+  {e:'🎹',w:'piano'},{e:'🎸',w:'guitar'},{e:'🥁',w:'drums'},{e:'🎺',w:'trumpet'},
+  {e:'🎻',w:'violin'}
+];
+
+// ===================== WORD PICTURE GAME =====================
+let wordQueue = [];
+let wpIdx = 0;
+let wpCorrect = 0;
+let wpWrong = 0;
+let wpAnswered = false;
+
+function startWordPicture() {
+  wordQueue = [...wordList].sort(() => Math.random() - 0.5);
+  wpIdx = 0; wpCorrect = 0; wpWrong = 0;
+  showScreen('word-picture-screen');
+  showWordQ();
+}
+
+function showWordQ() {
+  wpAnswered = false;
+  const curr = wordQueue[wpIdx];
+  document.getElementById('wp-emoji').textContent = curr.e;
+  document.getElementById('wp-qnum').textContent = wpIdx + 1;
+  document.getElementById('wp-score-c').textContent = wpCorrect;
+  document.getElementById('wp-score-w').textContent = wpWrong;
+
+  const wrongs = wordList.filter(x => x.w !== curr.w)
+    .sort(() => Math.random() - 0.5).slice(0, 2);
+  const opts = [curr, ...wrongs].sort(() => Math.random() - 0.5);
+
+  document.querySelectorAll('.wp-opt').forEach((btn, i) => {
+    btn.textContent = opts[i].w;
+    btn.dataset.correct = opts[i].w === curr.w ? '1' : '0';
+    btn.className = 'wp-opt';
+    btn.disabled = false;
+  });
+
+  const fb = document.getElementById('wp-feedback');
+  fb.style.display = 'none'; fb.innerHTML = '';
+  document.getElementById('wp-next').style.display = 'none';
+
+  speakEng(curr.w);
+}
+
+function checkWP(btn) {
+  if (wpAnswered) return;
+  wpAnswered = true;
+  document.querySelectorAll('.wp-opt').forEach(b => b.disabled = true);
+
+  if (btn.dataset.correct === '1') {
+    btn.classList.add('wp-ok');
+    wpCorrect++;
+    document.getElementById('wp-score-c').textContent = wpCorrect;
+    const msgs = ['מעולה! 🎉','כל הכבוד! ⭐','נהדר! 🦄','פנטסטי! 🚀','יפה מאוד! 🌟'];
+    showWPFeedback(`<span style="color:#1a7a4a;font-weight:700">${msgs[Math.floor(Math.random()*msgs.length)]}</span>`);
+    playSuccess(); launchConfetti();
+  } else {
+    btn.classList.add('wp-no');
+    wpWrong++;
+    document.getElementById('wp-score-w').textContent = wpWrong;
+    document.querySelectorAll('.wp-opt').forEach(b => { if (b.dataset.correct === '1') b.classList.add('wp-ok'); });
+    const curr = wordQueue[wpIdx];
+    showWPFeedback(`<span style="color:#c0392b;font-weight:700">❌ התשובה הנכונה היא: <em>${curr.w}</em></span>`);
+    playWrong();
+  }
+  document.getElementById('wp-next').style.display = '';
+}
+
+function showWPFeedback(html) {
+  const fb = document.getElementById('wp-feedback');
+  fb.innerHTML = html; fb.style.display = 'block';
+}
+
+function nextWP() {
+  wpIdx++;
+  if (wpIdx >= wordQueue.length) { showScreen('english-menu-screen'); return; }
+  showWordQ();
+}
+
+function speakCurrentWP() {
+  if (wordQueue[wpIdx]) speakEng(wordQueue[wpIdx].w);
+}
+
+function speakEng(word) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(word);
+  utt.lang = 'en-US'; utt.rate = 0.82; utt.pitch = 1.05;
+  speechSynthesis.speak(utt);
+}
+
+// ===================== ENGLISH / ABC =====================
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+let currentLetterIdx = 0;
+
+function startABC() {
+  currentLetterIdx = 0;
+  showScreen('abc-screen');
+  showLetter();
+}
+
+function showLetter() {
+  const letter = LETTERS[currentLetterIdx];
+  document.getElementById('abc-capital').textContent = letter;
+  document.getElementById('abc-lower').textContent = letter.toLowerCase();
+  document.getElementById('abc-num').textContent = currentLetterIdx + 1;
+  document.getElementById('abc-prev').disabled = currentLetterIdx === 0;
+  document.getElementById('abc-next').disabled = currentLetterIdx === 25;
+  speakLetter();
+}
+
+function speakLetter() {
+  if (!window.speechSynthesis) return;
+  const letter = LETTERS[currentLetterIdx];
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(letter.toLowerCase());
+  utt.lang = 'en-US';
+  utt.rate = 0.82;
+  utt.pitch = 1.1;
+  speechSynthesis.speak(utt);
+}
+
+function nextLetter() {
+  if (currentLetterIdx < 25) { currentLetterIdx++; showLetter(); }
+}
+
+function prevLetter() {
+  if (currentLetterIdx > 0) { currentLetterIdx--; showLetter(); }
+}
+
+// ===================== MISSING WORD =====================
+const sentenceList = [
+  // Animals (30)
+  { s:'The ___ barks loudly.',                      a:'dog',         d:['cat','bird'],          p:'🐶' },
+  { s:'The ___ says meow.',                         a:'cat',         d:['dog','fish'],           p:'🐱' },
+  { s:'The ___ swims in the pond.',                 a:'duck',        d:['horse','cat'],          p:'🦆' },
+  { s:'The ___ jumps very high.',                   a:'frog',        d:['bear','dog'],           p:'🐸' },
+  { s:'The ___ has a very long neck.',              a:'giraffe',     d:['elephant','lion'],      p:'🦒' },
+  { s:'The ___ is the king of the jungle.',         a:'lion',        d:['tiger','bear'],         p:'🦁' },
+  { s:'The ___ has black and white stripes.',       a:'zebra',       d:['horse','cow'],          p:'🦓' },
+  { s:'The ___ is the largest animal in the sea.',  a:'whale',       d:['shark','dolphin'],      p:'🐋' },
+  { s:'The ___ lays eggs in the barn.',             a:'hen',         d:['cow','cat'],            p:'🐔' },
+  { s:'The ___ carries heavy loads in the desert.', a:'camel',       d:['horse','elephant'],     p:'🐪' },
+  { s:'The ___ has a big trunk.',                   a:'elephant',    d:['hippo','rhino'],        p:'🐘' },
+  { s:'The ___ hops and has a pouch.',              a:'kangaroo',    d:['rabbit','deer'],        p:'🦘' },
+  { s:'The ___ makes honey.',                       a:'bee',         d:['fly','butterfly'],      p:'🐝' },
+  { s:'The ___ sleeps all winter.',                 a:'bear',        d:['fox','wolf'],           p:'🐻' },
+  { s:'The ___ has a beautiful colorful tail.',     a:'peacock',     d:['parrot','flamingo'],    p:'🦚' },
+  { s:'The ___ gallops fast on four legs.',         a:'horse',       d:['donkey','cow'],         p:'🐴' },
+  { s:'The little ___ swims in the fish tank.',     a:'fish',        d:['crab','snail'],         p:'🐠' },
+  { s:'The ___ gives us warm wool.',                a:'sheep',       d:['goat','cow'],           p:'🐑' },
+  { s:'The ___ gives us milk.',                     a:'cow',         d:['sheep','goat'],         p:'🐄' },
+  { s:'The ___ has a bushy tail and loves nuts.',   a:'squirrel',    d:['rabbit','chipmunk'],    p:'🐿️' },
+  { s:'The ___ is a big striped wild cat.',         a:'tiger',       d:['lion','leopard'],       p:'🐯' },
+  { s:'The ___ hides inside its shell.',            a:'turtle',      d:['snail','crab'],         p:'🐢' },
+  { s:'The ___ is pink and loves to roll in mud.',  a:'pig',         d:['hippo','warthog'],      p:'🐷' },
+  { s:'The ___ has a long tail and swings in trees.',a:'monkey',     d:['ape','lemur'],          p:'🐒' },
+  { s:'The ___ builds its web to catch flies.',     a:'spider',      d:['ant','worm'],           p:'🕷️' },
+  { s:'The ___ is very clever and loves water.',    a:'dolphin',     d:['whale','seal'],         p:'🐬' },
+  { s:'The ___ has sharp teeth and lives in rivers.',a:'crocodile',  d:['lizard','turtle'],      p:'🐊' },
+  { s:'The ___ is a bird that cannot fly.',         a:'penguin',     d:['eagle','owl'],          p:'🐧' },
+  { s:'The ___ flies very high and has great eyesight.',a:'eagle',   d:['parrot','pigeon'],      p:'🦅' },
+  { s:'The ___ glows in the dark at night.',        a:'firefly',     d:['moth','dragonfly'],     p:'✨' },
+  // Food (30)
+  { s:'I eat a red ___ every morning.',             a:'apple',       d:['banana','carrot'],      p:'🍎' },
+  { s:'We drink cold ___ from a glass.',            a:'milk',        d:['juice','water'],        p:'🥛' },
+  { s:'She puts ___ on her bread.',                 a:'butter',      d:['jam','honey'],          p:'🧈' },
+  { s:'He drinks orange ___ at breakfast.',         a:'juice',       d:['milk','tea'],           p:'🧃' },
+  { s:'The baker bakes fresh ___ every morning.',   a:'bread',       d:['cake','pizza'],         p:'🍞' },
+  { s:'We eat ___ with tomato sauce.',              a:'pasta',       d:['rice','bread'],         p:'🍝' },
+  { s:'She put cheese on the ___.',                 a:'pizza',       d:['salad','soup'],         p:'🍕' },
+  { s:'He ordered a chocolate ___.',                a:'cake',        d:['cookie','pie'],         p:'🎂' },
+  { s:'I like ___ on my pancakes.',                 a:'honey',       d:['butter','jam'],         p:'🍯' },
+  { s:'She peels a yellow ___.',                    a:'banana',      d:['mango','pear'],         p:'🍌' },
+  { s:'We put ___ on a burger.',                    a:'cheese',      d:['butter','jam'],         p:'🧀' },
+  { s:'She fries an ___ in the pan.',               a:'egg',         d:['onion','potato'],       p:'🍳' },
+  { s:'I love eating sweet ___.',                   a:'chocolate',   d:['candy','biscuit'],      p:'🍫' },
+  { s:'She squeezes a fresh ___.',                  a:'lemon',       d:['orange','lime'],        p:'🍋' },
+  { s:'The salad has fresh red ___.',               a:'tomatoes',    d:['apples','grapes'],      p:'🍅' },
+  { s:'She bites into a big juicy ___.',            a:'watermelon',  d:['melon','pear'],         p:'🍉' },
+  { s:'He puts ___ on his toast.',                  a:'jam',         d:['butter','honey'],       p:'🫙' },
+  { s:'We boil the ___ in a pot.',                  a:'potatoes',    d:['apples','carrots'],     p:'🥔' },
+  { s:'She cooks white ___ with every meal.',       a:'rice',        d:['pasta','bread'],        p:'🍚' },
+  { s:'He ordered a beef ___ at the restaurant.',   a:'burger',      d:['pizza','salad'],        p:'🍔' },
+  { s:'She drinks a hot cup of ___ in the morning.',a:'coffee',      d:['juice','milk'],         p:'☕' },
+  { s:'She eats ___ with syrup.',                   a:'pancakes',    d:['cookies','waffles'],    p:'🥞' },
+  { s:'He grills a ___ on the barbecue.',           a:'steak',       d:['salad','soup'],         p:'🥩' },
+  { s:'She loves to eat fresh red ___.',            a:'strawberries',d:['grapes','cherries'],    p:'🍓' },
+  { s:'We make soup with ___ and onions.',          a:'carrots',     d:['apples','bananas'],     p:'🥕' },
+  { s:'He dips his bread in olive ___.',            a:'oil',         d:['butter','vinegar'],     p:'🫒' },
+  { s:'She eats a green ___ with her salad.',       a:'cucumber',    d:['melon','pear'],         p:'🥒' },
+  { s:'We make chips from ___.',                    a:'potatoes',    d:['carrots','onions'],     p:'🥔' },
+  { s:'He eats a ___ for a quick snack.',           a:'banana',      d:['carrot','cookie'],      p:'🍌' },
+  { s:'She makes a salad with fresh ___.',          a:'lettuce',     d:['spinach','cabbage'],    p:'🥗' },
+  // Vehicles (15)
+  { s:'Dad drives a red ___ to work.',              a:'car',         d:['bus','truck'],          p:'🚗' },
+  { s:'The ___ flies high in the sky.',             a:'plane',       d:['train','boat'],         p:'✈️' },
+  { s:'We ride the ___ to school.',                 a:'bus',         d:['car','bike'],           p:'🚌' },
+  { s:'The sailor sails a small ___.',              a:'boat',        d:['plane','train'],        p:'⛵' },
+  { s:'The ___ runs on metal tracks.',              a:'train',       d:['bus','car'],            p:'🚂' },
+  { s:'The firefighter drives a big ___.',          a:'truck',       d:['car','bus'],            p:'🚒' },
+  { s:'She rides her ___ to the park.',             a:'bike',        d:['car','bus'],            p:'🚲' },
+  { s:'The astronaut travels in a ___.',            a:'rocket',      d:['plane','boat'],         p:'🚀' },
+  { s:'The doctor arrives quickly by ___.',         a:'helicopter',  d:['plane','car'],          p:'🚁' },
+  { s:'He delivers pizza on his ___.',              a:'scooter',     d:['bike','car'],           p:'🛵' },
+  { s:'We traveled across the sea on a big ___.',   a:'ship',        d:['boat','ferry'],         p:'🚢' },
+  { s:'The farmer drives a red ___ in the field.',  a:'tractor',     d:['truck','bulldozer'],    p:'🚜' },
+  { s:'We went up in a hot air ___.',               a:'balloon',     d:['kite','rocket'],        p:'🎈' },
+  { s:'The police officer rides a fast ___.',       a:'motorcycle',  d:['car','scooter'],        p:'🏍️' },
+  { s:'The workers travel on the underground ___.',  a:'subway',      d:['bus','tram'],           p:'🚇' },
+  // Nature (15)
+  { s:'The ___ shines in the sky at night.',        a:'moon',        d:['sun','star'],           p:'🌙' },
+  { s:'Plants need water and ___ to grow.',         a:'sun',         d:['moon','rain'],          p:'☀️' },
+  { s:'We fly a kite when there is ___.',           a:'wind',        d:['rain','snow'],          p:'🌬️' },
+  { s:'Children love to play in the ___.',          a:'snow',        d:['rain','mud'],           p:'❄️' },
+  { s:'The ___ is very tall and has green leaves.', a:'tree',        d:['bush','flower'],        p:'🌳' },
+  { s:'A beautiful ___ blooms in spring.',          a:'flower',      d:['tree','leaf'],          p:'🌸' },
+  { s:'We swim in the ___ in summer.',              a:'sea',         d:['river','lake'],         p:'🌊' },
+  { s:'The river flows down from the ___.',         a:'mountain',    d:['hill','valley'],        p:'⛰️' },
+  { s:'A colorful ___ appears after the rain.',     a:'rainbow',     d:['cloud','sunset'],       p:'🌈' },
+  { s:'The ___ is frozen water that falls in winter.',a:'snow',      d:['hail','frost'],         p:'❄️' },
+  { s:'The ___ gives us shade on a hot day.',       a:'tree',        d:['bush','umbrella'],      p:'🌴' },
+  { s:'The autumn leaves turn orange and ___.',     a:'fall',        d:['grow','bloom'],         p:'🍂' },
+  { s:'The ___ flows from the mountain to the sea.',a:'river',       d:['stream','lake'],        p:'🏞️' },
+  { s:'We collect rain water in a ___.',            a:'bucket',      d:['bottle','glass'],       p:'🪣' },
+  { s:'The beautiful ___ sunset fills the sky with orange.',a:'evening',d:['morning','midday'], p:'🌅' },
+  // Objects (20)
+  { s:'I write with a ___.',                        a:'pen',         d:['brush','pencil'],       p:'🖊️' },
+  { s:'She reads a ___ before bed.',                a:'book',        d:['paper','magazine'],     p:'📚' },
+  { s:'He sits on a ___.',                          a:'chair',       d:['table','sofa'],         p:'🪑' },
+  { s:'I open the door with a ___.',                a:'key',         d:['lock','handle'],        p:'🔑' },
+  { s:'He cuts the paper with ___.',                a:'scissors',    d:['a knife','a pen'],      p:'✂️' },
+  { s:'She carries her books in a ___.',            a:'bag',         d:['box','basket'],         p:'🎒' },
+  { s:'We tell the time with a ___.',               a:'clock',       d:['ruler','calendar'],     p:'🕐' },
+  { s:'I call my friend on the ___.',               a:'phone',       d:['radio','computer'],     p:'📱' },
+  { s:'She cooks food in a big ___.',               a:'pot',         d:['bowl','pan'],           p:'🍲' },
+  { s:'We see our reflection in a ___.',            a:'mirror',      d:['window','glass'],       p:'🪞' },
+  { s:'He types on his ___.',                       a:'computer',    d:['phone','tablet'],       p:'💻' },
+  { s:'She draws a picture with a ___.',            a:'pencil',      d:['pen','marker'],         p:'✏️' },
+  { s:'We store food in the ___.',                  a:'fridge',      d:['oven','microwave'],     p:'🧊' },
+  { s:'She listens to music with ___.',             a:'headphones',  d:['speakers','radio'],     p:'🎧' },
+  { s:'We measure length with a ___.',              a:'ruler',       d:['clock','scale'],        p:'📏' },
+  { s:'She takes a photo with her ___.',            a:'camera',      d:['phone','tablet'],       p:'📷' },
+  { s:'He sends a letter in an ___.',               a:'envelope',    d:['box','bag'],            p:'✉️' },
+  { s:'We put flowers in a ___.',                   a:'vase',        d:['cup','bowl'],           p:'💐' },
+  { s:'She sews with a ___ and thread.',            a:'needle',      d:['pin','knife'],          p:'🧵' },
+  { s:'We wash our hands with ___ and water.',      a:'soap',        d:['shampoo','lotion'],     p:'🧼' },
+  // Clothing (15)
+  { s:'He wears a ___ on his head.',                a:'hat',         d:['scarf','cap'],          p:'🎩' },
+  { s:'She puts on her ___ before going out.',      a:'coat',        d:['shirt','dress'],        p:'🧥' },
+  { s:'I wear ___ on my feet.',                     a:'shoes',       d:['socks','boots'],        p:'👟' },
+  { s:'She wore a beautiful ___ to the party.',     a:'dress',       d:['skirt','blouse'],       p:'👗' },
+  { s:'It is cold so I wear a warm ___.',           a:'scarf',       d:['hat','gloves'],         p:'🧣' },
+  { s:'She wears warm ___ on her hands.',           a:'gloves',      d:['socks','mittens'],      p:'🧤' },
+  { s:'He puts on a ___ to keep warm.',             a:'sweater',     d:['shirt','jacket'],       p:'🧶' },
+  { s:'He wears a ___ and tie to work.',            a:'suit',        d:['shirt','jacket'],       p:'👔' },
+  { s:'I wear cotton ___ every day.',               a:'socks',       d:['shoes','boots'],        p:'🧦' },
+  { s:'She wears ___ to protect her eyes in the pool.',a:'goggles',  d:['glasses','helmet'],    p:'🥽' },
+  { s:'He wears a ___ to protect his head.',        a:'helmet',      d:['hat','cap'],            p:'⛑️' },
+  { s:'We wear a ___ when it rains.',               a:'raincoat',    d:['jacket','sweater'],     p:'🌧️' },
+  { s:'She wears a short ___ in summer.',           a:'skirt',       d:['dress','shorts'],       p:'👗' },
+  { s:'He wears blue ___ to school.',               a:'jeans',       d:['shorts','trousers'],    p:'👖' },
+  { s:'She wears ___ on her wrist.',                a:'a bracelet',  d:['a ring','a watch'],     p:'💍' },
+  // Body (10)
+  { s:'We hear sounds with our ___.',               a:'ears',        d:['eyes','nose'],          p:'👂' },
+  { s:'We see with our ___.',                       a:'eyes',        d:['ears','nose'],          p:'👀' },
+  { s:'We smell flowers with our ___.',             a:'nose',        d:['mouth','ears'],         p:'👃' },
+  { s:'We eat with our ___.',                       a:'mouth',       d:['nose','hands'],         p:'👄' },
+  { s:'We kick a ball with our ___.',               a:'feet',        d:['hands','legs'],         p:'🦶' },
+  { s:'We clap with our ___.',                      a:'hands',       d:['feet','fingers'],       p:'👏' },
+  { s:'We carry heavy things with our ___.',        a:'arms',        d:['legs','shoulders'],     p:'💪' },
+  { s:'We think with our ___.',                     a:'brain',       d:['heart','stomach'],      p:'🧠' },
+  { s:'We run fast with our long ___.',             a:'legs',        d:['arms','feet'],          p:'🦵' },
+  { s:'We point at things with our ___.',           a:'finger',      d:['thumb','toe'],          p:'☝️' },
+  // Sports (15)
+  { s:'We kick the ___ in soccer.',                 a:'ball',        d:['hoop','net'],           p:'⚽' },
+  { s:'Swimmers race in a ___.',                    a:'pool',        d:['lake','river'],         p:'🏊' },
+  { s:'She hits the ball with a ___.',              a:'bat',         d:['stick','racket'],       p:'🏏' },
+  { s:'We play tennis with a ___.',                 a:'racket',      d:['bat','stick'],          p:'🎾' },
+  { s:'The runner runs fast on the ___.',           a:'track',       d:['court','field'],        p:'🏃' },
+  { s:'We throw a ___ through the hoop.',           a:'ball',        d:['frisbee','puck'],       p:'🏀' },
+  { s:'He scores a ___ in soccer.',                 a:'goal',        d:['point','basket'],       p:'⚽' },
+  { s:'We wear ___ to skate on the ice.',           a:'skates',      d:['boots','sneakers'],     p:'⛸️' },
+  { s:'She wins a gold ___ at the race.',           a:'medal',       d:['trophy','ribbon'],      p:'🥇' },
+  { s:'She lifts heavy ___ at the gym.',            a:'weights',     d:['balls','ropes'],        p:'🏋️' },
+  { s:'We wear a ___ when we cycle.',               a:'helmet',      d:['cap','hat'],            p:'🚲' },
+  { s:'The archer shoots an ___ at the target.',    a:'arrow',       d:['dart','spear'],         p:'🏹' },
+  { s:'She dives off the ___ into the pool.',       a:'board',       d:['ladder','edge'],        p:'🏊' },
+  { s:'We play ___ on a grass field.',              a:'soccer',      d:['tennis','golf'],        p:'⚽' },
+  { s:'He paddles his ___ down the river.',         a:'kayak',       d:['boat','raft'],          p:'🛶' },
+  // School (15)
+  { s:'The teacher writes on the black ___.',       a:'board',       d:['wall','door'],          p:'📋' },
+  { s:'We sit at our ___ in class.',                a:'desk',        d:['chair','table'],        p:'📚' },
+  { s:'I draw with a ___.',                         a:'pencil',      d:['pen','marker'],         p:'✏️' },
+  { s:'She glues paper with ___.',                  a:'glue',        d:['tape','staples'],       p:'🖊️' },
+  { s:'We learn new words in our ___.',             a:'book',        d:['notebook','paper'],     p:'📖' },
+  { s:'She raises her ___ to answer the teacher.',  a:'hand',        d:['finger','arm'],         p:'✋' },
+  { s:'We color pictures with ___.',                a:'crayons',     d:['markers','pens'],       p:'🖍️' },
+  { s:'The teacher gives us a ___ on Friday.',      a:'test',        d:['book','sticker'],       p:'📝' },
+  { s:'The student writes in a ___.',               a:'notebook',    d:['textbook','magazine'],  p:'📓' },
+  { s:'We use an ___ to clean the board.',          a:'eraser',      d:['brush','cloth'],        p:'🧹' },
+  { s:'She sharpens her ___ before writing.',       a:'pencil',      d:['pen','marker'],         p:'✏️' },
+  { s:'The ___ rings and class begins.',            a:'bell',        d:['alarm','whistle'],      p:'🔔' },
+  { s:'We cut shapes with ___.',                    a:'scissors',    d:['tape','glue'],          p:'✂️' },
+  { s:'The ___ explains the lesson to the class.',  a:'teacher',     d:['student','helper'],     p:'👩‍🏫' },
+  { s:'We borrow books from the school ___.',       a:'library',     d:['office','gym'],         p:'📚' },
+  // Home (20)
+  { s:'We sleep in a warm ___.',                    a:'bed',         d:['sofa','chair'],         p:'🛏️' },
+  { s:'We watch TV in the ___.',                    a:'living room', d:['kitchen','bedroom'],    p:'📺' },
+  { s:'We cook food in the ___.',                   a:'kitchen',     d:['bathroom','bedroom'],   p:'🍳' },
+  { s:'She takes a shower in the ___.',             a:'bathroom',    d:['kitchen','bedroom'],    p:'🚿' },
+  { s:'He opens the ___ and goes outside.',         a:'door',        d:['window','gate'],        p:'🚪' },
+  { s:'We look outside through the ___.',           a:'window',      d:['door','wall'],          p:'🪟' },
+  { s:'We clean the floor with a ___.',             a:'broom',       d:['mop','brush'],          p:'🧹' },
+  { s:'He waters the ___ in the garden.',           a:'plants',      d:['trees','flowers'],      p:'🌱' },
+  { s:'We sit on the ___ to watch TV.',             a:'sofa',        d:['chair','bench'],        p:'🛋️' },
+  { s:'She dries herself with a ___.',              a:'towel',       d:['cloth','sheet'],        p:'🛁' },
+  { s:'He turns off the ___ before sleeping.',      a:'light',       d:['fan','TV'],             p:'💡' },
+  { s:'We store clothes in the ___.',               a:'closet',      d:['drawer','shelf'],       p:'👕' },
+  { s:'He fixes things with a ___.',                a:'hammer',      d:['screwdriver','wrench'], p:'🔨' },
+  { s:'We use a ___ to paint the walls.',           a:'brush',       d:['roller','sponge'],      p:'🖌️' },
+  { s:'She locks the door with a ___.',             a:'key',         d:['handle','bolt'],        p:'🔑' },
+  { s:'He builds a shelf with a ___.',              a:'screwdriver', d:['hammer','wrench'],      p:'🔧' },
+  { s:'We cook food in a ___ on the stove.',        a:'pan',         d:['pot','bowl'],           p:'🍳' },
+  { s:'She puts the trash in the ___.',             a:'bin',         d:['bag','box'],            p:'🗑️' },
+  { s:'He reads in his favorite ___.',              a:'armchair',    d:['sofa','bench'],         p:'🛋️' },
+  { s:'We eat breakfast at the kitchen ___.',       a:'table',       d:['counter','shelf'],      p:'🪑' },
+  // Colors and feelings (10)
+  { s:'The sky is ___ during the day.',             a:'blue',        d:['green','red'],          p:'🌤️' },
+  { s:'The grass is always ___.',                   a:'green',       d:['yellow','blue'],        p:'🌿' },
+  { s:'The sun looks bright ___.',                  a:'yellow',      d:['orange','white'],       p:'☀️' },
+  { s:'She felt very ___ at her birthday party.',   a:'happy',       d:['sad','tired'],          p:'😊' },
+  { s:'He was ___ when he lost the game.',          a:'sad',         d:['angry','happy'],        p:'😢' },
+  { s:'The apple is bright ___.',                   a:'red',         d:['blue','green'],         p:'🍎' },
+  { s:'Fresh snow is ___.',                         a:'white',       d:['grey','blue'],          p:'❄️' },
+  { s:'She felt ___ before giving her first speech.',a:'nervous',    d:['excited','happy'],      p:'😰' },
+  { s:'The cat was very ___ after eating its meal.',a:'full',        d:['hungry','tired'],       p:'😺' },
+  { s:'The night sky is ___ and full of stars.',    a:'dark',        d:['bright','clear'],       p:'🌑' },
+];
+
+let mwQueue = [], mwIdx = 0, mwCorrect = 0, mwWrong = 0, mwAnswered = false, mwCurrentAnswer = '';
+
+function startMissingWord() {
+  mwQueue = [...sentenceList].sort(() => Math.random() - 0.5);
+  mwIdx = 0; mwCorrect = 0; mwWrong = 0;
+  document.getElementById('mw-qtotal').textContent = mwQueue.length;
+  showScreen('missing-word-screen');
+  showMWQ();
+}
+
+function showMWQ() {
+  if (mwIdx >= mwQueue.length) {
+    alert('כל הכבוד! סיימת את כל המשפטים! ✅ ' + mwCorrect + ' / ' + mwQueue.length);
+    showScreen('english-menu-screen'); return;
+  }
+  mwAnswered = false;
+  const item = mwQueue[mwIdx];
+  mwCurrentAnswer = item.a;
+  document.getElementById('mw-qnum').textContent = mwIdx + 1;
+  document.getElementById('mw-score-c').textContent = mwCorrect;
+  document.getElementById('mw-score-w').textContent = mwWrong;
+
+  document.getElementById('mw-pic').textContent = item.p || '';
+  const sentenceHTML = item.s.replace('___', '<span class="mw-blank">___</span>');
+  document.getElementById('mw-sentence').innerHTML = sentenceHTML;
+
+  const opts = [item.a, ...item.d].sort(() => Math.random() - 0.5);
+  for (let i = 0; i < 3; i++) {
+    const btn = document.getElementById('mw-opt-' + i);
+    btn.textContent = opts[i];
+    btn.className = 'mw-opt';
+    btn.disabled = false;
+  }
+
+  const fb = document.getElementById('mw-feedback');
+  fb.style.display = 'none'; fb.textContent = '';
+  document.getElementById('mw-next').style.display = 'none';
+}
+
+function checkMW(idx) {
+  if (mwAnswered) return;
+  mwAnswered = true;
+  const chosen = document.getElementById('mw-opt-' + idx).textContent;
+  const correct = chosen === mwCurrentAnswer;
+
+  for (let i = 0; i < 3; i++) {
+    const btn = document.getElementById('mw-opt-' + i);
+    btn.disabled = true;
+    if (btn.textContent === mwCurrentAnswer) btn.classList.add('mw-ok');
+    else if (i === idx) btn.classList.add('mw-no');
+  }
+
+  const fullSentence = mwQueue[mwIdx].s.replace('___', mwCurrentAnswer);
+  const fb = document.getElementById('mw-feedback');
+  if (correct) {
+    mwCorrect++;
+    fb.style.cssText = 'display:block;background:#eafaf4;color:#006044;border:1.5px solid #00b894';
+    fb.textContent = '✅ כן! המשפט המלא: ' + fullSentence;
+    playSuccess();
+  } else {
+    mwWrong++;
+    fb.style.cssText = 'display:block;background:#fff0f3;color:#c0392b;border:1.5px solid #ff6584';
+    fb.textContent = '❌ המילה הנכונה היא "' + mwCurrentAnswer + '". ' + fullSentence;
+    playWrong();
+  }
+  document.getElementById('mw-score-c').textContent = mwCorrect;
+  document.getElementById('mw-score-w').textContent = mwWrong;
+  document.getElementById('mw-next').style.display = 'inline-flex';
+}
+
+function nextMW() {
+  mwIdx++;
+  showMWQ();
+}
+
+function speakMWSentence() {
+  const item = mwQueue[mwIdx];
+  const spoken = item.s.replace('___', 'blank');
+  speakEng(spoken);
+}
+
+// ===================== FUN MODE =====================
+let funModeOn = false;
+let funBgInterval = null;
+
+function toggleTheme() {
+  funModeOn = !funModeOn;
+  document.body.classList.toggle('fun-mode', funModeOn);
+  if (funModeOn) { initFunBg(); } else { clearFunBg(); }
+}
+
+function initFunBg() {
+  const bg = document.getElementById('fun-bg');
+  bg.innerHTML = '';
+
+  // Glowing orbs (aurora)
+  const orbs = [
+    { c:'rgba(124,58,237,0.45)',  s:'600px', l:'5%',  t:'10%', d:'9s'  },
+    { c:'rgba(219,39,119,0.35)',  s:'500px', l:'65%', t:'55%', d:'11s' },
+    { c:'rgba(8,145,178,0.3)',    s:'400px', l:'35%', t:'75%', d:'7s'  },
+    { c:'rgba(245,158,11,0.25)', s:'350px', l:'78%', t:'5%',  d:'13s' },
+    { c:'rgba(52,211,153,0.2)',   s:'300px', l:'20%', t:'50%', d:'8s'  },
+  ];
+  orbs.forEach((o,i) => {
+    const el = document.createElement('div');
+    el.className = 'fun-orb';
+    el.style.cssText = `width:${o.s};height:${o.s};background:${o.c};left:${o.l};top:${o.t};animation-duration:${o.d};animation-delay:${i*1.1}s;`;
+    bg.appendChild(el);
+  });
+
+  // Twinkling stars
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement('div');
+    s.className = 'fun-star';
+    const sz = 1 + Math.random() * 3.5;
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-delay:${Math.random()*5}s;animation-duration:${1.2+Math.random()*3.5}s;`;
+    bg.appendChild(s);
+  }
+
+  // Floating emoji drifters
+  const emojis = ['⭐','🌟','✨','💫','🎈','🌈','💎','🦄','🎉','🚀','🌙','💜','💙','💖','🎊','🌸','⚡','🍭'];
+  function addFloater() {
+    if (!funModeOn) return;
+    const el = document.createElement('div');
+    el.className = 'fun-float';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    const dur = 9 + Math.random() * 12;
+    el.style.cssText = `left:${Math.random()*100}%;font-size:${1+Math.random()*2}rem;animation-duration:${dur}s;`;
+    bg.appendChild(el);
+    setTimeout(() => el.remove(), dur * 1000 + 200);
+  }
+  for (let i = 0; i < 10; i++) setTimeout(addFloater, i * 900);
+  funBgInterval = setInterval(addFloater, 1800);
+
+  // Shooting stars
+  function addShooter() {
+    if (!funModeOn) return;
+    const el = document.createElement('div');
+    el.className = 'fun-shoot';
+    el.style.cssText = `top:${Math.random()*50}%;left:${60+Math.random()*40}%;transform:rotate(${25+Math.random()*20}deg);animation-duration:${0.8+Math.random()*0.6}s;`;
+    bg.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+  setTimeout(function shoot() { if (!funModeOn) return; addShooter(); setTimeout(shoot, 2000 + Math.random()*4000); }, 1000);
+}
+
+function clearFunBg() {
+  if (funBgInterval) { clearInterval(funBgInterval); funBgInterval = null; }
+  document.getElementById('fun-bg').innerHTML = '';
+}
+
 // ===================== INIT =====================
-document.getElementById('name-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') startGame();
-});
 </script>
 </body>
 </html>
