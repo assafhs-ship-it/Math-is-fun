@@ -440,6 +440,36 @@
       color: #1a7a4a; direction: rtl; text-align: right;
     }
 
+    /* Long Division Help Panel */
+    .ld-help-panel {
+      background: #f8f5ff; border: 2px solid #a78bfa;
+      border-radius: 16px; padding: 16px 14px 12px;
+      margin-top: 12px; direction: rtl;
+    }
+    .ld-step-content {
+      background: #fff; border-radius: 10px;
+      border-right: 4px solid #7c3aed;
+      padding: 12px 14px; font-size: 1rem; line-height: 1.7;
+      color: #2d3436; margin-bottom: 12px; min-height: 70px;
+      text-align: right;
+    }
+    .ld-step-nav {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 8px;
+    }
+    .ld-step-counter {
+      font-size: 0.85rem; color: #7c3aed;
+      font-weight: 700; flex: 1; text-align: center;
+    }
+    .ld-step-btn {
+      background: #7c3aed; color: #fff; border: none;
+      border-radius: 10px; padding: 8px 16px;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: opacity 0.2s;
+    }
+    .ld-step-btn:disabled { opacity: 0.35; cursor: default; }
+    .ld-step-btn:not(:disabled):hover { opacity: 0.85; }
+
     /* Cookie help visual */
     .cookie-help {
       background: #fffbf0;
@@ -1422,8 +1452,53 @@
           <span class="opt-name">כפל עם 3–4 ספרות</span>
         </span>
       </button>
+      <button class="eng-opt-btn" style="border-color:#7c3aed;background:#f5f3ff;color:#4c1d95" onclick="startLongDiv()">
+        <span class="opt-icon">➗</span>
+        <span class="opt-text">
+          <span class="opt-name">חילוק ארוך</span>
+        </span>
+      </button>
     </div>
     <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== LONG DIVISION SCREEN ======== -->
+<div class="screen" id="long-div-screen">
+  <div class="card">
+    <div class="score-strip">
+      <div class="score-chip">✅ נכון: <span id="ld-score-c">0</span></div>
+      <div class="score-chip">❌ טעות: <span id="ld-score-w">0</span></div>
+      <div class="score-chip">📝 שאלה: <span id="ld-score-n">1</span></div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="ld-progress-bar" style="width:0%"></div>
+    </div>
+    <div class="level-badge">➗ חילוק ארוך</div>
+    <div class="question-number" id="ld-q-number">שאלה מספר 1</div>
+    <div class="question-text" id="ld-question-text" style="direction:ltr">_ ÷ _ = ?</div>
+    <div class="answer-row">
+      <input type="number" class="answer-input" id="ld-answer-input"
+             placeholder="?" autocomplete="off"
+             onkeydown="ldHandleKey(event)" />
+      <span class="feedback-icon" id="ld-feedback-icon"></span>
+    </div>
+    <div class="feedback-msg" id="ld-feedback-msg" style="display:none"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="ldCheck()" id="ld-check-btn">בדוק! ✔️</button>
+      <button class="btn btn-help" onclick="ldToggleHelp()" id="ld-help-btn">עזרה 💡</button>
+      <button class="btn btn-next" onclick="ldNextQ()" id="ld-next-btn" style="display:none">הבא ▶</button>
+      <button class="btn btn-finish" onclick="showScreen('math-menu-screen')">סיום 🏁</button>
+    </div>
+    <div class="ld-help-panel" id="ld-help-panel" style="display:none">
+      <div class="ld-step-content" id="ld-step-content"></div>
+      <div class="ld-step-nav">
+        <button class="ld-step-btn" id="ld-prev-btn" onclick="ldStepPrev()">◀ הקודם</button>
+        <span class="ld-step-counter" id="ld-step-counter">שלב 1 מתוך 1</span>
+        <button class="ld-step-btn" id="ld-next-step-btn" onclick="ldStepNext()">הבא ▶</button>
+      </div>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('math-menu-screen')">← חזור</button>
   </div>
 </div>
 
@@ -2136,6 +2211,152 @@ function selectDiff(diff) {
   questionCount = 0; correctCount = 0; wrongCount = 0;
   loadQuestion();
 }
+
+// ===================== LONG DIVISION =====================
+let ldCount = 0, ldCorrect = 0, ldWrong = 0;
+let ldCurrentQ = null, ldAnswered = false;
+let ldSteps = [], ldStepIdx = 0;
+
+function startLongDiv() {
+  ldCount = 0; ldCorrect = 0; ldWrong = 0;
+  showScreen('long-div-screen');
+  ldLoadQuestion();
+}
+
+function ldGenQuestion() {
+  const b = 2 + Math.floor(Math.random() * 8);       // divisor 2–9
+  const quotient = 10 + Math.floor(Math.random() * 41); // answer 10–50
+  const a = b * quotient;
+  return { display: `${a} ÷ ${b} = ?`, answer: quotient, steps: ldBuildSteps(a, b) };
+}
+
+function ldBuildSteps(a, b) {
+  const digits = String(a).split('').map(Number);
+  const steps = [`📋 נחשב: ${a} ÷ ${b}<br>נעבור ספרה ספרה משמאל לימין.`];
+  let current = 0, quotientDigits = [], i = 0;
+
+  while (i < digits.length) {
+    current = current * 10 + digits[i];
+    i++;
+
+    if (Math.floor(current / b) === 0 && i < digits.length) {
+      const next = digits[i];
+      const combined = current * 10 + next;
+      steps.push(`${b} לא נכנס ב-<strong>${current}</strong>, אז נצרף את הספרה הבאה (${next}) → נסתכל על <strong>${combined}</strong>.`);
+      current = combined;
+      i++;
+    }
+
+    const q = Math.floor(current / b);
+    const prod = q * b;
+    const rem = current - prod;
+    quotientDigits.push(q);
+
+    let step = `מסתכלים על <strong>${current}</strong>:<br>`;
+    step += `${current} ÷ ${b} = <strong>${q}</strong> &nbsp;(כי ${q} × ${b} = ${prod})<br>`;
+    step += `${current} − ${prod} = <strong>${rem}</strong>`;
+    if (rem === 0 && i >= digits.length) {
+      step += ` ← נשאר 0, סיימנו! ✅`;
+    } else if (rem > 0 && i < digits.length) {
+      step += ` ← נשאר ${rem}, מורידים ${digits[i]} → יש לנו ${rem}${digits[i]}`;
+    } else if (rem === 0 && i < digits.length) {
+      step += ` ← נשאר 0, מורידים ${digits[i]}`;
+    }
+    steps.push(step);
+    current = rem;
+  }
+
+  steps.push(`✅ <strong>התשובה הסופית: ${a} ÷ ${b} = ${quotientDigits.join('')}</strong>`);
+  return steps;
+}
+
+function ldLoadQuestion() {
+  ldAnswered = false;
+  ldCount++;
+  ldCurrentQ = ldGenQuestion();
+  ldSteps = ldCurrentQ.steps;
+  ldStepIdx = 0;
+
+  document.getElementById('ld-q-number').textContent = `שאלה מספר ${ldCount}`;
+  document.getElementById('ld-question-text').textContent = ldCurrentQ.display;
+  document.getElementById('ld-score-n').textContent = ldCount;
+  document.getElementById('ld-progress-bar').style.width = Math.min((ldCount - 1) / 20 * 100, 100) + '%';
+
+  const inp = document.getElementById('ld-answer-input');
+  inp.value = ''; inp.className = 'answer-input'; inp.disabled = false; inp.focus();
+  document.getElementById('ld-feedback-icon').textContent = '';
+  document.getElementById('ld-feedback-icon').style.display = 'none';
+  const msg = document.getElementById('ld-feedback-msg');
+  msg.style.display = 'none'; msg.className = 'feedback-msg';
+
+  document.getElementById('ld-check-btn').style.display = '';
+  document.getElementById('ld-help-btn').style.display = '';
+  document.getElementById('ld-next-btn').style.display = 'none';
+  document.getElementById('ld-help-panel').style.display = 'none';
+}
+
+function ldHandleKey(e) {
+  if (e.key === 'Enter') { if (!ldAnswered) ldCheck(); else ldNextQ(); }
+}
+
+function ldCheck() {
+  if (ldAnswered) return;
+  const inp = document.getElementById('ld-answer-input');
+  const val = inp.value.trim();
+  if (val === '' || isNaN(parseInt(val))) { inp.focus(); return; }
+  ldAnswered = true;
+
+  const correct = parseInt(val) === ldCurrentQ.answer;
+  const icon = document.getElementById('ld-feedback-icon');
+  const msg = document.getElementById('ld-feedback-msg');
+
+  if (correct) {
+    ldCorrect++;
+    inp.classList.add('correct');
+    icon.textContent = ['🎉','⭐','🌟','🎊','🥳','💫','🚀','🏆'][Math.floor(Math.random() * 8)];
+    icon.style.display = 'inline';
+    msg.className = 'feedback-msg correct-msg';
+    msg.innerHTML = `מעולה! ${ldCurrentQ.answer} זו התשובה הנכונה! 🎉`;
+    document.getElementById('ld-score-c').textContent = ldCorrect;
+    playSuccess(); launchConfetti();
+  } else {
+    ldWrong++;
+    inp.classList.add('wrong');
+    icon.textContent = '❌'; icon.style.display = 'inline';
+    msg.className = 'feedback-msg wrong-msg';
+    msg.innerHTML = `אופס! התשובה הנכונה היא <strong>${ldCurrentQ.answer}</strong>. לחץ על עזרה 💡 לראות את הפתרון שלב אחר שלב.`;
+    document.getElementById('ld-score-w').textContent = ldWrong;
+    playWrong();
+  }
+
+  msg.style.display = 'block';
+  inp.disabled = true;
+  document.getElementById('ld-check-btn').style.display = 'none';
+  document.getElementById('ld-next-btn').style.display = '';
+  document.getElementById('ld-next-btn').focus();
+}
+
+function ldToggleHelp() {
+  const panel = document.getElementById('ld-help-panel');
+  if (panel.style.display === 'none') {
+    ldStepIdx = 0;
+    ldRenderStep();
+    panel.style.display = 'block';
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function ldRenderStep() {
+  document.getElementById('ld-step-content').innerHTML = ldSteps[ldStepIdx];
+  document.getElementById('ld-step-counter').textContent = `שלב ${ldStepIdx + 1} מתוך ${ldSteps.length}`;
+  document.getElementById('ld-prev-btn').disabled = ldStepIdx === 0;
+  document.getElementById('ld-next-step-btn').disabled = ldStepIdx === ldSteps.length - 1;
+}
+
+function ldStepPrev() { if (ldStepIdx > 0) { ldStepIdx--; ldRenderStep(); } }
+function ldStepNext() { if (ldStepIdx < ldSteps.length - 1) { ldStepIdx++; ldRenderStep(); } }
+function ldNextQ() { ldLoadQuestion(); }
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
