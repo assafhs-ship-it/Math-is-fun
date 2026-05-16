@@ -294,6 +294,42 @@
     .feedback-msg.help-msg {
       background: #fffbea; color: #7d5a00; border: 2px solid #fde68a;
     }
+    #ff-feedback.help-msg {
+      background: linear-gradient(135deg, #0c4a6e, #0e3d5c);
+      color: #e0f2fe !important;
+      border: 2px solid #38bdf8;
+    }
+    #ff-feedback.help-msg strong { color: #7dd3fc; }
+
+    /* === Frac Add/Sub === */
+    .fas-question { text-align: center; margin: 14px 0 8px; }
+    .fas-q-row { display: inline-flex; align-items: center; gap: 14px; color: #ffffff; }
+    .fas-op { font-size: 2rem; font-weight: 900; color: #0891b2; line-height: 1; }
+    .fas-q-mark { font-size: 2.2rem; font-weight: 900; color: #06b6d4; }
+    .fas-help-circles { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px 0 6px; flex-wrap: wrap; }
+    #fas-feedback.help-msg {
+      background: linear-gradient(135deg, #0c4a6e, #0e3d5c);
+      color: #e0f2fe !important;
+      border: 2px solid #38bdf8;
+    }
+    #fas-feedback.help-msg strong { color: #7dd3fc; }
+    #fas-feedback.help-msg p { margin: 4px 0; font-size: 0.92rem; }
+    .fas-help-step { direction: ltr; text-align: center; margin: 3px 0; }
+
+    /* === Frac Multiply/Divide === */
+    .fmd-question { text-align: center; margin: 14px 0 8px; }
+    .fmd-q-row { display: inline-flex; align-items: center; gap: 14px; color: #ffffff; }
+    .fmd-op { font-size: 2rem; font-weight: 900; color: #0891b2; line-height: 1; }
+    .fmd-q-mark { font-size: 2.2rem; font-weight: 900; color: #06b6d4; }
+    .fmd-help-circles { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 6px; flex-wrap: wrap; }
+    .fmd-grid { display: inline-grid; grid-template-columns: auto auto auto; align-items: center; gap: 4px 10px; direction: ltr; margin: 6px auto; }
+    #fmd-feedback.help-msg {
+      background: linear-gradient(135deg, #0c4a6e, #0e3d5c);
+      color: #e0f2fe !important;
+      border: 2px solid #38bdf8;
+    }
+    #fmd-feedback.help-msg strong { color: #7dd3fc; }
+    #fmd-feedback.help-msg p { margin: 4px 0; font-size: 0.92rem; }
 
     .btn-row {
       display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
@@ -750,10 +786,51 @@
     .eng-opt-btn .opt-name { font-size: 1.1rem; font-weight: 800; }
     .eng-opt-btn .opt-desc { font-size: 0.78rem; font-weight: 400; color: #aaa; margin-top: 2px; }
     .eng-opt-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+    /* Math menu: 2-column grid */
+    #math-menu-screen .english-options {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+#math-menu-screen .eng-opt-btn {
+      padding: 13px 12px;
+    }
+    #math-menu-screen .eng-opt-btn .opt-icon { font-size: 1.6rem; }
+    #math-menu-screen .eng-opt-btn .opt-name { font-size: 0.95rem; }
     .eng-opt-btn.abc    { border-color: #6c63ff; background: #f5f5ff; color: #6c63ff; }
     .eng-opt-btn.abc .opt-desc { color: #a78bfa; }
     .eng-opt-btn.soon   { opacity: 0.55; cursor: default; }
     .eng-opt-btn.soon:hover { transform: none; box-shadow: none; }
+
+    /* ---- Find the Fraction ---- */
+    .ff-circle-wrap {
+      display: flex; justify-content: center; align-items: center;
+      margin: 10px auto;
+      filter: drop-shadow(0 0 14px rgba(6,182,212,0.65));
+    }
+    .ff-options {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin: 14px 0; width: 100%;
+    }
+    .ff-opt-btn {
+      border: 3px solid #e0e0e0; border-radius: 16px;
+      background: #fafafa; cursor: pointer;
+      font-family: 'Rubik', sans-serif;
+      padding: 16px 10px; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ff-opt-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+    .ff-opt-btn.ff-correct { border-color: #43e97b; background: #f0fff6; }
+    .ff-opt-btn.ff-wrong   { border-color: #ff6584; background: #fff0f3; }
+    .ff-opt-btn:disabled   { cursor: default; }
+    .frac-display {
+      display: inline-flex; flex-direction: column;
+      align-items: center; gap: 3px;
+      font-size: 1.6rem; font-weight: 900; color: inherit; line-height: 1;
+    }
+    .frac-bar {
+      display: block; height: 3px; width: 100%; min-width: 28px;
+      background: currentColor; border-radius: 2px;
+    }
 
     /* ---------- HEBREW MENU / EXERCISES ---------- */
     #hebrew-menu-screen { padding-top: 72px; }
@@ -1429,7 +1506,6 @@
       <input type="number" class="answer-input" id="answer-input"
              placeholder="?" autocomplete="off"
              onkeydown="handleKey(event)" />
-      <span class="feedback-icon" id="feedback-icon"></span>
     </div>
 
     <div class="feedback-msg" id="feedback-msg"></div>
@@ -1538,8 +1614,128 @@
           <span class="opt-name">חילוק ארוך</span>
         </span>
       </button>
+      <button class="eng-opt-btn" style="border-color:#0891b2;background:#e0f2fe;color:#0c4a6e" onclick="showScreen('fractions-menu-screen')">
+        <span class="opt-icon">½</span>
+        <span class="opt-text">
+          <span class="opt-name">שברים</span>
+        </span>
+      </button>
     </div>
     <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== FRACTIONS MENU SCREEN ======== -->
+<div class="screen" id="fractions-menu-screen">
+  <div class="card">
+    <span style="font-size:4rem;font-weight:900;background:linear-gradient(135deg,#0891b2,#06b6d4,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 2px 8px rgba(6,182,212,0.5))">½</span>
+    <div class="english-menu-title">שברים</div>
+    <div class="english-menu-sub">בחר נושא</div>
+    <div class="english-options">
+      <button class="eng-opt-btn" style="border-color:#0891b2;background:#e0f2fe;color:#0c4a6e" onclick="startFracFind()">
+        <span class="opt-icon">🔍</span>
+        <span class="opt-text">
+          <span class="opt-name">מצא את השבר</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#0891b2;background:#e0f2fe;color:#0c4a6e" onclick="startFracAS()">
+        <span class="opt-icon">➕</span>
+        <span class="opt-text">
+          <span class="opt-name">חיבור וחיסור שברים</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#0891b2;background:#e0f2fe;color:#0c4a6e" onclick="startFracMD()">
+        <span class="opt-icon">✖️</span>
+        <span class="opt-text">
+          <span class="opt-name">כפל וחילוק שברים</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('math-menu-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== FIND THE FRACTION SCREEN ======== -->
+<div class="screen" id="frac-find-screen">
+  <div class="card">
+    <div class="score-strip">
+      <div class="score-chip">✅ נכון: <span id="ff-score-c">0</span></div>
+      <div class="score-chip">❌ טעות: <span id="ff-score-w">0</span></div>
+      <div class="score-chip">📝 שאלה: <span id="ff-score-n">1</span></div>
+    </div>
+    <div class="level-badge">🔍 מצא את השבר</div>
+    <div class="question-number" id="ff-q-number">שאלה מספר 1</div>
+    <p style="font-size:1rem;font-weight:700;color:#555;margin:4px 0 8px;direction:rtl">איזה שבר מיוצג בתמונה?</p>
+    <div class="ff-circle-wrap">
+      <svg id="ff-circle" viewBox="0 0 200 200" width="190" height="190"></svg>
+    </div>
+    <div class="ff-options">
+      <button class="ff-opt-btn" id="ff-btn-0"></button>
+      <button class="ff-opt-btn" id="ff-btn-1"></button>
+      <button class="ff-opt-btn" id="ff-btn-2"></button>
+      <button class="ff-opt-btn" id="ff-btn-3"></button>
+    </div>
+    <div class="feedback-msg" id="ff-feedback" style="display:none"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn btn-help" id="ff-help-btn" onclick="ffHelp()">עזרה 💡</button>
+      <button class="btn btn-next" id="ff-next-btn" onclick="ffLoad()" style="display:none">הבא ▶</button>
+      <button class="btn btn-finish" onclick="showScreen('fractions-menu-screen')">סיום 🏁</button>
+    </div>
+    <button class="btn-back-eng" style="margin-top:18px" onclick="showScreen('fractions-menu-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== FRAC ADD/SUBTRACT SCREEN ======== -->
+<div class="screen" id="frac-as-screen">
+  <div class="card">
+    <div class="score-strip">
+      <div class="score-chip">✅ נכון: <span id="fas-score-c">0</span></div>
+      <div class="score-chip">❌ טעות: <span id="fas-score-w">0</span></div>
+      <div class="score-chip">📝 שאלה: <span id="fas-score-n">1</span></div>
+    </div>
+    <div class="level-badge">➕ חיבור וחיסור שברים</div>
+    <div class="question-number" id="fas-q-number">שאלה מספר 1</div>
+    <div class="fas-question" id="fas-question"></div>
+    <div class="ff-options">
+      <button class="ff-opt-btn" id="fas-btn-0"></button>
+      <button class="ff-opt-btn" id="fas-btn-1"></button>
+      <button class="ff-opt-btn" id="fas-btn-2"></button>
+      <button class="ff-opt-btn" id="fas-btn-3"></button>
+    </div>
+    <div class="feedback-msg" id="fas-feedback" style="display:none"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn btn-help" id="fas-help-btn" onclick="fasHelp()">עזרה 💡</button>
+      <button class="btn btn-next" id="fas-next-btn" onclick="fasLoad()" style="display:none">הבא ▶</button>
+      <button class="btn btn-finish" onclick="showScreen('fractions-menu-screen')">סיום 🏁</button>
+    </div>
+    <button class="btn-back-eng" style="margin-top:18px" onclick="showScreen('fractions-menu-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== FRAC MULTIPLY/DIVIDE SCREEN ======== -->
+<div class="screen" id="frac-md-screen">
+  <div class="card">
+    <div class="score-strip">
+      <div class="score-chip">✅ נכון: <span id="fmd-score-c">0</span></div>
+      <div class="score-chip">❌ טעות: <span id="fmd-score-w">0</span></div>
+      <div class="score-chip">📝 שאלה: <span id="fmd-score-n">1</span></div>
+    </div>
+    <div class="level-badge">✖️ כפל וחילוק שברים</div>
+    <div class="question-number" id="fmd-q-number">שאלה מספר 1</div>
+    <div class="fmd-question" id="fmd-question"></div>
+    <div class="ff-options">
+      <button class="ff-opt-btn" id="fmd-btn-0"></button>
+      <button class="ff-opt-btn" id="fmd-btn-1"></button>
+      <button class="ff-opt-btn" id="fmd-btn-2"></button>
+      <button class="ff-opt-btn" id="fmd-btn-3"></button>
+    </div>
+    <div class="feedback-msg" id="fmd-feedback" style="display:none"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn btn-help" id="fmd-help-btn" onclick="fmdHelp()">עזרה 💡</button>
+      <button class="btn btn-next" id="fmd-next-btn" onclick="fmdLoad()" style="display:none">הבא ▶</button>
+      <button class="btn btn-finish" onclick="showScreen('fractions-menu-screen')">סיום 🏁</button>
+    </div>
+    <button class="btn-back-eng" style="margin-top:18px" onclick="showScreen('fractions-menu-screen')">← חזור</button>
   </div>
 </div>
 
@@ -2306,6 +2502,602 @@ function selectDiff(diff) {
   loadQuestion();
 }
 
+// ===================== FIND THE FRACTION =====================
+let ffCount = 0, ffCorrect = 0, ffWrong = 0;
+let ffCurrentQ = null, ffAnswered = false;
+
+let ffUsed = new Set();
+
+function ffGetDenoms() {
+  if (ffCount <= 5)  return [2, 3];
+  if (ffCount <= 10) return [2, 3, 4];
+  return [2, 3, 4, 5, 6, 8];
+}
+
+function startFracFind() {
+  ffCount = 0; ffCorrect = 0; ffWrong = 0; ffUsed.clear();
+  document.getElementById('ff-score-c').textContent = 0;
+  document.getElementById('ff-score-w').textContent = 0;
+  showScreen('frac-find-screen');
+  ffLoad();
+}
+
+function ffGenQ() {
+  const allDenoms = [2, 3, 4, 5, 6, 8];
+  const denoms = ffGetDenoms();
+
+  // Build list of unused fractions at current difficulty
+  let pool = [];
+  for (const d of denoms)
+    for (let n = 1; n < d; n++)
+      if (!ffUsed.has(`${n}/${d}`)) pool.push({n, d});
+
+  // If all used, reset used set and try again
+  if (pool.length === 0) { ffUsed.clear(); return ffGenQ(); }
+
+  const choice = pool[Math.floor(Math.random() * pool.length)];
+  ffUsed.add(`${choice.n}/${choice.d}`);
+  const {n: numer, d: denom} = choice;
+
+  // Build 3 wrong answers from all denoms
+  const opts = [{n: numer, d: denom}];
+  let attempts = 0;
+  while (opts.length < 4 && attempts++ < 200) {
+    const wd = allDenoms[Math.floor(Math.random() * allDenoms.length)];
+    const wn = 1 + Math.floor(Math.random() * (wd - 1));
+    if (!opts.some(o => o.n === wn && o.d === wd)) opts.push({n: wn, d: wd});
+  }
+  opts.sort(() => Math.random() - 0.5);
+  return {numer, denom, opts, correctIdx: opts.findIndex(o => o.n === numer && o.d === denom)};
+}
+
+function ffFracHTML(n, d, size='1.2rem') {
+  return `<span class="frac-display" style="display:inline-flex;font-size:${size}"><span class="frac-n">${n}</span><span class="frac-bar"></span><span class="frac-d">${d}</span></span>`;
+}
+
+function ffLoad() {
+  ffAnswered = false;
+  ffCount++;
+  ffCurrentQ = ffGenQ();
+  document.getElementById('ff-q-number').textContent = `שאלה מספר ${ffCount}`;
+  document.getElementById('ff-score-n').textContent = ffCount;
+  document.getElementById('ff-feedback').style.display = 'none';
+  document.getElementById('ff-next-btn').style.display = 'none';
+  document.getElementById('ff-help-btn').style.display = '';
+
+  drawFracCircle(document.getElementById('ff-circle'), ffCurrentQ.numer, ffCurrentQ.denom);
+
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`ff-btn-${i}`);
+    const o = ffCurrentQ.opts[i];
+    btn.innerHTML = `<span class="frac-display"><span class="frac-n">${o.n}</span><span class="frac-bar"></span><span class="frac-d">${o.d}</span></span>`;
+    btn.className = 'ff-opt-btn';
+    btn.disabled = false;
+    btn.onclick = () => ffCheck(i);
+  }
+}
+
+function ffCheck(idx) {
+  if (ffAnswered) return;
+  ffAnswered = true;
+  const correct = idx === ffCurrentQ.correctIdx;
+
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`ff-btn-${i}`);
+    btn.disabled = true;
+    if (i === ffCurrentQ.correctIdx) btn.classList.add('ff-correct');
+    else if (i === idx) btn.classList.add('ff-wrong');
+  }
+
+  document.getElementById('ff-help-btn').style.display = 'none';
+  document.getElementById('ff-next-btn').style.display = '';
+
+  const fb = document.getElementById('ff-feedback');
+  const frac = ffFracHTML(ffCurrentQ.numer, ffCurrentQ.denom);
+  if (correct) {
+    ffCorrect++;
+    document.getElementById('ff-score-c').textContent = ffCorrect;
+    fb.style.display = 'none';
+    playSuccess(); launchConfetti();
+  } else {
+    ffWrong++;
+    document.getElementById('ff-score-w').textContent = ffWrong;
+    fb.className = 'feedback-msg wrong-msg';
+    fb.innerHTML = `אופס! התשובה הנכונה היא ${frac}`;
+    fb.style.display = 'block';
+    playWrong();
+  }
+}
+
+function ffHelp() {
+  const {numer, denom} = ffCurrentQ;
+  const fb = document.getElementById('ff-feedback');
+  fb.className = 'feedback-msg help-msg';
+  fb.innerHTML = `💡 החוג מחולק ל-<strong>${denom}</strong> חלקים שווים.<br>
+    החלקים הכחולים הם <strong>${numer}</strong> מתוך <strong>${denom}</strong>.<br>
+    לכן השבר הוא ${ffFracHTML(numer, denom)}`;
+  fb.style.display = 'block';
+}
+
+function drawFracCircle(svg, numer, denom) {
+  const cx = 100, cy = 100, r = 82;
+  const step = 360 / denom;
+
+  let slices = '', lines = '';
+  for (let i = 0; i < denom; i++) {
+    const s = -90 + i * step, e = s + step;
+    const filled = i < numer;
+    slices += `<path d="${ffSlicePath(cx,cy,r,s,e)}" fill="url(#${filled?'ff-fill':'ff-empty'})" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>`;
+  }
+  for (let i = 0; i < denom; i++) {
+    const a = (-90 + i * step) * Math.PI / 180;
+    lines += `<line x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(a)).toFixed(1)}" y2="${(cy+r*Math.sin(a)).toFixed(1)}" stroke="rgba(255,255,255,0.75)" stroke-width="2"/>`;
+  }
+
+  // Glowing outline around the filled region
+  const filledOutline = ffSlicePath(cx, cy, r, -90, -90 + numer * step);
+
+  svg.innerHTML = `
+    <defs>
+      <radialGradient id="ff-fill" cx="65" cy="50" r="105" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="20%" stop-color="#67e8f9"/>
+        <stop offset="60%" stop-color="#0891b2"/>
+        <stop offset="100%" stop-color="#164e63"/>
+      </radialGradient>
+      <radialGradient id="ff-empty" cx="65" cy="50" r="105" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#334155"/>
+        <stop offset="100%" stop-color="#0f172a"/>
+      </radialGradient>
+      <radialGradient id="ff-shine" cx="60" cy="40" r="72" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+        <stop offset="60%" stop-color="rgba(255,255,255,0.06)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </radialGradient>
+      <filter id="ff-glow" x="-25%" y="-25%" width="150%" height="150%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="ff-glow2" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <ellipse cx="${cx}" cy="${cy+7}" rx="${r+2}" ry="${r-12}" fill="rgba(0,0,0,0.45)" filter="url(#ff-glow)"/>
+    ${slices}
+    ${lines}
+    <path d="${filledOutline}" fill="none" stroke="rgba(0,240,255,0.55)" stroke-width="7" stroke-linejoin="round" pointer-events="none" filter="url(#ff-glow2)"/>
+    <path d="${filledOutline}" fill="none" stroke="#00f0ff" stroke-width="2.5" stroke-linejoin="round" pointer-events="none"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#ff-shine)" pointer-events="none"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(34,211,238,0.4)" stroke-width="6" pointer-events="none" filter="url(#ff-glow)"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#22d3ee" stroke-width="2" pointer-events="none"/>`;
+}
+
+function ffSlicePath(cx, cy, r, startDeg, endDeg) {
+  const rad = d => d * Math.PI / 180;
+  const x1 = (cx + r * Math.cos(rad(startDeg))).toFixed(2);
+  const y1 = (cy + r * Math.sin(rad(startDeg))).toFixed(2);
+  const x2 = (cx + r * Math.cos(rad(endDeg))).toFixed(2);
+  const y2 = (cy + r * Math.sin(rad(endDeg))).toFixed(2);
+  const large = (endDeg - startDeg > 180) ? 1 : 0;
+  return `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`;
+}
+
+// ===================== FRAC ADD/SUBTRACT =====================
+let fasCount = 0, fasCorrect = 0, fasWrong = 0;
+let fasCurrentQ = null, fasAnswered = false;
+let fasUsed = new Set();
+
+function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+function lcm(a, b) { return a * b / gcd(a, b); }
+
+function fasGetDiff() {
+  if (fasCount <= 5)  return 'same';
+  if (fasCount <= 10) return 'mult';
+  return 'diff';
+}
+
+function fasGenQ() {
+  const diff = fasGetDiff();
+  let attempts = 0;
+  while (attempts++ < 500) {
+    const op = Math.random() < 0.5 ? '+' : '-';
+    let a, b, c, d;
+    if (diff === 'same') {
+      b = d = [2,3,4,5,6][Math.floor(Math.random()*5)];
+      a = 1 + Math.floor(Math.random()*(b-1));
+      c = 1 + Math.floor(Math.random()*(d-1));
+    } else if (diff === 'mult') {
+      b = [2,3,4][Math.floor(Math.random()*3)];
+      d = b * (2 + Math.floor(Math.random()*2));
+      a = 1 + Math.floor(Math.random()*(b-1));
+      c = 1 + Math.floor(Math.random()*(d-1));
+      if (Math.random() < 0.5) { [a,b,c,d] = [c,d,a,b]; }
+    } else {
+      const pairs = [[2,3],[2,5],[3,4],[3,5],[4,5],[2,7],[3,7]];
+      [b, d] = pairs[Math.floor(Math.random()*pairs.length)];
+      a = 1 + Math.floor(Math.random()*(b-1));
+      c = 1 + Math.floor(Math.random()*(d-1));
+    }
+    const L = lcm(b, d);
+    const an = a*(L/b), cn = c*(L/d);
+    const rawRn = op === '+' ? an+cn : an-cn;
+    if (rawRn <= 0 || rawRn >= L) continue;
+    const g = gcd(rawRn, L);
+    const rn = rawRn/g, rd = L/g;
+    const key = `${a}/${b}${op}${c}/${d}`;
+    if (fasUsed.has(key)) continue;
+    fasUsed.add(key);
+
+    const opts = [{n:rn, d:rd}];
+    let wa = 0;
+    while (opts.length < 4 && wa++ < 400) {
+      let wn, wd;
+      const strat = Math.floor(Math.random()*4);
+      if (strat === 0) {
+        const wrn = op==='+' ? an-cn : an+cn;
+        if (wrn <= 0 || wrn >= L) continue;
+        const wg = gcd(Math.abs(wrn), L); wn = Math.abs(wrn)/wg; wd = L/wg;
+      } else if (strat === 1) {
+        wn = a+c; wd = b+d;
+        const wg = gcd(wn, wd); wn = wn/wg; wd = wd/wg;
+      } else if (strat === 2) {
+        wd = rd; wn = rn + (Math.random()<0.5 ? 1 : -1);
+        if (wn <= 0 || wn >= wd) continue;
+        const wg = gcd(wn, wd); wn = wn/wg; wd = wd/wg;
+      } else {
+        wd = [2,3,4,5,6][Math.floor(Math.random()*5)];
+        wn = 1+Math.floor(Math.random()*(wd-1));
+        const wg = gcd(wn, wd); wn = wn/wg; wd = wd/wg;
+      }
+      if (wn > 0 && wd > 0 && !opts.some(o=>o.n===wn&&o.d===wd)) opts.push({n:wn, d:wd});
+    }
+    while (opts.length < 4) {
+      const wd = [2,3,4,5,6][Math.floor(Math.random()*5)];
+      const wn = 1+Math.floor(Math.random()*(wd-1));
+      const wg = gcd(wn, wd); const fn=wn/wg, fd=wd/wg;
+      if (!opts.some(o=>o.n===fn&&o.d===fd)) opts.push({n:fn, d:fd});
+    }
+    opts.sort(()=>Math.random()-0.5);
+    return {a,b,c,d,op,L,an,cn,rawRn,rn,rd, opts,
+            correctIdx:opts.findIndex(o=>o.n===rn&&o.d===rd)};
+  }
+  const opts = [{n:3,d:4},{n:1,d:2},{n:2,d:3},{n:1,d:4}];
+  return {a:1,b:2,c:1,d:4,op:'+',L:4,an:2,cn:1,rawRn:3,rn:3,rd:4,opts,correctIdx:0};
+}
+
+function startFracAS() {
+  fasCount = 0; fasCorrect = 0; fasWrong = 0; fasUsed.clear();
+  document.getElementById('fas-score-c').textContent = 0;
+  document.getElementById('fas-score-w').textContent = 0;
+  showScreen('frac-as-screen');
+  fasLoad();
+}
+
+function fasLoad() {
+  fasAnswered = false;
+  fasCount++;
+  fasCurrentQ = fasGenQ();
+  const {a,b,c,d,op} = fasCurrentQ;
+  const opSym = op==='+' ? '+' : '−';
+  document.getElementById('fas-q-number').textContent = `שאלה מספר ${fasCount}`;
+  document.getElementById('fas-score-n').textContent = fasCount;
+  document.getElementById('fas-feedback').style.display = 'none';
+  document.getElementById('fas-next-btn').style.display = 'none';
+  document.getElementById('fas-help-btn').style.display = '';
+  document.getElementById('fas-question').innerHTML =
+    `<div class="fas-q-row" dir="ltr">
+      ${ffFracHTML(a,b,'2rem')}
+      <span class="fas-op">${opSym}</span>
+      ${ffFracHTML(c,d,'2rem')}
+      <span class="fas-op">=</span>
+      <span class="fas-q-mark">?</span>
+    </div>`;
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`fas-btn-${i}`);
+    const o = fasCurrentQ.opts[i];
+    btn.innerHTML = `<span class="frac-display"><span class="frac-n">${o.n}</span><span class="frac-bar"></span><span class="frac-d">${o.d}</span></span>`;
+    btn.className = 'ff-opt-btn';
+    btn.disabled = false;
+    btn.onclick = () => fasCheck(i);
+  }
+}
+
+function fasCheck(idx) {
+  if (fasAnswered) return;
+  fasAnswered = true;
+  const correct = idx === fasCurrentQ.correctIdx;
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`fas-btn-${i}`);
+    btn.disabled = true;
+    if (i === fasCurrentQ.correctIdx) btn.classList.add('ff-correct');
+    else if (i === idx) btn.classList.add('ff-wrong');
+  }
+  document.getElementById('fas-help-btn').style.display = 'none';
+  document.getElementById('fas-next-btn').style.display = '';
+  const fb = document.getElementById('fas-feedback');
+  if (correct) {
+    fasCorrect++;
+    document.getElementById('fas-score-c').textContent = fasCorrect;
+    fb.style.display = 'none';
+    playSuccess(); launchConfetti();
+  } else {
+    fasWrong++;
+    document.getElementById('fas-score-w').textContent = fasWrong;
+    fb.className = 'feedback-msg wrong-msg';
+    fb.innerHTML = `אופס! התשובה הנכונה היא ${ffFracHTML(fasCurrentQ.rn, fasCurrentQ.rd)}`;
+    fb.style.display = 'block';
+    playWrong();
+  }
+}
+
+function fasMiniSVG(n, d) {
+  const sz=72, cx=36, cy=36, r=29, step=360/d;
+  let slices='', lines='';
+  for (let i=0;i<d;i++) {
+    const s=-90+i*step, e=s+step;
+    slices += `<path d="${ffSlicePath(cx,cy,r,s,e)}" fill="${i<n?'#0891b2':'#1e293b'}" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>`;
+  }
+  for (let i=0;i<d;i++) {
+    const ang=(-90+i*step)*Math.PI/180;
+    lines += `<line x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(ang)).toFixed(1)}" y2="${(cy+r*Math.sin(ang)).toFixed(1)}" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>`;
+  }
+  return `<svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}" style="display:inline-block;vertical-align:middle">
+    ${slices}${lines}
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="${cx}" y="${sz-2}" text-anchor="middle" font-size="10" fill="#e0f2fe" font-weight="bold">${n}/${d}</text>
+  </svg>`;
+}
+
+function fasHelp() {
+  if (!fasCurrentQ) return;
+  const {a,b,c,d,op,L,an,cn,rawRn,rn,rd} = fasCurrentQ;
+  const fb = document.getElementById('fas-feedback');
+  fb.className = 'feedback-msg help-msg';
+  const opSym = op==='+' ? '+' : '−';
+  const sameDenom = b===d;
+  const needSimplify = (rawRn !== rn || L !== rd);
+  let html = `<div style="direction:rtl">`;
+  html += `<div class="fas-help-circles">
+    ${fasMiniSVG(a,b)}
+    <span style="font-size:1.5rem;font-weight:900;color:#7dd3fc">${opSym}</span>
+    ${fasMiniSVG(c,d)}
+    <span style="font-size:1.5rem;font-weight:900;color:#7dd3fc">=</span>
+    ${fasMiniSVG(rn,rd)}
+  </div>`;
+  if (sameDenom) {
+    html += `<p>📌 המכנה כבר זהה (${b}), מחשבים ישירות:</p>`;
+    html += `<p class="fas-help-step">${ffFracHTML(a,b)} ${opSym} ${ffFracHTML(c,d)} = ${ffFracHTML(rawRn,L)}</p>`;
+  } else {
+    html += `<p>📌 המכנים שונים (${b} ו-${d}).</p>`;
+    html += `<p>✏️ מכנה משותף של ${b} ו-${d}: <strong>${L}</strong></p>`;
+    html += `<p class="fas-help-step">${ffFracHTML(a,b)} = ${ffFracHTML(an,L)}</p>`;
+    html += `<p class="fas-help-step">${ffFracHTML(c,d)} = ${ffFracHTML(cn,L)}</p>`;
+    html += `<p class="fas-help-step">${ffFracHTML(an,L)} ${opSym} ${ffFracHTML(cn,L)} = ${ffFracHTML(rawRn,L)}</p>`;
+  }
+  if (needSimplify) {
+    html += `<p>✂️ מפשטים: ${ffFracHTML(rawRn,L)} = ${ffFracHTML(rn,rd)}</p>`;
+  }
+  html += `</div>`;
+  fb.innerHTML = html;
+  fb.style.display = 'block';
+}
+
+// ===================== FRAC MULTIPLY/DIVIDE =====================
+let fmdCount = 0, fmdCorrect = 0, fmdWrong = 0;
+let fmdCurrentQ = null, fmdAnswered = false;
+let fmdUsed = new Set();
+
+function fmdGetDiff() {
+  if (fmdCount <= 5)  return 'easy';   // small numerators/denoms, multiply only
+  if (fmdCount <= 10) return 'mid';    // divide introduced, slightly larger
+  return 'hard';                        // both ops, need simplification before/after
+}
+
+function fmdGenQ() {
+  const diff = fmdGetDiff();
+  let attempts = 0;
+  while (attempts++ < 500) {
+    let a, b, c, d, op;
+    if (diff === 'easy') {
+      op = '×';
+      b = [2,3,4][Math.floor(Math.random()*3)];
+      d = [2,3,4][Math.floor(Math.random()*3)];
+      a = 1 + Math.floor(Math.random()*(b-1));
+      c = 1 + Math.floor(Math.random()*(d-1));
+    } else if (diff === 'mid') {
+      op = Math.random() < 0.5 ? '×' : '÷';
+      b = [2,3,4,5][Math.floor(Math.random()*4)];
+      d = [2,3,4,5][Math.floor(Math.random()*4)];
+      a = 1 + Math.floor(Math.random()*(b-1));
+      c = 1 + Math.floor(Math.random()*(d-1));
+    } else {
+      op = Math.random() < 0.5 ? '×' : '÷';
+      b = [2,3,4,5,6][Math.floor(Math.random()*5)];
+      d = [2,3,4,5,6][Math.floor(Math.random()*5)];
+      a = 1 + Math.floor(Math.random()*(b-1));
+      c = 1 + Math.floor(Math.random()*Math.max(d-1,1));
+    }
+
+    // For division: a/b ÷ c/d = a/b × d/c = (a×d)/(b×c)
+    let rn, rd;
+    if (op === '×') {
+      rn = a * c; rd = b * d;
+    } else {
+      if (c === 0) continue;          // avoid ÷0
+      rn = a * d; rd = b * c;
+    }
+    if (rn <= 0 || rd <= 0) continue;
+    const g = gcd(rn, rd);
+    const srn = rn/g, srd = rd/g;
+    // keep result a proper fraction (< 1) so answers stay comparable
+    if (srn >= srd) continue;
+
+    const key = `${a}/${b}${op}${c}/${d}`;
+    if (fmdUsed.has(key)) continue;
+    fmdUsed.add(key);
+
+    // For division, the "flipped" denominator
+    const flipC = op === '÷' ? d : null;
+    const flipD = op === '÷' ? c : null;
+
+    // Build 4 options — 1 correct + 3 plausible wrong
+    const opts = [{n:srn, d:srd}];
+    let wa = 0;
+    while (opts.length < 4 && wa++ < 400) {
+      let wn, wd;
+      const strat = Math.floor(Math.random()*5);
+      if (strat === 0) {
+        // forgot to flip for division (used c/d instead of d/c)
+        const wrn = a*c, wrd = b*d;
+        const wg = gcd(wrn,wrd); wn=wrn/wg; wd=wrd/wg;
+      } else if (strat === 1) {
+        // added instead of multiplied
+        const L = lcm(b,d);
+        const wrn = (op==='×'||op==='÷') ? a*(L/b) + c*(L/d) : a*c;
+        const wrd = L;
+        if (wrn<=0||wrn>=wrd) { continue; }
+        const wg=gcd(wrn,wrd); wn=wrn/wg; wd=wrd/wg;
+      } else if (strat === 2) {
+        // off-by-one numerator
+        wn = srn + (Math.random()<0.5?1:-1); wd = srd;
+        if (wn<=0||wn>=wd) continue;
+        const wg=gcd(wn,wd); wn=wn/wg; wd=wd/wg;
+      } else if (strat === 3) {
+        // multiply only numerators, keep one denom
+        wn=a*c; wd=b;
+        const wg=gcd(wn,wd); wn=wn/wg; wd=wd/wg;
+      } else {
+        wd=[2,3,4,5,6][Math.floor(Math.random()*5)];
+        wn=1+Math.floor(Math.random()*(wd-1));
+        const wg=gcd(wn,wd); wn=wn/wg; wd=wd/wg;
+      }
+      if (wn>0 && wd>0 && !opts.some(o=>o.n===wn&&o.d===wd)) opts.push({n:wn,d:wd});
+    }
+    while (opts.length < 4) {
+      const wd=[2,3,4,5,6][Math.floor(Math.random()*5)];
+      const wn=1+Math.floor(Math.random()*(wd-1));
+      const wg=gcd(wn,wd); const fn=wn/wg,fd=wd/wg;
+      if (!opts.some(o=>o.n===fn&&o.d===fd)) opts.push({n:fn,d:fd});
+    }
+    opts.sort(()=>Math.random()-0.5);
+    return {a,b,c,d,op,rn:srn,rd:srd,rawRn:rn,rawRd:rd,flipC,flipD,
+            opts, correctIdx:opts.findIndex(o=>o.n===srn&&o.d===srd)};
+  }
+  const opts=[{n:1,d:6},{n:1,d:2},{n:1,d:3},{n:2,d:3}];
+  return {a:1,b:2,c:1,d:3,op:'×',rn:1,rd:6,rawRn:1,rawRd:6,flipC:null,flipD:null,opts,correctIdx:0};
+}
+
+function startFracMD() {
+  fmdCount=0; fmdCorrect=0; fmdWrong=0; fmdUsed.clear();
+  document.getElementById('fmd-score-c').textContent=0;
+  document.getElementById('fmd-score-w').textContent=0;
+  showScreen('frac-md-screen');
+  fmdLoad();
+}
+
+function fmdLoad() {
+  fmdAnswered=false;
+  fmdCount++;
+  fmdCurrentQ=fmdGenQ();
+  const {a,b,c,d,op}=fmdCurrentQ;
+  const opSym = op==='×' ? '×' : '÷';
+  document.getElementById('fmd-q-number').textContent=`שאלה מספר ${fmdCount}`;
+  document.getElementById('fmd-score-n').textContent=fmdCount;
+  document.getElementById('fmd-feedback').style.display='none';
+  document.getElementById('fmd-next-btn').style.display='none';
+  document.getElementById('fmd-help-btn').style.display='';
+  document.getElementById('fmd-question').innerHTML=
+    `<div class="fmd-q-row" dir="ltr">
+      ${ffFracHTML(a,b,'2rem')}
+      <span class="fmd-op">${opSym}</span>
+      ${ffFracHTML(c,d,'2rem')}
+      <span class="fmd-op">=</span>
+      <span class="fmd-q-mark">?</span>
+    </div>`;
+  for (let i=0;i<4;i++) {
+    const btn=document.getElementById(`fmd-btn-${i}`);
+    const o=fmdCurrentQ.opts[i];
+    btn.innerHTML=`<span class="frac-display"><span class="frac-n">${o.n}</span><span class="frac-bar"></span><span class="frac-d">${o.d}</span></span>`;
+    btn.className='ff-opt-btn';
+    btn.disabled=false;
+    btn.onclick=()=>fmdCheck(i);
+  }
+}
+
+function fmdCheck(idx) {
+  if (fmdAnswered) return;
+  fmdAnswered=true;
+  const correct=idx===fmdCurrentQ.correctIdx;
+  for (let i=0;i<4;i++) {
+    const btn=document.getElementById(`fmd-btn-${i}`);
+    btn.disabled=true;
+    if (i===fmdCurrentQ.correctIdx) btn.classList.add('ff-correct');
+    else if (i===idx) btn.classList.add('ff-wrong');
+  }
+  document.getElementById('fmd-help-btn').style.display='none';
+  document.getElementById('fmd-next-btn').style.display='';
+  const fb=document.getElementById('fmd-feedback');
+  if (correct) {
+    fmdCorrect++;
+    document.getElementById('fmd-score-c').textContent=fmdCorrect;
+    fb.style.display='none';
+    playSuccess(); launchConfetti();
+  } else {
+    fmdWrong++;
+    document.getElementById('fmd-score-w').textContent=fmdWrong;
+    fb.className='feedback-msg wrong-msg';
+    fb.innerHTML=`אופס! התשובה הנכונה היא ${ffFracHTML(fmdCurrentQ.rn,fmdCurrentQ.rd)}`;
+    fb.style.display='block';
+    playWrong();
+  }
+}
+
+function fmdHelp() {
+  if (!fmdCurrentQ) return;
+  const {a,b,c,d,op,rn,rd,rawRn,rawRd,flipC,flipD}=fmdCurrentQ;
+  const fb=document.getElementById('fmd-feedback');
+  fb.className='feedback-msg help-msg';
+  const multiply = op==='×';
+  const needSimplify = (rawRn!==rn || rawRd!==rd);
+
+  let html=`<div style="direction:rtl">`;
+
+  // Mini circles: left fraction  op  right fraction  =  result
+  html+=`<div class="fmd-help-circles">
+    ${fasMiniSVG(a,b)}
+    <span style="font-size:1.5rem;font-weight:900;color:#7dd3fc">${op}</span>
+    ${fasMiniSVG(c,d)}
+    <span style="font-size:1.5rem;font-weight:900;color:#7dd3fc">=</span>
+    ${fasMiniSVG(rn,rd)}
+  </div>`;
+
+  if (multiply) {
+    html+=`<p>📌 בכפל שברים — כופלים מונה במונה ומכנה במכנה:</p>`;
+    html+=`<div class="fmd-grid">
+      <span>${a}</span><span style="color:#7dd3fc">×</span><span>${c}</span>
+      <span style="border-top:2px solid #7dd3fc;grid-column:1/-1"></span>
+      <span>${b}</span><span style="color:#7dd3fc">×</span><span>${d}</span>
+    </div>`;
+    html+=`<p class="fas-help-step">= ${ffFracHTML(rawRn,rawRd)}</p>`;
+  } else {
+    html+=`<p>📌 בחילוק שברים — הופכים את השבר השני וכופלים:</p>`;
+    html+=`<p class="fas-help-step">${ffFracHTML(a,b)} ÷ ${ffFracHTML(c,d)} = ${ffFracHTML(a,b)} × ${ffFracHTML(flipC,flipD)}</p>`;
+    html+=`<div class="fmd-grid">
+      <span>${a}</span><span style="color:#7dd3fc">×</span><span>${flipC}</span>
+      <span style="border-top:2px solid #7dd3fc;grid-column:1/-1"></span>
+      <span>${b}</span><span style="color:#7dd3fc">×</span><span>${flipD}</span>
+    </div>`;
+    html+=`<p class="fas-help-step">= ${ffFracHTML(rawRn,rawRd)}</p>`;
+  }
+  if (needSimplify) {
+    html+=`<p>✂️ מפשטים: ${ffFracHTML(rawRn,rawRd)} = ${ffFracHTML(rn,rd)}</p>`;
+  }
+  html+=`</div>`;
+  fb.innerHTML=html;
+  fb.style.display='block';
+}
+
 // ===================== LONG DIVISION =====================
 let ldCount = 0, ldCorrect = 0, ldWrong = 0;
 let ldCurrentQ = null, ldAnswered = false;
@@ -2489,10 +3281,6 @@ function loadQuestion() {
   inp.disabled = false;
   inp.focus();
 
-  const icon = document.getElementById('feedback-icon');
-  icon.textContent = '';
-  icon.style.display = 'none';
-
   const msg = document.getElementById('feedback-msg');
   msg.style.display = 'none';
   msg.className = 'feedback-msg';
@@ -2525,21 +3313,6 @@ function checkAnswer() {
     correctCount++;
     inp.classList.add('correct');
 
-    const icon = document.getElementById('feedback-icon');
-    const emojis = ['🎉','⭐','🦄','🌟','🎊','🥳','👏','💫','🚀','🏆'];
-    icon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    icon.style.display = 'inline';
-
-    const n = playerName ? playerName + ' ' : '';
-    const msgs = [
-      `מעולה! ${n}צודק/ת לגמרי! 🎉`,
-      `וואו! כל הכבוד${playerName ? ', ' + playerName : ''}! ⭐`,
-      `נהדר! ${n}ממש חכם/ה! 🦄`,
-      `פנטסטי! תשובה מושלמת! 🌟`,
-      `יפה מאוד! המשיך/י כך! 🚀`
-    ];
-    showMsg('correct-msg', msgs[Math.floor(Math.random() * msgs.length)]);
-
     document.getElementById('score-correct').textContent = correctCount;
     playSuccess();
     launchConfetti();
@@ -2547,10 +3320,6 @@ function checkAnswer() {
   } else {
     wrongCount++;
     inp.classList.add('wrong');
-
-    const icon = document.getElementById('feedback-icon');
-    icon.textContent = '❌';
-    icon.style.display = 'inline';
 
     showMsg('wrong-msg', `אופס! טעות קטנה – בואו נראה איך פותרים:<br>${currentQ.explanation}`);
 
