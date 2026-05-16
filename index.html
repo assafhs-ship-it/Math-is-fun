@@ -1493,9 +1493,9 @@
     <div class="ld-help-panel" id="ld-help-panel" style="display:none">
       <div class="ld-step-content" id="ld-step-content"></div>
       <div class="ld-step-nav">
-        <button class="ld-step-btn" id="ld-prev-btn" onclick="ldStepPrev()">◀ הקודם</button>
-        <span class="ld-step-counter" id="ld-step-counter">שלב 1 מתוך 1</span>
         <button class="ld-step-btn" id="ld-next-step-btn" onclick="ldStepNext()">הבא ▶</button>
+        <span class="ld-step-counter" id="ld-step-counter">שלב 1 מתוך 1</span>
+        <button class="ld-step-btn" id="ld-prev-btn" onclick="ldStepPrev()">◀ הקודם</button>
       </div>
     </div>
     <button class="btn-back-eng" onclick="showScreen('math-menu-screen')">← חזור</button>
@@ -2231,8 +2231,9 @@ function ldGenQuestion() {
 }
 
 function ldBuildSteps(a, b) {
+  const ltr = s => `<bdi dir="ltr">${s}</bdi>`;
   const digits = String(a).split('').map(Number);
-  const steps = [`📋 נחשב: ${a} ÷ ${b}<br>נעבור ספרה ספרה משמאל לימין.`];
+  const steps = [`📋 נחשב: ${ltr(`${a} ÷ ${b}`)}<br>נעבור ספרה ספרה משמאל לימין.`];
   let current = 0, quotientDigits = [], i = 0;
 
   while (i < digits.length) {
@@ -2253,12 +2254,12 @@ function ldBuildSteps(a, b) {
     quotientDigits.push(q);
 
     let step = `מסתכלים על <strong>${current}</strong>:<br>`;
-    step += `${current} ÷ ${b} = <strong>${q}</strong> &nbsp;(כי ${q} × ${b} = ${prod})<br>`;
-    step += `${current} − ${prod} = <strong>${rem}</strong>`;
+    step += ltr(`${current} ÷ ${b} = <strong>${q}</strong>`) + ` &nbsp;(כי ${ltr(`${q} × ${b} = ${prod}`)})<br>`;
+    step += ltr(`${current} − ${prod} = <strong>${rem}</strong>`);
     if (rem === 0 && i >= digits.length) {
       step += ` ← נשאר 0, סיימנו! ✅`;
     } else if (rem > 0 && i < digits.length) {
-      step += ` ← נשאר ${rem}, מורידים ${digits[i]} → יש לנו ${rem}${digits[i]}`;
+      step += ` ← נשאר ${rem}, מורידים ${digits[i]} → יש לנו ${ltr(`${rem}${digits[i]}`)}`;
     } else if (rem === 0 && i < digits.length) {
       step += ` ← נשאר 0, מורידים ${digits[i]}`;
     }
@@ -2266,7 +2267,7 @@ function ldBuildSteps(a, b) {
     current = rem;
   }
 
-  steps.push(`✅ <strong>התשובה הסופית: ${a} ÷ ${b} = ${quotientDigits.join('')}</strong>`);
+  steps.push(`✅ <strong>התשובה הסופית: ${ltr(`${a} ÷ ${b} = ${quotientDigits.join('')}`)}</strong>`);
   return steps;
 }
 
