@@ -9,14 +9,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary: #6c63ff;
-      --secondary: #ff6584;
-      --accent: #43e97b;
-      --yellow: #f9d423;
-      --bg: #f0f4ff;
-      --card: #ffffff;
-      --text: #2d3436;
-      --shadow: 0 8px 32px rgba(108,99,255,0.15);
+      --primary: #7c3aed;
+      --secondary: #ec4899;
+      --accent: #10b981;
+      --yellow: #f59e0b;
+      --bg: linear-gradient(160deg, #fdf4ff 0%, #eff6ff 45%, #f0fdf4 100%);
+      --card: rgba(255,255,255,0.93);
+      --text: #1e1b4b;
+      --shadow: 0 12px 48px rgba(124,58,237,0.12), 0 4px 16px rgba(236,72,153,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
     }
 
     body {
@@ -36,20 +36,21 @@
       content: '';
       position: fixed;
       border-radius: 50%;
-      opacity: 0.18;
       pointer-events: none;
       z-index: 0;
     }
     body::before {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, #6c63ff, #ff6584);
-      top: -150px; left: -150px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, #c084fc, #f9a8d4);
+      opacity: 0.28;
+      top: -160px; left: -160px;
       animation: blobMove1 12s ease-in-out infinite alternate;
     }
     body::after {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, #43e97b, #f9d423);
-      bottom: -100px; right: -100px;
+      width: 440px; height: 440px;
+      background: radial-gradient(circle, #34d399, #fbbf24);
+      opacity: 0.22;
+      bottom: -110px; right: -110px;
       animation: blobMove2 10s ease-in-out infinite alternate;
     }
     @keyframes blobMove1 { to { transform: translate(60px, 80px) scale(1.1); } }
@@ -91,6 +92,9 @@
       background: var(--card);
       border-radius: 28px;
       box-shadow: var(--shadow);
+      border: 1.5px solid rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       padding: 40px 36px;
       width: 100%;
       text-align: center;
@@ -109,7 +113,10 @@
     #welcome-screen h1 {
       font-family: 'Secular One', sans-serif;
       font-size: 2.4rem;
-      color: var(--primary);
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-bottom: 6px;
     }
     #welcome-screen p {
@@ -132,7 +139,7 @@
     }
     .input-group input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(108,99,255,0.15);
+      box-shadow: 0 0 0 4px rgba(124,58,237,0.15);
     }
 
     /* ---------- BUTTONS ---------- */
@@ -247,7 +254,7 @@
     }
     .answer-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(108,99,255,0.15);
+      box-shadow: 0 0 0 4px rgba(124,58,237,0.15);
     }
     .answer-input.correct {
       border-color: var(--accent);
@@ -303,9 +310,9 @@
 
     /* === Frac Add/Sub === */
     .fas-question { text-align: center; margin: 14px 0 8px; }
-    .fas-q-row { display: inline-flex; align-items: center; gap: 14px; color: #ffffff; }
-    .fas-op { font-size: 2rem; font-weight: 900; color: #0891b2; line-height: 1; }
-    .fas-q-mark { font-size: 2.2rem; font-weight: 900; color: #06b6d4; }
+    .fas-q-row { display: inline-flex; align-items: center; gap: 14px; color: var(--text); }
+    .fas-op { font-size: 2rem; font-weight: 900; color: #0e7490; line-height: 1; }
+    .fas-q-mark { font-size: 2.2rem; font-weight: 900; color: #0e7490; }
     .fas-help-circles { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px 0 6px; flex-wrap: wrap; }
     #fas-feedback.help-msg {
       background: linear-gradient(135deg, #0c4a6e, #0e3d5c);
@@ -318,9 +325,9 @@
 
     /* === Frac Multiply/Divide === */
     .fmd-question { text-align: center; margin: 14px 0 8px; }
-    .fmd-q-row { display: inline-flex; align-items: center; gap: 14px; color: #ffffff; }
-    .fmd-op { font-size: 2rem; font-weight: 900; color: #0891b2; line-height: 1; }
-    .fmd-q-mark { font-size: 2.2rem; font-weight: 900; color: #06b6d4; }
+    .fmd-q-row { display: inline-flex; align-items: center; gap: 14px; color: var(--text); }
+    .fmd-op { font-size: 2rem; font-weight: 900; color: #0e7490; line-height: 1; }
+    .fmd-q-mark { font-size: 2.2rem; font-weight: 900; color: #0e7490; }
     .fmd-help-circles { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 6px; flex-wrap: wrap; }
     .fmd-grid { display: inline-grid; grid-template-columns: auto auto auto; align-items: center; gap: 4px 10px; direction: ltr; margin: 6px auto; }
     #fmd-feedback.help-msg {
@@ -349,10 +356,10 @@
     .fcc-question {
       margin: 14px 0 12px;
       display: flex; align-items: center; justify-content: center; gap: 14px;
-      color: #ffffff; direction: ltr;
+      color: var(--text); direction: ltr;
     }
-    .fcc-vs { font-size:2rem; font-weight:900; color:#6c63ff; }
-    .fcc-one { font-size:2rem; font-weight:900; color:#ffffff; }
+    .fcc-vs { font-size:2rem; font-weight:900; color:var(--primary); }
+    .fcc-one { font-size:2rem; font-weight:900; color:var(--text); }
     .fcc-answers { display:flex; flex-direction:column; gap:9px; margin:4px 0; }
     .fcc-btn {
       width:100%; padding:13px 16px;
@@ -533,9 +540,9 @@
     .subject-btn {
       flex: 1; max-width: 180px;
       padding: 18px 10px;
-      border: 3px solid #e0e0e0;
+      border: 2.5px solid rgba(124,58,237,0.15);
       border-radius: 18px;
-      background: #fafafa;
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(249,246,255,0.92));
       cursor: pointer;
       font-family: 'Rubik', sans-serif;
       font-size: 0.95rem; font-weight: 600; color: #555;
@@ -585,7 +592,7 @@
     #subj-math::before {
       background: conic-gradient(from var(--math-angle),
         transparent 0%, transparent 28%,
-        #6c63ff 40%, #c4b5fd 50%, #6c63ff 60%,
+        #7c3aed 40%, #c4b5fd 50%, #7c3aed 60%,
         transparent 72%, transparent 100%);
       animation: math-run 7s linear infinite;
     }
@@ -620,9 +627,9 @@
     .diff-btn {
       flex: 1; min-width: 130px; max-width: 160px;
       padding: 14px 10px;
-      border: 3px solid #e0e0e0;
+      border: 2.5px solid rgba(124,58,237,0.13);
       border-radius: 18px;
-      background: #fafafa;
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(249,246,255,0.92));
       cursor: pointer;
       font-family: 'Rubik', sans-serif;
       font-size: 0.95rem; font-weight: 600;
@@ -644,7 +651,7 @@
     /* ---------- STEP-BY-STEP CALC ---------- */
     .calc-box { margin-top: 4px; }
     .calc-title {
-      font-weight: 700; color: #6c63ff;
+      font-weight: 700; color: #7c3aed;
       margin-bottom: 10px; font-size: 0.95rem;
       direction: rtl; text-align: right;
     }
@@ -768,13 +775,13 @@
     #footer {
       display: block; border-radius: 50px;
       font-family: 'Rubik', sans-serif; font-size: 0.8rem; font-weight: 700;
-      color: #6c63ff; cursor: pointer; user-select: none;
+      color: #7c3aed; cursor: pointer; user-select: none;
       padding: 7px 16px; white-space: nowrap;
-      background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(167,139,250,0.12));
-      border: 1px solid rgba(108,99,255,0.18);
+      background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(167,139,250,0.12));
+      border: 1px solid rgba(124,58,237,0.18);
       backdrop-filter: blur(8px); transition: all 0.25s;
     }
-    #footer:hover { transform: scale(1.04); background: linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.22)); }
+    #footer:hover { transform: scale(1.04); background: linear-gradient(135deg,rgba(124,58,237,0.2),rgba(167,139,250,0.22)); }
 
     /* ---- Bio popup ---- */
     #bio-overlay {
@@ -894,8 +901,9 @@
     }
     .eng-opt-btn {
       width: 100%; padding: 18px 20px;
-      border: 3px solid #e0e0e0; border-radius: 18px;
-      background: #fafafa; cursor: pointer;
+      border: 2.5px solid rgba(124,58,237,0.13); border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(249,246,255,0.92));
+      cursor: pointer;
       font-family: 'Rubik', sans-serif; font-size: 1.05rem; font-weight: 700;
       color: #555; display: flex; align-items: center; gap: 14px;
       transition: all 0.2s; text-align: right; direction: ltr;
@@ -967,7 +975,7 @@
       font-size: 5.5rem; font-weight: 900; color: var(--primary);
       font-family: 'Secular One', sans-serif;
       margin: 8px 0 4px;
-      text-shadow: 2px 4px 16px rgba(108,99,255,0.25);
+      text-shadow: 2px 4px 16px rgba(124,58,237,0.25);
       line-height: 1;
     }
     .heb-letter-question { font-size: 1rem; color: #888; margin-bottom: 20px; direction: rtl; }
@@ -994,7 +1002,7 @@
       font-size: 5rem; font-weight: 900; color: var(--primary);
       font-family: 'Secular One', sans-serif; line-height: 1;
       margin: 2px 0 16px;
-      text-shadow: 2px 4px 16px rgba(108,99,255,0.25);
+      text-shadow: 2px 4px 16px rgba(124,58,237,0.25);
     }
     .hc-grid {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -1262,7 +1270,7 @@
       display: flex; align-items: center; gap: 8px;
       padding: 9px 18px;
       background: rgba(255,255,255,0.85);
-      border: 2px solid rgba(108,99,255,0.25);
+      border: 2px solid rgba(124,58,237,0.25);
       border-radius: 50px;
       cursor: pointer;
       font-family: 'Rubik', sans-serif;
@@ -1273,7 +1281,7 @@
       transition: all 0.25s ease;
       white-space: nowrap;
     }
-    #options-trigger:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(108,99,255,0.25); }
+    #options-trigger:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(124,58,237,0.25); }
     #options-dropdown {
       display: flex;
       flex-direction: column;
@@ -1281,7 +1289,7 @@
       margin-top: 8px;
       padding: 10px;
       background: rgba(255,255,255,0.97);
-      border: 2px solid rgba(108,99,255,0.18);
+      border: 2px solid rgba(124,58,237,0.18);
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.13);
       backdrop-filter: blur(14px);
@@ -1302,7 +1310,7 @@
       display: flex; align-items: center; gap: 8px;
       padding: 9px 14px;
       background: transparent;
-      border: 1.5px solid rgba(108,99,255,0.14);
+      border: 1.5px solid rgba(124,58,237,0.14);
       border-radius: 40px;
       cursor: pointer;
       font-family: 'Rubik', sans-serif;
@@ -1313,7 +1321,7 @@
       width: 100%;
       text-align: right;
     }
-    .opt-item:hover { background: rgba(108,99,255,0.07); border-color: rgba(108,99,255,0.3); }
+    .opt-item:hover { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.3); }
     #home-item { display: none; }
     #home-item.visible { display: flex; }
     #music-item.music-on {
@@ -1410,6 +1418,15 @@
     body.fun-mode .english-menu-title,
     body.fun-mode .english-menu-sub { color: rgba(255,255,255,0.9) !important; }
     body.fun-mode .question-text    { color: #fff !important; text-shadow: 0 0 24px rgba(167,139,250,0.9); }
+    body.fun-mode .fas-q-row   { color: #ffffff !important; }
+    body.fun-mode .fas-op      { color: #06b6d4 !important; }
+    body.fun-mode .fas-q-mark  { color: #06b6d4 !important; }
+    body.fun-mode .fmd-q-row   { color: #ffffff !important; }
+    body.fun-mode .fmd-op      { color: #06b6d4 !important; }
+    body.fun-mode .fmd-q-mark  { color: #06b6d4 !important; }
+    body.fun-mode .fcc-question { color: #ffffff !important; }
+    body.fun-mode .fcc-one     { color: #ffffff !important; }
+    body.fun-mode .fcc-vs      { color: #a78bfa !important; }
     body.fun-mode .score-chip       { background: rgba(255,255,255,0.08) !important; color: rgba(255,255,255,0.9) !important; border-color: rgba(255,255,255,0.12) !important; }
     body.fun-mode .level-badge      { background: rgba(124,58,237,0.35) !important; border-color: rgba(167,139,250,0.4) !important; color: #c4b5fd !important; }
     body.fun-mode .question-number  { color: rgba(255,255,255,0.55) !important; }
@@ -1614,8 +1631,8 @@
       <span>מוזיקה</span>
     </button>
     <button id="theme-item" class="opt-item" onclick="toggleTheme()">
-      <span>✨</span>
-      <span>מצב כיף</span>
+      <span id="theme-icon">☀️</span>
+      <span id="theme-label">בהיר</span>
       <div class="toggle-switch"><div class="toggle-knob"></div></div>
     </button>
   </div>
@@ -1638,7 +1655,7 @@
   <div class="card">
     <span class="mascot">🦁</span>
     <h1>לומדים עם אבון</h1>
-    <p>גרסה 1.2</p>
+    <p>גרסה 1.4</p>
     <div class="input-group">
       <div class="name-glow-wrap">
         <input type="text" id="name-input" placeholder="מה השם שלך?" maxlength="20" autocomplete="off" />
@@ -1824,6 +1841,13 @@
         <span class="opt-icon">📊</span>
         <span class="opt-text">
           <span class="opt-name">לוח הכפל</span>
+        </span>
+      </button>
+      <button class="eng-opt-btn" style="border-color:#a29bfe;background:#f3f0ff;color:#4a3ab5" onclick="startHebCount()">
+        <span class="opt-icon">🔢</span>
+        <span class="opt-text">
+          <span class="opt-name">כמותי</span>
+          <span class="opt-desc">בחר את הכמות הנכונה של תמונות</span>
         </span>
       </button>
     </div>
@@ -2076,13 +2100,6 @@
           <span class="opt-desc">בחר את התמונה שמתחילה באות הנתונה</span>
         </span>
       </button>
-      <button class="eng-opt-btn" style="border-color:#a29bfe;background:#f3f0ff;color:#4a3ab5" onclick="startHebCount()">
-        <span class="opt-icon">🔢</span>
-        <span class="opt-text">
-          <span class="opt-name">כמותי</span>
-          <span class="opt-desc">בחר את הכמות הנכונה של תמונות</span>
-        </span>
-      </button>
       <button class="eng-opt-btn" style="border-color:#f06292;background:#fce4ec;color:#ad1457" onclick="startHebSyllable()">
         <span class="opt-icon">🗣️</span>
         <span class="opt-text">
@@ -2177,7 +2194,7 @@
     <div class="btn-row" style="margin-top:8px">
       <button class="btn btn-next" id="hc-next" onclick="nextHebCount()" style="display:none">הבא ▶</button>
     </div>
-    <button class="btn-back-eng" onclick="showScreen('hebrew-menu-screen')" style="margin-top:10px">← חזור לתפריט</button>
+    <button class="btn-back-eng" onclick="showScreen('math-menu-screen')" style="margin-top:10px">← חזור לתפריט</button>
   </div>
 </div>
 
@@ -5136,6 +5153,8 @@ document.addEventListener('click', e => {
 function toggleTheme() {
   funModeOn = !funModeOn;
   document.body.classList.toggle('fun-mode', funModeOn);
+  document.getElementById('theme-label').textContent = funModeOn ? 'כהה' : 'בהיר';
+  document.getElementById('theme-icon').textContent  = funModeOn ? '🌙' : '☀️';
   if (funModeOn) { initFunBg(); } else { clearFunBg(); }
 }
 
@@ -5200,7 +5219,13 @@ function clearFunBg() {
 }
 
 // ===================== INIT =====================
-(function() { funModeOn = true; document.body.classList.add('fun-mode'); initFunBg(); })();
+(function() {
+  funModeOn = true;
+  document.body.classList.add('fun-mode');
+  initFunBg();
+  document.getElementById('theme-label').textContent = 'כהה';
+  document.getElementById('theme-icon').textContent  = '🌙';
+})();
 
 // ---- Bio popup ----
 function openBio()  { document.getElementById('bio-overlay').classList.add('open'); }
