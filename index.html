@@ -331,6 +331,43 @@
     #fmd-feedback.help-msg strong { color: #7dd3fc; }
     #fmd-feedback.help-msg p { margin: 4px 0; font-size: 0.92rem; }
 
+    /* === Frac Compare === */
+    .fcc-explain {
+      display: flex; gap: 7px; margin: 10px 0 4px;
+    }
+    .fcc-ex-card {
+      flex: 1; border-radius: 12px; padding: 9px 5px 8px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      border: 2px solid;
+    }
+    .fcc-ex-card.c-lt { background:#f0fdf4; border-color:#86efac; color:#166534; }
+    .fcc-ex-card.c-eq { background:#eff6ff; border-color:#93c5fd; color:#1e40af; }
+    .fcc-ex-card.c-gt { background:#fff7ed; border-color:#fdba74; color:#9a3412; }
+    .fcc-ex-sym  { font-size:1.5rem; font-weight:900; line-height:1; }
+    .fcc-ex-lbl  { font-size:0.68rem; font-weight:800; text-align:center; direction:rtl; }
+    .fcc-ex-rule { font-size:0.6rem; opacity:0.72; direction:rtl; text-align:center; }
+    .fcc-question {
+      margin: 14px 0 12px;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      color: #ffffff; direction: ltr;
+    }
+    .fcc-vs { font-size:2rem; font-weight:900; color:#6c63ff; }
+    .fcc-one { font-size:2rem; font-weight:900; color:#ffffff; }
+    .fcc-answers { display:flex; flex-direction:column; gap:9px; margin:4px 0; }
+    .fcc-btn {
+      width:100%; padding:13px 16px;
+      border-radius:14px; border:2px solid;
+      font-family:'Rubik',sans-serif; font-size:1rem; font-weight:800;
+      cursor:pointer; transition:transform 0.12s, box-shadow 0.12s;
+      direction:rtl; text-align:center;
+    }
+    .fcc-btn:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 4px 12px rgba(0,0,0,0.12); }
+    .fcc-btn.c-lt { background:#f0fdf4; border-color:#86efac; color:#166534; }
+    .fcc-btn.c-eq { background:#eff6ff; border-color:#93c5fd; color:#1e40af; }
+    .fcc-btn.c-gt { background:#fff7ed; border-color:#fdba74; color:#9a3412; }
+    .fcc-btn.fcc-correct { background:#d1fae5 !important; border-color:#10b981 !important; color:#065f46 !important; }
+    .fcc-btn.fcc-wrong   { background:#fee2e2 !important; border-color:#ef4444 !important; color:#7f1d1d !important; }
+
     /* === Multiplication Table === */
     #mult-table-screen .card {
       background: linear-gradient(135deg,
@@ -871,17 +908,21 @@
 
     /* Math menu: 2-column grid */
     #math-menu-screen .english-options,
-    #hebrew-menu-screen .english-options {
+    #hebrew-menu-screen .english-options,
+    #fractions-menu-screen .english-options {
       display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
     }
     #math-menu-screen .eng-opt-btn,
-    #hebrew-menu-screen .eng-opt-btn {
+    #hebrew-menu-screen .eng-opt-btn,
+    #fractions-menu-screen .eng-opt-btn {
       padding: 13px 12px;
     }
     #math-menu-screen .eng-opt-btn .opt-icon,
-    #hebrew-menu-screen .eng-opt-btn .opt-icon { font-size: 1.6rem; }
+    #hebrew-menu-screen .eng-opt-btn .opt-icon,
+    #fractions-menu-screen .eng-opt-btn .opt-icon { font-size: 1.6rem; }
     #math-menu-screen .eng-opt-btn .opt-name,
-    #hebrew-menu-screen .eng-opt-btn .opt-name { font-size: 0.95rem; }
+    #hebrew-menu-screen .eng-opt-btn .opt-name,
+    #fractions-menu-screen .eng-opt-btn .opt-name { font-size: 0.95rem; }
     .eng-opt-btn.abc    { border-color: #6c63ff; background: #f5f5ff; color: #6c63ff; }
     .eng-opt-btn.abc .opt-desc { color: #a78bfa; }
     .eng-opt-btn.soon   { opacity: 0.55; cursor: default; }
@@ -1815,6 +1856,12 @@
           <span class="opt-name">כפל וחילוק שברים</span>
         </span>
       </button>
+      <button class="eng-opt-btn" style="border-color:#7c3aed;background:#f5f3ff;color:#4c1d95" onclick="startFracCompare()">
+        <span class="opt-icon">⚖️</span>
+        <span class="opt-text">
+          <span class="opt-name">?גדול, קטן או שווה ל-1</span>
+        </span>
+      </button>
     </div>
     <button class="btn-back-eng" onclick="showScreen('math-menu-screen')">← חזור</button>
   </div>
@@ -1898,6 +1945,60 @@
     <div class="btn-row" style="margin-top:10px">
       <button class="btn btn-help" id="fmd-help-btn" onclick="fmdHelp()">עזרה 💡</button>
       <button class="btn btn-next" id="fmd-next-btn" onclick="fmdLoad()" style="display:none">הבא ▶</button>
+      <button class="btn btn-finish" onclick="showScreen('fractions-menu-screen')">סיום 🏁</button>
+    </div>
+    <button class="btn-back-eng" style="margin-top:18px" onclick="showScreen('fractions-menu-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== FRAC COMPARE SCREEN ======== -->
+<div class="screen" id="frac-compare-screen">
+  <div class="card">
+    <div class="score-strip">
+      <div class="score-chip">✅ נכון: <span id="fcc-score-c">0</span></div>
+      <div class="score-chip">❌ טעות: <span id="fcc-score-w">0</span></div>
+      <div class="score-chip">📝 שאלה: <span id="fcc-score-n">1</span></div>
+    </div>
+    <div class="level-badge">⚖️ גדול, קטן או שווה ל-1?</div>
+
+    <!-- Always-visible explanation -->
+    <div class="fcc-explain">
+      <div class="fcc-ex-card c-lt">
+        <div class="fcc-ex-sym">¾</div>
+        <div class="fcc-ex-lbl">פחות מ-1</div>
+        <div class="fcc-ex-rule">מונה &lt; מכנה</div>
+      </div>
+      <div class="fcc-ex-card c-eq">
+        <div class="fcc-ex-sym">⁴⁄₄</div>
+        <div class="fcc-ex-lbl">שווה ל-1</div>
+        <div class="fcc-ex-rule">מונה = מכנה</div>
+      </div>
+      <div class="fcc-ex-card c-gt">
+        <div class="fcc-ex-sym">⁵⁄₃</div>
+        <div class="fcc-ex-lbl">יותר מ-1</div>
+        <div class="fcc-ex-rule">מונה &gt; מכנה</div>
+      </div>
+    </div>
+
+    <div class="question-number" id="fcc-q-number">שאלה מספר 1</div>
+
+    <!-- Question: fraction ? 1 -->
+    <div class="fcc-question">
+      <span id="fcc-frac"></span>
+      <span class="fcc-vs">?</span>
+      <span class="fcc-one">1</span>
+    </div>
+
+    <!-- 3 answer buttons -->
+    <div class="fcc-answers">
+      <button class="fcc-btn c-lt" id="fcc-btn-lt" onclick="fccCheck('lt')">פחות מ-1 &nbsp; &lt;</button>
+      <button class="fcc-btn c-eq" id="fcc-btn-eq" onclick="fccCheck('eq')">שווה ל-1 &nbsp; =</button>
+      <button class="fcc-btn c-gt" id="fcc-btn-gt" onclick="fccCheck('gt')">יותר מ-1 &nbsp; &gt;</button>
+    </div>
+
+    <div class="feedback-msg" id="fcc-feedback" style="display:none"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn btn-next" id="fcc-next-btn" onclick="fccLoad()" style="display:none">הבא ▶</button>
       <button class="btn btn-finish" onclick="showScreen('fractions-menu-screen')">סיום 🏁</button>
     </div>
     <button class="btn-back-eng" style="margin-top:18px" onclick="showScreen('fractions-menu-screen')">← חזור</button>
@@ -2930,6 +3031,92 @@ function showMultTable() {
       colHeaders.forEach(h => h && h.classList.remove('mt-hl'));
     });
   });
+}
+
+// ===================== FRAC COMPARE (< = > 1) =====================
+let fccCount = 0, fccCorrect = 0, fccWrong = 0;
+let fccCurrentQ = null, fccAnswered = false;
+
+function fccGetDiff() {
+  if (fccCount <= 5)  return 'easy';
+  if (fccCount <= 10) return 'mid';
+  return 'hard';
+}
+
+function fccGenQ() {
+  const diff = fccGetDiff();
+  // Balanced distribution: 40% lt, 20% eq, 40% gt
+  const r = Math.random();
+  const type = r < 0.4 ? 'lt' : r < 0.6 ? 'eq' : 'gt';
+  let n, d;
+  const easy  = [2,3,4,5];
+  const mid   = [3,4,5,6,7,8];
+  const hard  = [5,6,7,8,9,10,11,12];
+  const pool  = diff === 'easy' ? easy : diff === 'mid' ? mid : hard;
+  d = pool[Math.floor(Math.random() * pool.length)];
+  if (type === 'lt') {
+    n = 1 + Math.floor(Math.random() * (d - 1));       // 1 ≤ n < d
+  } else if (type === 'eq') {
+    n = d;
+  } else {
+    const extra = diff === 'easy' ? 2 : diff === 'mid' ? 3 : 5;
+    n = d + 1 + Math.floor(Math.random() * extra);     // n > d
+  }
+  return { n, d, type };
+}
+
+function startFracCompare() {
+  fccCount = 0; fccCorrect = 0; fccWrong = 0;
+  document.getElementById('fcc-score-c').textContent = 0;
+  document.getElementById('fcc-score-w').textContent = 0;
+  showScreen('frac-compare-screen');
+  fccLoad();
+}
+
+function fccLoad() {
+  fccAnswered = false;
+  fccCount++;
+  fccCurrentQ = fccGenQ();
+  const { n, d } = fccCurrentQ;
+  document.getElementById('fcc-q-number').textContent = `שאלה מספר ${fccCount}`;
+  document.getElementById('fcc-score-n').textContent = fccCount;
+  document.getElementById('fcc-frac').innerHTML = ffFracHTML(n, d, '2.4rem');
+  document.getElementById('fcc-feedback').style.display = 'none';
+  document.getElementById('fcc-next-btn').style.display = 'none';
+  ['lt','eq','gt'].forEach(t => {
+    const btn = document.getElementById(`fcc-btn-${t}`);
+    btn.disabled = false;
+    btn.classList.remove('fcc-correct','fcc-wrong');
+  });
+}
+
+function fccCheck(type) {
+  if (fccAnswered) return;
+  fccAnswered = true;
+  const correct = type === fccCurrentQ.type;
+  ['lt','eq','gt'].forEach(t => {
+    const btn = document.getElementById(`fcc-btn-${t}`);
+    btn.disabled = true;
+    if (t === fccCurrentQ.type) btn.classList.add('fcc-correct');
+    else if (t === type)        btn.classList.add('fcc-wrong');
+  });
+  document.getElementById('fcc-next-btn').style.display = '';
+  const fb = document.getElementById('fcc-feedback');
+  const { n, d } = fccCurrentQ;
+  const labels = { lt:'פחות מ-1', eq:'שווה ל-1', gt:'יותר מ-1' };
+  if (correct) {
+    fccCorrect++;
+    document.getElementById('fcc-score-c').textContent = fccCorrect;
+    fb.style.display = 'none';
+    playSuccess(); launchConfetti();
+  } else {
+    fccWrong++;
+    document.getElementById('fcc-score-w').textContent = fccWrong;
+    fb.className = 'feedback-msg wrong-msg';
+    fb.innerHTML = `אופס! ${ffFracHTML(n,d)} היא <strong>${labels[fccCurrentQ.type]}</strong>`;
+    fb.style.display = 'block';
+    playWrong();
+  }
 }
 
 // ===================== FRAC ADD/SUBTRACT =====================
