@@ -4,31 +4,84 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a single-file Hebrew math practice web app for children called **"Learning is Fun"** (`index.html`). There is no build system, no dependencies to install, and no server required — open `index.html` directly in any browser.
+A single-file Hebrew children's learning web app called **"לומדים עם אבון"** (`index.html`). No build system, no dependencies, no server — open `index.html` directly in any browser. Published on GitHub Pages at `https://assafhs-ship-it.github.io/Math-is-fun/`.
 
 ## Architecture
 
-Everything lives in one file (`index.html`): HTML structure, CSS styles, and JavaScript logic.
+Everything lives in one file: HTML structure, CSS, and JavaScript. Screens are shown/hidden via `.screen` / `.screen.active` toggled by `showScreen(id)`.
 
-**Screens** (shown/hidden via `.screen` / `.screen.active`):
-- `#welcome-screen` — name input + difficulty picker
-- `#question-screen` — active question, scoring, help, and finish
-- `#summary-screen` — end-of-game results
+### Screens
 
-**Key JavaScript components:**
-- `generateQuestion()` — builds a question based on `selectedDiff` ('easy' / 'medium' / 'hard') and `getSubLevel(questionCount)` (1/2/3), which controls how hard numbers get within each difficulty
-- `buildExpl(op, a, b, answer)` — returns an HTML string with a stacked visual + step-by-step explanation; delegates to `buildAddHTML`, `buildSubHTML`, `buildMultHTML`, `buildDivHTML`
-- `pickOp(ops, weights)` — weighted random operation selector
-- `launchConfetti()` / `playSuccess()` / `playWrong()` — feedback on correct/wrong answers using Canvas and Web Audio API
+| Screen ID | Purpose |
+|---|---|
+| `welcome-screen` | Name input + subject picker (Math / English / Hebrew) |
+| `question-screen` | Active math Q&A with scoring, help panel, auto-advance |
+| `summary-screen` | End-of-session results |
+| `math-menu-screen` | Math difficulty/mode picker |
+| `english-menu-screen` | English activity picker |
+| `phonics-screen` | Letter & phonics tile board (click to pronounce) |
+| `abc-screen` | A–Z flashcard navigator |
+| `word-picture-screen` | See image → pick word |
+| `missing-word-screen` | Fill-in-the-blank sentences |
+| `hebrew-menu-screen` | Hebrew activity picker |
+| `heb-missing-word-screen`, `heb-letter-screen`, `heb-count-screen`, `heb-syllable-screen`, `heb-sounds-screen` | Hebrew exercises |
+| `fractions-menu-screen` | Fractions sub-menu |
+| `frac-find-screen` | Identify fraction from circle diagram |
+| `frac-as-screen` | Add/subtract fractions MCQ |
+| `frac-md-screen` | Multiply/divide fractions MCQ |
+| `mult-table-screen` | Interactive 10×10 multiplication table |
+| `long-div-screen` | Long division with step-by-step help |
 
-**Difficulty modes:**
-- Easy: `+` and `−` only, single → double digits
-- Medium: mostly `×` and `÷`, 1–2 digit operands
-- Hard: `×` and `÷` only, 3–4 digit operands
+### JavaScript Sections (in order)
 
-**Language:** Hebrew (RTL). Math question text uses `direction: ltr` so numbers display left-to-right.
+- **STATE** — global counters, current question, difficulty, subject
+- **AUDIO** — `playSuccess()` / `playWrong()` via Web Audio API; `getAudio()` lazy-inits `AudioContext`
+- **BG SYMBOLS** — floating math symbols on the welcome screen
+- **CONFETTI** — canvas-based confetti on correct answers (`launchConfetti()`)
+- **QUESTION GENERATOR** — `generateQuestion()`, `getSubLevel(n)` (1/2/3 based on question count), `pickOp(ops, weights)`, `buildExpl()` → delegates to `buildAddHTML` / `buildSubHTML` / `buildMultHTML` / `buildDivHTML`
+- **GAME FLOW** — `selectSubject()`, `selectDiff()`, `loadQuestion()`, `checkAnswer()`, `showHelp()`, auto-advance timer (`startAutoNext` / `clearAutoNext`)
+- **FIND THE FRACTION** — `startFracFind()`, `ffGenQ()`, `ffLoad()`, `ffCheck()`, `ffHelp()`, `drawFracCircle()`, `ffSlicePath()`
+- **MULTIPLICATION TABLE** — `showMultTable()` builds the 11×11 grid dynamically with hover row/col highlighting
+- **FRAC ADD/SUBTRACT** — `startFracAS()`, `fasGenQ()`, `fasLoad()`, `fasCheck()`, `fasHelp()`, `fasMiniSVG()`
+- **FRAC MULTIPLY/DIVIDE** — `startFracMD()`, `fmdGenQ()`, `fmdLoad()`, `fmdCheck()`, `fmdHelp()`
+- **LONG DIVISION** — `startLongDiv()`, `ldGenQuestion()`, `ldBuildSteps()`, step navigator (`ldStepPrev` / `ldStepNext`)
+- **WORD PICTURE DATA / GAME** — `wordQueue`, `startWordPicture()`, `speakEng(word)`
+- **PHONICS TILES** — `startPhonics()`, `buildPhonicsTiles()` (built once, cached), `ptSpeak(tile, sound, word)`, `PT_WORDS`, `PT_PHONICS`
+- **ENGLISH / ABC** — `startABC()`, `showLetter()`, `speakLetter()`
+- **MISSING WORD** — `startMissingWord()`, sentence fill-in game
+- **HEBREW EXERCISES** — missing word, letter recognition, counting, syllables, sounds; `speakHebPart()`, `speakHebSyl()`, `speakHebSounds()`
+- **BACKGROUND MUSIC** — Web Audio API oscillator-based music, toggled via options menu
+- **FUN MODE** — `body.fun-mode` CSS class toggled on `<body>`; overrides colors/styles via `!important` rules in a dedicated CSS block
+- **INIT** — event listeners, initial screen setup
+
+### Key Shared Utilities
+
+- `ffFracHTML(n, d, size)` — renders an inline stacked fraction as HTML (used by frac-find, frac-add/sub, frac-mul/div)
+- `ffSlicePath(cx, cy, r, startDeg, endDeg)` — SVG arc path for fraction circle slices (used by `drawFracCircle` and `fasMiniSVG`)
+- `gcd(a, b)` / `lcm(a, b)` — shared by frac-add/sub and frac-mul/div
+- `speakEng(word)` — `speechSynthesis` with `lang='en-US'`, `rate=0.82`
+
+### Difficulty & Progression
+
+- **Math easy**: `+` and `−`, single → double digits; sub-level increases every 5 questions via `getSubLevel()`
+- **Math medium**: `×` and `÷`, 1–2 digit operands
+- **Math hard**: `×` and `÷`, 3–4 digit operands
+- **Fractions**: all three fraction screens start easy (small denoms / same denom) and raise difficulty every 5 questions
+- **Long division**: random within difficulty band, step-by-step help with forward/back navigation
+
+### Layout Conventions
+
+- App is Hebrew/RTL (`direction: rtl` on body). Math expressions and English content use `direction: ltr` or `<bdi dir="ltr">` inline.
+- Fraction circles are SVG, generated in JS, not static HTML.
+- The multiplication table grid is built entirely in JS on first call and cached (never rebuilt on re-entry).
+- `body.fun-mode` overrides are in a single CSS block near the bottom of `<style>` — add new fun-mode overrides there.
 
 ## Publishing
 
-The file is published as `index.html` on GitHub Pages at:
-`https://<username>.github.io/learning-is-fun/`
+```bash
+git add index.html
+git commit -m "description"
+git push
+```
+
+GitHub Pages serves `index.html` from the `main` branch automatically.
