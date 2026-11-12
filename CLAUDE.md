@@ -32,6 +32,13 @@ Everything lives in one file: HTML structure, CSS, and JavaScript. Screens are s
 | `mult-table-screen` | Interactive 10×10 multiplication table |
 | `long-div-screen` | Long division with step-by-step help |
 
+### "לומדים למבחן" (test prep) section
+
+Welcome button `subj-test` → `test-menu-screen` (kid picker: איימי is disabled/"בקרוב", טומי is active).
+Tommy's screens: `tommy-screen` (lobby with XP/level), `tommy-eng-screen` (English missions), `tq-screen` (shared 3-choice quiz engine: `tqStart(title, buildFn, backScreen)`), `tl-screen` (A/B/N letters guide), `tm-screen` (20 math word problems, `TOMMY_MATH`, picture help via `tmHelpHTML`).
+JS lives under the `STUDY FOR TEST` comment inside GAME FLOW. Data: `TOMMY_WORDS`, `TOMMY_PHRASES`, `TOMMY_DIALOGS`, `TL_LETTERS`. Speech there uses `tSpeak()` (picks the best available English voice), not `speakEng()`.
+These five screens share a battle-game theme (CSS block `TOMMY: BATTLE-GAME THEME`, scoped with an `:is(#tommy-screen,…)` id prefix so it overrides both light and fun-mode). New Tommy screens must be added to that `:is()` list (search-and-replace all occurrences). XP is stored in `localStorage` key `tommyXP`.
+
 ### JavaScript Sections (in order)
 
 - **STATE** — global counters, current question, difficulty, subject

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning is Fun - לומדים עם אבון</title>
-  <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Karantina:wght@400;700&family=Secular+One&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -615,6 +615,132 @@
       animation: heb-run 6.5s linear infinite;
     }
     @keyframes heb-run { to { --heb-angle: 360deg; } }
+
+    /* ---------- STUDY FOR TEST ---------- */
+    #subj-test {
+      flex-direction: row; justify-content: center; gap: 12px;
+      width: 100%; max-width: 568px; margin: 6px auto 0; padding: 16px 10px;
+    }
+    #subj-test .subj-icon { font-size: 2.4rem; }
+    #subj-test .subj-name { font-size: 1.2rem; }
+    .subject-btn.selected-test { border-color: #f59e0b; background: #fffbeb; color: #b45309; box-shadow: 0 4px 16px rgba(245,158,11,0.3); }
+    #test-menu-screen, #tommy-screen { padding-top: 72px; }
+    .kid-options { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+    .kid-btn {
+      width: 100%; padding: 30px 20px; border-radius: 24px;
+      border: 3px solid; cursor: pointer; position: relative;
+      font-family: 'Secular One', sans-serif; font-size: 2.2rem;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      transition: all 0.2s;
+    }
+    .kid-btn .kid-icon { font-size: 3rem; }
+    .kid-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,0.12); }
+    .kid-btn.amy   { border-color: #ec4899; background: linear-gradient(135deg,#fdf2f8,#fce7f3); color: #be185d; }
+    .kid-btn.tommy { border-color: #3b82f6; background: linear-gradient(135deg,#eff6ff,#dbeafe); color: #1d4ed8; }
+    .kid-btn:disabled { opacity: 0.55; cursor: default; }
+    .kid-soon {
+      position: absolute; top: 10px; left: 14px;
+      font-family: 'Rubik', sans-serif; font-size: 0.8rem; font-weight: 700;
+      background: #fff; border-radius: 50px; padding: 3px 10px; color: #be185d;
+    }
+    .test-empty { color: #888; font-size: 1rem; line-height: 1.6; margin: 10px 0 28px; }
+    #tommy-eng-screen, #tq-screen, #tl-screen { padding-top: 72px; }
+    .eng-font { font-family: 'Andika', 'Rubik', sans-serif; }
+
+    /* Tommy quiz engine */
+    .tq-instr { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin: 10px 0 0; }
+    .tq-prompt {
+      color: #fff; font-family: 'Andika', 'Rubik', sans-serif; font-weight: 700;
+      direction: ltr; text-align: center; font-size: 2.6rem; line-height: 1.3;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .tq-prompt.tq-long { font-size: 1.9rem; }
+    .tq-prompt .tq-pic { display: block; font-size: 4.2rem; margin-bottom: 4px; text-shadow: none; }
+    .wp-opt.tq-opt { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 64px; }
+    .wp-opt.tq-opt.tq-en { font-family: 'Andika', 'Rubik', sans-serif; font-size: 1.3rem; direction: ltr; }
+    .tq-opt .tq-opt-pic { font-size: 2.2rem; line-height: 1; }
+    .tq-opt .tq-opt-num { font-size: 2.1rem; font-weight: 900; min-width: 2.6rem; }
+    .tq-opt .tq-opt-heb { font-size: 1.05rem; font-weight: 600; opacity: 0.8; }
+    #tq-opts.tq-letters { flex-direction: row; }
+    #tq-opts.tq-letters .wp-opt { flex: 1; font-family: 'Andika', 'Rubik', sans-serif; font-size: 2.8rem; padding: 6px; letter-spacing: 0; }
+    .tq-end-icon { font-size: 5rem; margin-top: 10px; }
+    .tq-end-text { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin: 10px 0 6px; }
+    .tq-end-sub { color: #888; margin-bottom: 20px; }
+
+    /* Tommy letters guide */
+    .tl-progress { color: #888; font-size: 0.9rem; margin-bottom: 6px; }
+    .tl-title { font-family: 'Secular One', sans-serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 12px; }
+    .tl-letters { display: flex; justify-content: center; gap: 18px; direction: ltr; margin-bottom: 4px; }
+    .tl-letter { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .tl-letter button {
+      width: 120px; height: 130px; border-radius: 22px; border: 3px solid; cursor: pointer;
+      font-family: 'Andika', 'Rubik', sans-serif; font-size: 5.5rem; font-weight: 700; line-height: 1;
+      transition: transform 0.15s;
+    }
+    .tl-letter button:hover { transform: scale(1.05); }
+    .tl-letter .tl-cap { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
+    .tl-letter .tl-low { border-color: #f59e0b; background: #fffbeb; color: #b45309; }
+    .tl-letter span { font-size: 0.85rem; color: #888; font-weight: 600; }
+    .tl-info { background: #f5f3ff; border-radius: 14px; padding: 12px; font-size: 1.05rem; margin: 12px 0; line-height: 1.8; }
+    .tl-tip { background: #fffbeb; border: 2px dashed #fcd34d; border-radius: 14px; padding: 10px 12px; font-size: 0.95rem; color: #92400e; margin-bottom: 12px; line-height: 1.6; }
+    .tl-words { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; direction: ltr; margin-bottom: 14px; }
+    .tl-word {
+      border: 2px solid #e0e0e0; border-radius: 50px; padding: 6px 14px; background: #fff; cursor: pointer;
+      font-family: 'Andika', 'Rubik', sans-serif; font-size: 1.15rem; color: var(--text);
+      display: flex; align-items: center; gap: 6px; transition: all 0.15s;
+    }
+    .tl-word:hover { border-color: var(--primary); background: #f5f5ff; }
+    .tl-word b { color: #e11d48; font-size: 1.3rem; }
+    .tl-pairs { display: flex; justify-content: center; gap: 14px; direction: ltr; margin: 10px 0 16px; }
+    .tl-pair {
+      font-family: 'Andika', 'Rubik', sans-serif; font-size: 3rem; font-weight: 700;
+      background: #f5f3ff; border-radius: 18px; padding: 8px 18px; cursor: pointer; border: none; color: var(--primary);
+    }
+    /* Tommy math word problems */
+    #tm-screen { padding-top: 72px; }
+    #tm-screen .card { max-width: 560px; }
+    .tm-emoji { font-size: 4rem; line-height: 1; margin: 12px 0 8px; }
+    .tm-text {
+      font-size: 1.3rem; font-weight: 600; line-height: 1.75; color: var(--text);
+      background: #f5f3ff; border-radius: 18px; padding: 14px 16px; margin-bottom: 14px;
+    }
+    .tm-text b { color: var(--primary); font-size: 1.5rem; font-weight: 900; }
+    .tm-answer-row { display: flex; justify-content: center; margin-bottom: 12px; }
+    #tm-input { -moz-appearance: textfield; appearance: textfield; }
+    #tm-input::-webkit-outer-spin-button, #tm-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .tm-help {
+      border: 2px dashed #c4b5fd; border-radius: 18px; padding: 14px 10px;
+      margin: 12px 0 4px; background: #faf5ff;
+    }
+    .tm-hint { font-size: 1rem; font-weight: 600; color: #6d28d9; margin-bottom: 10px; line-height: 1.6; }
+    .tm-pic { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; direction: ltr; }
+    .tm-grp {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; align-content: center;
+      max-width: 210px; padding: 8px; border-radius: 14px; border: 2px solid;
+      font-size: 1.55rem; line-height: 1.15; position: relative;
+    }
+    .tm-grp.g1 { background: #eff6ff; border-color: #93c5fd; }
+    .tm-grp.g2 { background: #fff7ed; border-color: #fdba74; }
+    .tm-grp.wide { max-width: 100%; }
+    .tm-grp.small { font-size: 1.25rem; max-width: 120px; padding: 6px; }
+    .tm-grp .tm-cnt {
+      flex-basis: 100%; text-align: center; font-family: 'Rubik', sans-serif;
+      font-size: 0.9rem; font-weight: 800; color: #555; margin-top: 2px; direction: rtl;
+    }
+    .tm-sign { font-size: 2rem; font-weight: 900; color: var(--primary); }
+    .tm-grp i { font-style: normal; }
+    .tm-gone { position: relative; }
+    .tm-gone i { opacity: 0.3; }
+    .tm-gone::after {
+      content: '✕'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #ef4444; font-size: 1.6rem; font-weight: 900; font-family: Arial, sans-serif;
+    }
+    .tm-eq {
+      direction: ltr; font-family: 'Andika', Arial, sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--primary);
+      margin-top: 12px; letter-spacing: 1px;
+    }
+    .tm-eq .tm-ans { color: #16a34a; }
+    .tl-nav { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-top: 6px; }
 
     .difficulty-label {
       font-size: 1rem; font-weight: 600; color: #555;
@@ -1502,6 +1628,28 @@
     body.fun-mode .eng-opt-btn:hover { background: rgba(255,255,255,0.11) !important; transform: translateY(-5px) scale(1.03) !important; box-shadow: 0 0 30px rgba(167,139,250,0.5) !important; }
     body.fun-mode .opt-name { color: #fff !important; }
     body.fun-mode .opt-desc { color: rgba(255,255,255,0.65) !important; }
+    body.fun-mode .subject-btn.selected-test { background: linear-gradient(135deg,rgba(245,158,11,0.35),rgba(234,88,12,0.35)) !important; border-color:#fcd34d !important; box-shadow:0 0 28px rgba(252,211,77,0.5) !important; }
+    body.fun-mode .kid-btn { background: rgba(255,255,255,0.06) !important; color: #fff !important; }
+    body.fun-mode .kid-btn.amy   { border-color: #f9a8d4 !important; }
+    body.fun-mode .kid-btn.tommy { border-color: #93c5fd !important; }
+    body.fun-mode .kid-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12) !important; box-shadow: 0 0 30px rgba(167,139,250,0.5) !important; }
+    body.fun-mode .test-empty { color: rgba(255,255,255,0.7) !important; }
+    body.fun-mode .tq-instr, body.fun-mode .tq-end-text, body.fun-mode .tl-title { color: #c4b5fd !important; }
+    body.fun-mode .tq-end-sub, body.fun-mode .tl-progress, body.fun-mode .tl-letter span { color: rgba(255,255,255,0.65) !important; }
+    body.fun-mode .tl-letter .tl-cap { background: rgba(59,130,246,0.2) !important; color: #bfdbfe !important; border-color: #60a5fa !important; }
+    body.fun-mode .tl-letter .tl-low { background: rgba(245,158,11,0.2) !important; color: #fde68a !important; border-color: #fbbf24 !important; }
+    body.fun-mode .tl-info, body.fun-mode .tl-pair { background: rgba(255,255,255,0.07) !important; color: #fff !important; }
+    body.fun-mode .tl-tip { background: rgba(245,158,11,0.12) !important; color: #fde68a !important; border-color: rgba(252,211,77,0.5) !important; }
+    body.fun-mode .tl-word { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.18) !important; color: #fff !important; }
+    body.fun-mode .tl-word b { color: #fda4af !important; }
+    body.fun-mode .tm-text { background: rgba(255,255,255,0.07) !important; color: #fff !important; }
+    body.fun-mode .tm-text b { color: #fde68a !important; }
+    body.fun-mode .tm-help { background: rgba(255,255,255,0.05) !important; border-color: rgba(196,181,253,0.5) !important; }
+    body.fun-mode .tm-hint, body.fun-mode .tm-eq, body.fun-mode .tm-sign { color: #c4b5fd !important; }
+    body.fun-mode .tm-grp.g1 { background: rgba(59,130,246,0.18) !important; border-color: rgba(147,197,253,0.6) !important; }
+    body.fun-mode .tm-grp.g2 { background: rgba(249,115,22,0.18) !important; border-color: rgba(253,186,116,0.6) !important; }
+    body.fun-mode .tm-grp .tm-cnt { color: rgba(255,255,255,0.85) !important; }
+    body.fun-mode .tm-eq .tm-ans { color: #6ee7b7 !important; }
     body.fun-mode .subject-btn.selected-hebrew { background: linear-gradient(135deg,rgba(6,182,212,0.35),rgba(20,184,166,0.35)) !important; border-color:#67e8f9 !important; box-shadow:0 0 28px rgba(103,232,249,0.5) !important; }
     body.fun-mode .heb-pic-btn { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.14) !important; color: #fff !important; }
     body.fun-mode .heb-pic-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12) !important; border-color: #a78bfa !important; }
@@ -1610,6 +1758,226 @@
       100% { transform: translateX(-400px) translateY(200px); opacity:0; }
     }
 
+
+    /* ============ TOMMY: BATTLE-GAME THEME ============ */
+    /* Scoped to Tommy's screens only. Looks the same in light and dark mode. */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) { padding-top: 72px; --fn-yellow: #ffe14d; --fn-font: 'Karantina', 'Secular One', 'Rubik', sans-serif; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen).active::before {
+      content: ''; position: fixed; inset: 0; z-index: -1;
+      background:
+        repeating-conic-gradient(from 0deg at 50% -10%, rgba(255,255,255,0.055) 0deg 5deg, transparent 5deg 10deg),
+        radial-gradient(ellipse at 50% 0%, #37b6ff 0%, #1677e6 32%, #0a3fa8 62%, #06164f 100%);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .card {
+      background: linear-gradient(180deg, rgba(9,27,84,0.94), rgba(4,12,46,0.96)) !important;
+      border: 3px solid #5cc8ff !important; border-radius: 8px !important;
+      box-shadow: 0 0 0 4px rgba(0,0,0,0.3), 0 18px 44px rgba(0,0,0,0.55), inset 0 0 40px rgba(60,160,255,0.12) !important;
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+      color: #fff !important; padding: 26px 22px !important; max-width: 560px;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .english-menu-title, :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-title {
+      font-family: var(--fn-font) !important; font-weight: 700; font-size: 2.9rem !important; line-height: 1;
+      color: #fff !important; letter-spacing: 1px; margin-bottom: 6px !important;
+      text-shadow: 0 3px 0 #04113f, 0 0 18px rgba(92,200,255,0.55);
+      transform: skewX(-6deg);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .english-menu-sub { color: #a9dcff !important; font-weight: 600; margin-bottom: 18px !important; }
+
+    /* Buttons */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .btn-next {
+      font-family: var(--fn-font) !important; font-size: 1.8rem !important; font-weight: 700 !important; letter-spacing: 1px;
+      background: linear-gradient(180deg, #fff58a 0%, #ffe14d 45%, #f5c400 100%) !important; color: #14143a !important;
+      border: 2px solid #fffbd0 !important; border-radius: 5px !important; padding: 8px 40px !important;
+      transform: skewX(-8deg); box-shadow: 0 5px 0 #9c7e00, 0 10px 20px rgba(0,0,0,0.45) !important;
+      transition: transform 0.12s, filter 0.12s, box-shadow 0.12s;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .btn-next:hover { filter: brightness(1.08); transform: skewX(-8deg) translateY(-2px) scale(1.03); }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .btn-next:active { transform: skewX(-8deg) translateY(4px); box-shadow: 0 1px 0 #9c7e00 !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .btn-back-eng {
+      font-family: var(--fn-font) !important; font-size: 1.3rem !important; font-weight: 400 !important; letter-spacing: 0.5px;
+      background: rgba(0,0,0,0.35) !important; color: #cfeaff !important;
+      border: 2px solid rgba(255,255,255,0.3) !important; border-radius: 5px !important; padding: 5px 22px !important;
+      transform: skewX(-8deg);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .btn-back-eng:hover { border-color: var(--fn-yellow) !important; color: var(--fn-yellow) !important; }
+
+    /* Player card + XP */
+    .fn-player {
+      display: flex; align-items: center; gap: 12px; direction: rtl; text-align: right;
+      background: rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.18); border-radius: 6px;
+      padding: 8px 12px; margin-bottom: 18px;
+    }
+    .fn-avatar {
+      width: 58px; height: 58px; flex-shrink: 0; font-size: 2.2rem;
+      display: flex; align-items: center; justify-content: center; border-radius: 6px;
+      background: radial-gradient(circle at 50% 35%, #ffc766, #c25e0a); border: 2px solid #ffd28a;
+    }
+    .fn-player-info { flex: 1; min-width: 0; }
+    .fn-player-name { font-family: 'Karantina', 'Secular One', sans-serif; font-weight: 700; font-size: 1.9rem; line-height: 1; color: #fff; }
+    .fn-level-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .fn-level {
+      font-family: 'Karantina', 'Secular One', sans-serif; font-size: 1.25rem; line-height: 1; white-space: nowrap;
+      background: #ffe14d; color: #14143a; padding: 2px 9px; border-radius: 4px; transform: skewX(-8deg);
+    }
+    .fn-xp-num { font-size: 0.78rem; font-weight: 700; color: #a9dcff; white-space: nowrap; direction: ltr; }
+    .fn-xp {
+      flex: 1; height: 13px; background: rgba(0,0,0,0.55); border: 2px solid rgba(255,255,255,0.28);
+      border-radius: 3px; overflow: hidden; transform: skewX(-12deg);
+    }
+    .fn-xp-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, #ff9f1c, #ffe14d);
+      box-shadow: 0 0 10px rgba(255,225,77,0.8); transition: width 0.45s ease;
+    }
+    .fn-progress { flex: none; margin: 0 4px 12px; }
+
+    /* Mission tiles (rarity colors) */
+    .fn-tiles { display: grid; gap: 12px; margin-bottom: 22px; direction: rtl; }
+    .fn-tiles.two { grid-template-columns: 1fr 1fr; }
+    .fn-tiles.three { grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .fn-tile {
+      --c1: #4fc3ff; --c2: #1257b8; --edge: #8fdcff;
+      position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      min-height: 190px; padding: 0; overflow: hidden; cursor: pointer;
+      border: 3px solid var(--edge); border-radius: 6px;
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 10px, transparent 10px 22px),
+        radial-gradient(circle at 50% 36%, var(--c1) 0%, var(--c2) 78%);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.35), 0 10px 22px rgba(0,0,0,0.4);
+      transition: transform 0.14s, box-shadow 0.14s, outline-color 0.14s;
+      outline: 4px solid transparent; outline-offset: 2px; font-family: 'Rubik', sans-serif;
+    }
+    .fn-tile:hover, .fn-tile:focus-visible { transform: translateY(-6px) scale(1.03); outline-color: #ffe14d; }
+    .fn-tile:active { transform: translateY(2px) scale(0.98); }
+    .fn-tile.uncommon  { --c1: #a4f05c; --c2: #2f7f14; --edge: #c4ff8a; }
+    .fn-tile.rare      { --c1: #5fd0ff; --c2: #1257b8; --edge: #8fdcff; }
+    .fn-tile.epic      { --c1: #d596ff; --c2: #5a16a3; --edge: #e6b8ff; }
+    .fn-tile.legendary { --c1: #ffc766; --c2: #b8500a; --edge: #ffdc9c; }
+    .fn-tile-rarity {
+      position: absolute; top: 0; right: 0; font-family: 'Karantina', sans-serif; font-size: 1.05rem; line-height: 1;
+      background: rgba(0,0,0,0.5); color: var(--edge); padding: 4px 10px 3px; border-bottom-left-radius: 6px; letter-spacing: 0.5px;
+    }
+    .fn-tile-icon { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 4.2rem; filter: drop-shadow(0 6px 6px rgba(0,0,0,0.4)); padding-top: 14px; }
+    .fn-tiles.three .fn-tile { min-height: 170px; }
+    .fn-tiles.three .fn-tile-icon { font-size: 3.2rem; }
+    .fn-tile-plate {
+      width: 100%; background: rgba(4,10,36,0.78); border-top: 3px solid var(--edge); padding: 6px 6px 8px;
+      display: flex; flex-direction: column; gap: 1px;
+    }
+    .fn-tile-name { font-family: 'Karantina', 'Secular One', sans-serif; font-weight: 700; font-size: 1.9rem; line-height: 1.05; color: #fff; }
+    .fn-tiles.three .fn-tile-name { font-size: 1.55rem; }
+    .fn-tile-desc { font-size: 0.74rem; font-weight: 500; color: #cfeaff; line-height: 1.25; }
+
+    /* HUD */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .score-strip { gap: 8px !important; margin-bottom: 10px !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .score-chip {
+      font-family: var(--fn-font) !important; font-size: 1.35rem !important; font-weight: 400 !important; line-height: 1.1;
+      background: rgba(0,0,0,0.5) !important; color: #fff !important;
+      border: 2px solid rgba(255,255,255,0.22) !important; border-radius: 5px !important;
+      padding: 4px 16px !important; transform: skewX(-8deg); box-shadow: none !important;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .score-chip span { color: #fff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .score-chip:nth-child(1) span { color: #86ff5c !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .score-chip:nth-child(2) span { color: #ff6b7d !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .score-chip:nth-child(3) span { color: var(--fn-yellow) !important; }
+
+    /* Quiz */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-instr { font-family: var(--fn-font); font-size: 1.7rem; font-weight: 400; color: var(--fn-yellow) !important; letter-spacing: 0.5px; margin: 2px 0 0; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-emoji-card {
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 12px, transparent 12px 26px),
+        radial-gradient(circle at 50% 35%, #5fd0ff 0%, #1257b8 80%) !important;
+      border: 3px solid #8fdcff !important; border-radius: 6px !important;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.35), inset 0 0 30px rgba(0,0,0,0.2) !important;
+      margin: 8px 0 14px !important; padding: 18px 16px 14px !important;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-prompt { text-shadow: 0 3px 0 rgba(4,17,63,0.55); }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .abc-speak-btn {
+      background: rgba(4,10,36,0.6) !important; color: #fff !important; border: 2px solid rgba(255,255,255,0.4) !important;
+      border-radius: 5px !important; font-family: var(--fn-font) !important; font-size: 1.25rem !important; padding: 3px 18px !important;
+      transform: skewX(-8deg);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .abc-speak-btn:hover { border-color: var(--fn-yellow) !important; color: var(--fn-yellow) !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-opt {
+      background: linear-gradient(90deg, rgba(26,74,170,0.95), rgba(12,36,104,0.95)) !important; color: #fff !important;
+      border: 2px solid #4aa8ff !important; border-inline-start: 9px solid #4aa8ff !important; border-radius: 5px !important;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.35) !important; transition: transform 0.12s, border-color 0.12s, background 0.12s;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-opt:hover:not(:disabled) {
+      background: linear-gradient(90deg, rgba(40,100,215,0.98), rgba(20,54,140,0.98)) !important;
+      border-color: var(--fn-yellow) !important; transform: translateY(-2px) scale(1.015);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-opt.wp-ok { background: linear-gradient(90deg, #2fbf4a, #127a2c) !important; border-color: #a6ff9c !important; color: #fff !important; box-shadow: 0 0 22px rgba(120,255,110,0.55) !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-opt.wp-no { background: linear-gradient(90deg, #d93a4c, #8a1322) !important; border-color: #ff9aa6 !important; color: #fff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-opt-heb { opacity: 0.95; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-feedback { font-family: var(--fn-font); font-size: 1.75rem; background: none !important; border: none !important; padding: 4px !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-feedback [style*="1a7a4a"] { color: #86ff5c !important; font-weight: 400 !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .wp-feedback [style*="c0392b"] { color: #ff8f9d !important; font-weight: 400 !important; }
+    .fn-xp-pop { color: #ffe14d; margin-inline-start: 8px; white-space: nowrap; direction: ltr; display: inline-block; }
+
+    /* End of round */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-end-icon { font-size: 5.5rem; filter: drop-shadow(0 0 22px rgba(255,225,77,0.7)); animation: fn-pop 0.5s ease; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-end-text {
+      font-family: var(--fn-font); font-size: 4rem; font-weight: 700; line-height: 1; color: var(--fn-yellow) !important;
+      text-shadow: 0 4px 0 #6b4e00, 0 0 26px rgba(255,225,77,0.6); transform: skewX(-8deg) rotate(-2deg); margin: 6px 0 12px;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-end-sub { color: #fff !important; font-size: 1.1rem; font-weight: 600; margin-bottom: 22px; line-height: 1.7; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-end-sub b { font-family: var(--fn-font); font-size: 1.6rem; color: var(--fn-yellow); font-weight: 400; }
+    @keyframes fn-pop { 0% { transform: scale(0.2) rotate(-20deg); opacity: 0; } 70% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
+
+    /* Letters guide */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-progress { font-family: var(--fn-font); font-size: 1.2rem; color: #a9dcff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-letter button {
+      border-radius: 6px !important; border-width: 3px !important; color: #fff !important;
+      text-shadow: 0 4px 0 rgba(0,0,0,0.3); box-shadow: 0 6px 0 rgba(0,0,0,0.35);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-letter .tl-cap { background: radial-gradient(circle at 50% 35%, #5fd0ff, #1257b8) !important; border-color: #8fdcff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-letter .tl-low { background: radial-gradient(circle at 50% 35%, #ffc766, #b8500a) !important; border-color: #ffdc9c !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-letter span { font-family: var(--fn-font); font-size: 1.35rem !important; font-weight: 400 !important; color: #cfeaff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-info {
+      background: rgba(0,0,0,0.4) !important; color: #fff !important; border-radius: 5px !important;
+      border-inline-start: 7px solid #4aa8ff;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-info b { color: var(--fn-yellow); }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-tip { background: rgba(255,225,77,0.1) !important; border: 2px dashed rgba(255,225,77,0.65) !important; border-radius: 5px !important; color: #fff3b0 !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-word { background: rgba(0,0,0,0.45) !important; border: 2px solid #4aa8ff !important; border-radius: 5px !important; color: #fff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-word:hover { border-color: var(--fn-yellow) !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-word b { color: var(--fn-yellow) !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-pair {
+      background: radial-gradient(circle at 50% 35%, #d596ff, #5a16a3) !important; color: #fff !important;
+      border: 3px solid #e6b8ff !important; border-radius: 6px !important; box-shadow: 0 5px 0 rgba(0,0,0,0.35);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) #tl-body > div[style*="color:#888"] { color: #a9dcff !important; }
+
+    /* Math missions */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-emoji { font-size: 4.4rem; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.45)); margin: 4px 0 8px; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-text {
+      background: rgba(0,0,0,0.42) !important; color: #fff !important; border-radius: 5px !important;
+      border: 2px solid rgba(255,255,255,0.16); border-inline-start: 8px solid var(--fn-yellow);
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-text b { color: var(--fn-yellow) !important; font-family: var(--fn-font); font-size: 2.5rem; font-weight: 700; line-height: 0.8; padding: 0 2px; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .answer-input {
+      background: rgba(0,0,0,0.5) !important; color: #fff !important; border: 3px solid var(--fn-yellow) !important;
+      border-radius: 5px !important; font-family: var(--fn-font) !important; font-size: 2.6rem !important; padding: 4px 10px !important;
+      box-shadow: 0 0 18px rgba(255,225,77,0.25) !important;
+    }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .answer-input::placeholder { color: rgba(255,255,255,0.4) !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-help { background: rgba(0,0,0,0.32) !important; border: 2px dashed #8fdcff !important; border-radius: 6px !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-hint { color: #a9dcff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-grp.g1 { background: rgba(95,208,255,0.2) !important; border-color: #8fdcff !important; border-radius: 6px; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-grp.g2 { background: rgba(255,199,102,0.2) !important; border-color: #ffdc9c !important; border-radius: 6px; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-grp .tm-cnt { color: #fff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-sign { color: var(--fn-yellow) !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-eq { color: #fff !important; }
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tm-eq .tm-ans { color: #86ff5c !important; }
+
+    @media (max-width: 420px) {
+      :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .english-menu-title, :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tl-title { font-size: 2.4rem !important; }
+      .fn-tiles.three .fn-tile-icon { font-size: 2.6rem; }
+      .fn-tiles.three .fn-tile-name { font-size: 1.3rem; }
+      .fn-tile-desc { font-size: 0.68rem; }
+      :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .tq-end-text { font-size: 3.2rem; }
+    }
+
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 480px) {
       .card { padding: 28px 20px; }
@@ -1655,7 +2023,7 @@
   <div class="card">
     <span class="mascot">🦁</span>
     <h1>לומדים עם אבון</h1>
-    <p>גרסה 1.4</p>
+    <p>גרסה 1.5</p>
     <div class="input-group">
       <div class="name-glow-wrap">
         <input type="text" id="name-input" placeholder="מה השם שלך?" maxlength="20" autocomplete="off" />
@@ -1677,6 +2045,10 @@
         <span class="subj-name">עברית</span>
       </button>
     </div>
+    <button class="subject-btn" id="subj-test" onclick="selectSubject('test')">
+      <span class="subj-icon">📝</span>
+      <span class="subj-name">לומדים למבחן</span>
+    </button>
 
 
   </div>
@@ -2116,6 +2488,179 @@
       </button>
     </div>
     <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== STUDY FOR TEST: KID PICKER ======== -->
+<div class="screen" id="test-menu-screen">
+  <div class="card">
+    <span style="font-size:3.5rem">📝</span>
+    <div class="english-menu-title">לומדים למבחן!</div>
+    <div class="english-menu-sub">מי מתכונן היום?</div>
+    <div class="kid-options">
+      <button class="kid-btn amy" disabled>
+        <span class="kid-soon">בקרוב</span>
+        <span class="kid-icon">👧</span><span>איימי</span>
+      </button>
+      <button class="kid-btn tommy" onclick="startTommy()">
+        <span class="kid-icon">👦</span><span>טומי</span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('welcome-screen')">← חזור</button>
+  </div>
+</div>
+
+<!-- ======== STUDY FOR TEST: TOMMY (LOBBY) ======== -->
+<div class="screen" id="tommy-screen">
+  <div class="card">
+    <div class="fn-player">
+      <div class="fn-avatar">🎮</div>
+      <div class="fn-player-info">
+        <div class="fn-player-name">טומי</div>
+        <div class="fn-level-row">
+          <span class="fn-level">רמה <span id="fn-level">1</span></span>
+          <div class="fn-xp"><div class="fn-xp-fill" id="fn-xp-fill"></div></div>
+          <span class="fn-xp-num" id="fn-xp-num">0 / 100 XP</span>
+        </div>
+      </div>
+    </div>
+    <div class="english-menu-title">הלובי של טומי</div>
+    <div class="english-menu-sub">בחר משימה, צבור XP ועלה רמה!</div>
+    <div class="fn-tiles two">
+      <button class="fn-tile legendary" onclick="startTommyMath()">
+        <span class="fn-tile-rarity">אגדי</span>
+        <span class="fn-tile-icon">🧮</span>
+        <span class="fn-tile-plate">
+          <span class="fn-tile-name">מתמטיקה</span>
+          <span class="fn-tile-desc">20 בעיות מילוליות</span>
+        </span>
+      </button>
+      <button class="fn-tile epic" onclick="showScreen('tommy-eng-screen')">
+        <span class="fn-tile-rarity">אפי</span>
+        <span class="fn-tile-icon">🔤</span>
+        <span class="fn-tile-plate">
+          <span class="fn-tile-name">אנגלית</span>
+          <span class="fn-tile-desc">מילים, אותיות ומשפטים</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('test-menu-screen')">← יציאה</button>
+  </div>
+</div>
+
+<!-- ======== TOMMY: ENGLISH MISSIONS ======== -->
+<div class="screen" id="tommy-eng-screen">
+  <div class="card">
+    <div class="english-menu-title">משימות אנגלית</div>
+    <div class="english-menu-sub">בחר משימה</div>
+    <div class="fn-tiles three">
+      <button class="fn-tile uncommon" onclick="startTommyWords()">
+        <span class="fn-tile-rarity">מיוחד</span>
+        <span class="fn-tile-icon">🖼️</span>
+        <span class="fn-tile-plate">
+          <span class="fn-tile-name">מילים</span>
+          <span class="fn-tile-desc">קרא ובחר את התמונה</span>
+        </span>
+      </button>
+      <button class="fn-tile rare" onclick="startTommyLetters()">
+        <span class="fn-tile-rarity">נדיר</span>
+        <span class="fn-tile-icon">🅰️</span>
+        <span class="fn-tile-plate">
+          <span class="fn-tile-name">אותיות</span>
+          <span class="fn-tile-desc"><bdi dir="ltr">A · B · N</bdi> מדריך ותרגול</span>
+        </span>
+      </button>
+      <button class="fn-tile epic" onclick="startTommyPhrases()">
+        <span class="fn-tile-rarity">אפי</span>
+        <span class="fn-tile-icon">💬</span>
+        <span class="fn-tile-plate">
+          <span class="fn-tile-name">משפטים</span>
+          <span class="fn-tile-desc">מה הפירוש ומה עונים</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('tommy-screen')">← חזרה ללובי</button>
+  </div>
+</div>
+
+<!-- ======== TOMMY: QUIZ (shared) ======== -->
+<div class="screen" id="tq-screen">
+  <div class="card">
+    <div class="english-menu-title" id="tq-title"></div>
+    <div id="tq-play">
+      <div class="score-strip">
+        <div class="score-chip">✅ <span id="tq-c">0</span></div>
+        <div class="score-chip">❌ <span id="tq-w">0</span></div>
+        <div class="score-chip">📝 <span id="tq-n">1</span> / <span id="tq-total">10</span></div>
+      </div>
+      <div class="fn-xp fn-progress"><div class="fn-xp-fill" id="tq-bar"></div></div>
+      <div class="tq-instr" id="tq-instr"></div>
+      <div class="wp-emoji-card">
+        <div class="tq-prompt" id="tq-prompt"></div>
+        <button class="abc-speak-btn" id="tq-speak" onclick="tqSpeak()">🔊 שמע</button>
+      </div>
+      <div class="wp-opts" id="tq-opts"></div>
+      <div class="wp-feedback" id="tq-feedback"></div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn btn-next" id="tq-next" onclick="tqNext()" style="display:none">הבא ▶</button>
+      </div>
+    </div>
+    <div id="tq-end" style="display:none">
+      <div class="tq-end-icon" id="tq-end-icon"></div>
+      <div class="tq-end-text" id="tq-end-text"></div>
+      <div class="tq-end-sub" id="tq-end-sub"></div>
+      <div class="btn-row"><button class="btn btn-next" onclick="tqRestart()">משחק נוסף</button></div>
+    </div>
+    <button class="btn-back-eng" id="tq-back" onclick="showScreen('tommy-eng-screen')" style="margin-top:12px">← חזרה למשימות</button>
+  </div>
+</div>
+
+<!-- ======== TOMMY: MATH WORD PROBLEMS ======== -->
+<div class="screen" id="tm-screen">
+  <div class="card">
+    <div class="english-menu-title">בעיות מילוליות 🧮</div>
+    <div id="tm-play">
+      <div class="score-strip">
+        <div class="score-chip">✅ <span id="tm-c">0</span></div>
+        <div class="score-chip">❌ <span id="tm-w">0</span></div>
+        <div class="score-chip">📝 <span id="tm-n">1</span> / <span id="tm-total">20</span></div>
+      </div>
+      <div class="fn-xp fn-progress"><div class="fn-xp-fill" id="tm-bar"></div></div>
+      <div class="tm-emoji" id="tm-emoji"></div>
+      <div class="tm-text" id="tm-text"></div>
+      <div class="tm-answer-row">
+        <input type="number" inputmode="numeric" class="answer-input" id="tm-input" placeholder="?" autocomplete="off" />
+      </div>
+      <div class="btn-row" id="tm-actions">
+        <button class="btn btn-next" id="tm-check" onclick="tmCheck()">בדיקה ✓</button>
+        <button class="btn-back-eng" id="tm-help-btn" onclick="tmToggleHelp()">💡 עזרה</button>
+      </div>
+      <div class="wp-feedback" id="tm-feedback" style="margin-top:10px"></div>
+      <div class="tm-help" id="tm-help" style="display:none"></div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn btn-next" id="tm-next" onclick="tmNext()" style="display:none">הבא ▶</button>
+      </div>
+    </div>
+    <div id="tm-end" style="display:none">
+      <div class="tq-end-icon" id="tm-end-icon"></div>
+      <div class="tq-end-text" id="tm-end-text"></div>
+      <div class="tq-end-sub" id="tm-end-sub"></div>
+      <div class="btn-row"><button class="btn btn-next" onclick="startTommyMath()">משחק נוסף</button></div>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('tommy-screen')" style="margin-top:12px">← חזרה ללובי</button>
+  </div>
+</div>
+
+<!-- ======== TOMMY: LETTERS GUIDE ======== -->
+<div class="screen" id="tl-screen">
+  <div class="card">
+    <div class="tl-progress" id="tl-progress"></div>
+    <div id="tl-body"></div>
+    <div class="tl-nav">
+      <button class="btn-back-eng" id="tl-prev" onclick="tlGo(-1)">→ הקודם</button>
+      <button class="btn btn-next" id="tl-next" onclick="tlGo(1)">הבא ←</button>
+    </div>
+    <button class="btn-back-eng" onclick="showScreen('tommy-eng-screen')" style="margin-top:14px">← חזרה למשימות</button>
   </div>
 </div>
 
@@ -2773,7 +3318,7 @@ function buildDivHTML(a, b, answer) {
 // ===================== GAME FLOW =====================
 function selectSubject(subj) {
   selectedSubject = subj;
-  ['math','english','hebrew'].forEach(s => {
+  ['math','english','hebrew','test'].forEach(s => {
     document.getElementById('subj-' + s).className = 'subject-btn' + (s === subj ? ' selected-' + s : '');
   });
   playerName = document.getElementById('name-input').value.trim();
@@ -2786,8 +3331,547 @@ function selectSubject(subj) {
   }
   if (subj === 'english') showScreen('english-menu-screen');
   else if (subj === 'hebrew') showScreen('hebrew-menu-screen');
+  else if (subj === 'test') showScreen('test-menu-screen');
   else showScreen('math-menu-screen');
 }
+
+// ===================== STUDY FOR TEST =====================
+function startTommy() { tXpRender(); showScreen('tommy-screen'); }
+
+// ----- XP & levels (saved on this device) -----
+const T_XP_KEY = 'tommyXP', T_XP_PER_ANSWER = 10, T_XP_PER_LEVEL = 100;
+function tXpGet() { try { return parseInt(localStorage.getItem(T_XP_KEY), 10) || 0; } catch (e) { return window._tXp || 0; } }
+function tXpAdd(n) {
+  const v = tXpGet() + n;
+  window._tXp = v;
+  try { localStorage.setItem(T_XP_KEY, v); } catch (e) {}
+}
+function tXpRender() {
+  const xp = tXpGet(), inLevel = xp % T_XP_PER_LEVEL;
+  document.getElementById('fn-level').textContent = Math.floor(xp / T_XP_PER_LEVEL) + 1;
+  document.getElementById('fn-xp-fill').style.width = (inLevel / T_XP_PER_LEVEL * 100) + '%';
+  document.getElementById('fn-xp-num').textContent = `${inLevel} / ${T_XP_PER_LEVEL} XP`;
+}
+const T_XP_POP = `<span class="fn-xp-pop">+${T_XP_PER_ANSWER} XP</span>`;
+// End-of-round screen shared by all Tommy missions
+function tEndScreen(prefix, c, n) {
+  const win = c >= n * 0.9, good = c >= n * 0.7;
+  document.getElementById(prefix + '-end-icon').textContent = win ? '👑' : good ? '🥈' : '💪';
+  document.getElementById(prefix + '-end-text').textContent = win ? 'ניצחון!' : good ? 'כמעט ניצחון!' : 'עוד קרב אחד!';
+  document.getElementById(prefix + '-end-sub').innerHTML =
+    `${c} תשובות נכונות מתוך ${n}<br><b dir="ltr">+${c * T_XP_PER_ANSWER} XP</b>`;
+  if (good) { playSuccess(); launchConfetti(); }
+}
+
+// ----- Natural-sounding voice: pick the best English voice the device offers -----
+let tVoice = null;
+function tPickVoice() {
+  if (!window.speechSynthesis) return;
+  const vs = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  if (!vs.length) return;
+  const score = v => {
+    const n = v.name;
+    let sc = 0;
+    if (/natural|neural/i.test(n)) sc += 100;            // Edge / Android neural voices
+    if (/premium/i.test(n)) sc += 90;                    // macOS / iOS downloaded voices
+    if (/enhanced/i.test(n)) sc += 80;
+    if (/siri/i.test(n)) sc += 70;
+    if (/^Google US English/i.test(n)) sc += 60;         // Chrome
+    if (/\b(Ava|Samantha|Allison|Zoe|Evan|Nicky|Aria|Jenny|Joelle|Noelle)\b/i.test(n)) sc += 40;
+    if (/en[-_]US/i.test(v.lang)) sc += 20;
+    if (/compact|eloquence|novelty|Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Kathy|Ralph|Good News/i.test(n)) sc -= 200;
+    return sc;
+  };
+  tVoice = vs.sort((x, y) => score(y) - score(x))[0];
+}
+if (window.speechSynthesis) {
+  tPickVoice();
+  speechSynthesis.addEventListener('voiceschanged', tPickVoice);
+}
+function tSpeak(text) {
+  if (!window.speechSynthesis) return;
+  if (!tVoice) tPickVoice();
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-US';
+  if (tVoice) { utt.voice = tVoice; utt.lang = tVoice.lang; }
+  utt.rate = text.length <= 2 ? 0.8 : 0.92;   // letters a bit slower, words and phrases at a natural pace
+  utt.pitch = 1;
+  speechSynthesis.speak(utt);
+}
+
+const tShuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+const tPick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+// ----- Shared quiz engine -----
+// question: { instr, prompt (html), long, speak, autoSpeak, letters, en, opts:[{html, ok}], answer (html) }
+let tq = { build: null, back: 'tommy-eng-screen', qs: [], i: 0, c: 0, w: 0, answered: false };
+
+function tqStart(title, build, back) {
+  tq.build = build; tq.back = back || 'tommy-eng-screen';
+  document.getElementById('tq-title').textContent = title;
+  document.getElementById('tq-back').onclick = () => showScreen(tq.back);
+  showScreen('tq-screen');
+  tqRestart();
+}
+
+function tqRestart() {
+  tq.qs = tq.build(); tq.i = 0; tq.c = 0; tq.w = 0;
+  document.getElementById('tq-play').style.display = '';
+  document.getElementById('tq-end').style.display = 'none';
+  document.getElementById('tq-total').textContent = tq.qs.length;
+  tqLoad();
+}
+
+function tqLoad() {
+  const q = tq.qs[tq.i];
+  tq.answered = false;
+  document.getElementById('tq-n').textContent = tq.i + 1;
+  document.getElementById('tq-c').textContent = tq.c;
+  document.getElementById('tq-w').textContent = tq.w;
+  document.getElementById('tq-bar').style.width = (tq.i / tq.qs.length * 100) + '%';
+  document.getElementById('tq-instr').textContent = q.instr;
+  const pr = document.getElementById('tq-prompt');
+  pr.innerHTML = q.prompt;
+  pr.className = 'tq-prompt' + (q.long ? ' tq-long' : '');
+  document.getElementById('tq-speak').style.display = q.speak ? '' : 'none';
+
+  const box = document.getElementById('tq-opts');
+  box.className = 'wp-opts' + (q.letters ? ' tq-letters' : '');
+  box.innerHTML = '';
+  tShuffle(q.opts).forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'wp-opt tq-opt' + (q.en ? ' tq-en' : '');
+    b.innerHTML = o.html;
+    b.dataset.correct = o.ok ? '1' : '0';
+    b.onclick = () => tqCheck(b);
+    box.appendChild(b);
+  });
+  const fb = document.getElementById('tq-feedback');
+  fb.style.display = 'none'; fb.innerHTML = '';
+  document.getElementById('tq-next').style.display = 'none';
+  if (q.autoSpeak) setTimeout(tqSpeak, 250);
+}
+
+function tqSpeak() {
+  const q = tq.qs[tq.i];
+  if (q && q.speak) tSpeak(q.speak);
+}
+
+function tqCheck(btn) {
+  if (tq.answered) return;
+  tq.answered = true;
+  const btns = document.querySelectorAll('#tq-opts .wp-opt');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('tq-feedback');
+  if (btn.dataset.correct === '1') {
+    btn.classList.add('wp-ok');
+    tq.c++; tXpAdd(T_XP_PER_ANSWER);
+    const msgs = ['פגיעה בול! 🎯','אלוף! 🏆','מהלך אגדי! ⚡','כל הכבוד! ⭐','מעולה! 🔥'];
+    fb.innerHTML = `<span style="color:#1a7a4a;font-weight:700">${tPick(msgs)}${T_XP_POP}</span>`;
+    playSuccess(); launchConfetti();
+  } else {
+    btn.classList.add('wp-no');
+    tq.w++;
+    btns.forEach(b => { if (b.dataset.correct === '1') b.classList.add('wp-ok'); });
+    fb.innerHTML = `<span style="color:#c0392b;font-weight:700">❌ התשובה הנכונה: ${tq.qs[tq.i].answer}</span>`;
+    playWrong();
+  }
+  fb.style.display = 'block';
+  document.getElementById('tq-bar').style.width = ((tq.i + 1) / tq.qs.length * 100) + '%';
+  document.getElementById('tq-c').textContent = tq.c;
+  document.getElementById('tq-w').textContent = tq.w;
+  const nx = document.getElementById('tq-next');
+  nx.textContent = tq.i === tq.qs.length - 1 ? 'סיום 🏁' : 'הבא ▶';
+  nx.style.display = '';
+}
+
+function tqNext() {
+  tq.i++;
+  if (tq.i < tq.qs.length) { tqLoad(); return; }
+  document.getElementById('tq-play').style.display = 'none';
+  document.getElementById('tq-end').style.display = '';
+  tEndScreen('tq', tq.c, tq.qs.length);
+}
+
+// ----- MATH: 20 word problems (+, −, ×, ÷) -----
+const tR = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
+// Each problem: op, icon (shown above the story), e / e2 (emoji used in the help picture),
+// gen() -> [a, b] fresh numbers every round, t(a, b) -> story text.
+// For '÷' a is the total and b the number of groups.
+const TOMMY_MATH = [
+  // ---- חיבור ----
+  { op:'+', icon:'🦖', e:'🦖', gen:() => [tR(5,12), tR(3,8)],
+    t:(a,b) => `לטומי יש <b>${a}</b> דינוזאורים צעצוע. ליום ההולדת הוא קיבל עוד <b>${b}</b> דינוזאורים. כמה דינוזאורים יש לו עכשיו?` },
+  { op:'+', icon:'⚽', e:'⚽', gen:() => [tR(2,6), tR(2,6)],
+    t:(a,b) => `הקבוצה של טומי הבקיעה <b>${a}</b> שערים במחצית הראשונה ועוד <b>${b}</b> שערים במחצית השנייה. כמה שערים הבקיעה הקבוצה בסך הכול?` },
+  { op:'+', icon:'🐠', e:'🐠', e2:'🐟', gen:() => [tR(4,10), tR(3,9)],
+    t:(a,b) => `באקווריום שוחים <b>${a}</b> דגים כתומים ו־<b>${b}</b> דגים כחולים. כמה דגים יש באקווריום?` },
+  { op:'+', icon:'🦁', e:'⭐', gen:() => [tR(6,12), tR(4,8)],
+    t:(a,b) => `אבון האריה אסף <b>${a}</b> כוכבים ביום ראשון ועוד <b>${b}</b> כוכבים ביום שני. כמה כוכבים הוא אסף בסך הכול?` },
+  { op:'+', icon:'🚀', e:'👨‍🚀', gen:() => [tR(3,8), tR(2,6)],
+    t:(a,b) => `בחללית טסים <b>${a}</b> אסטרונאוטים. בתחנת החלל הצטרפו אליהם עוד <b>${b}</b> אסטרונאוטים. כמה אסטרונאוטים יש עכשיו בחללית?` },
+  // ---- חיסור ----
+  { op:'−', icon:'🍪', e:'🍪', gen:() => [tR(10,20), tR(3,9)],
+    t:(a,b) => `אמא אפתה <b>${a}</b> עוגיות. טומי ואיימי אכלו <b>${b}</b> עוגיות. כמה עוגיות נשארו?` },
+  { op:'−', icon:'🎈', e:'🎈', gen:() => [tR(9,18), tR(2,8)],
+    t:(a,b) => `במסיבת יום ההולדת היו <b>${a}</b> בלונים. פתאום <b>${b}</b> בלונים התפוצצו — בום! כמה בלונים נשארו?` },
+  { op:'−', icon:'🃏', e:'🃏', gen:() => [tR(10,20), tR(3,9)],
+    t:(a,b) => `לטומי היו <b>${a}</b> קלפים. הוא נתן <b>${b}</b> קלפים לחבר הכי טוב שלו. כמה קלפים נשארו לטומי?` },
+  { op:'−', icon:'🌳', e:'🐦', gen:() => [tR(8,16), tR(2,7)],
+    t:(a,b) => `על העץ ישבו <b>${a}</b> ציפורים. <b>${b}</b> ציפורים עפו לחפש אוכל. כמה ציפורים נשארו על העץ?` },
+  { op:'−', icon:'🚗', e:'🚗', gen:() => [tR(10,18), tR(3,9)],
+    t:(a,b) => `בחניון חנו <b>${a}</b> מכוניות. <b>${b}</b> מכוניות נסעו הביתה. כמה מכוניות נשארו בחניון?` },
+  // ---- כפל ----
+  { op:'×', icon:'🍕', e:'🍕', gen:() => [tR(2,4), tR(4,6)],
+    t:(a,b) => `טומי הזמין <b>${a}</b> מגשי פיצה. בכל מגש יש <b>${b}</b> משולשים. כמה משולשי פיצה יש בסך הכול?` },
+  { op:'×', icon:'🐶', e:'🐾', gen:() => [tR(2,6), 4],
+    t:(a,b) => `בגינה משחקים <b>${a}</b> כלבים. לכל כלב יש <b>${b}</b> רגליים. כמה רגליים יש לכל הכלבים ביחד?` },
+  { op:'×', icon:'🏰', e:'🧱', gen:() => [tR(2,5), tR(3,6)],
+    t:(a,b) => `טומי בונה <b>${a}</b> מגדלים. בכל מגדל יש <b>${b}</b> קוביות. כמה קוביות הוא צריך בסך הכול?` },
+  { op:'×', icon:'🍬', e:'🍬', gen:() => [tR(3,6), tR(2,5)],
+    t:(a,b) => `על השולחן יש <b>${a}</b> שקיות הפתעה. בכל שקית יש <b>${b}</b> סוכריות. כמה סוכריות יש בכל השקיות ביחד?` },
+  { op:'×', icon:'🐔', e:'🥚', gen:() => [tR(2,5), tR(2,5)],
+    t:(a,b) => `בלול יש <b>${a}</b> תרנגולות. כל תרנגולת הטילה <b>${b}</b> ביצים. כמה ביצים יש בלול?` },
+  // ---- חילוק ----
+  { op:'÷', icon:'🍎', e:'🍎', gen:() => { const b = tR(2,4); return [b * tR(2,5), b]; },
+    t:(a,b) => `לטומי יש <b>${a}</b> תפוחים. הוא מחלק אותם שווה בשווה בין <b>${b}</b> חברים. כמה תפוחים מקבל כל חבר?` },
+  { op:'÷', icon:'🍫', e:'🍫', gen:() => { const b = tR(2,5); return [b * tR(2,4), b]; },
+    t:(a,b) => `אמא קנתה <b>${a}</b> שוקולדים וחילקה אותם שווה בשווה בין <b>${b}</b> ילדים. כמה שוקולדים קיבל כל ילד?` },
+  { op:'÷', icon:'💐', e:'🌸', gen:() => { const b = tR(2,4); return [b * tR(3,6), b]; },
+    t:(a,b) => `איימי קטפה <b>${a}</b> פרחים. היא שמה אותם ב־<b>${b}</b> אגרטלים, אותו מספר פרחים בכל אגרטל. כמה פרחים יש בכל אגרטל?` },
+  { op:'÷', icon:'🏃', e:'🧒', gen:() => { const b = tR(2,4); return [b * tR(3,6), b]; },
+    t:(a,b) => `המאמן מחלק <b>${a}</b> ילדים ל־<b>${b}</b> קבוצות שוות. כמה ילדים יש בכל קבוצה?` },
+  { op:'÷', icon:'✏️', e:'✏️', gen:() => { const b = tR(2,5); return [b * tR(2,5), b]; },
+    t:(a,b) => `יש <b>${a}</b> עפרונות ו־<b>${b}</b> קלמרים. שמים אותו מספר עפרונות בכל קלמר. כמה עפרונות יש בכל קלמר?` },
+];
+
+let tm = { qs: [], i: 0, c: 0, w: 0, tries: 0, done: false };
+
+function startTommyMath() {
+  tm.qs = tShuffle(TOMMY_MATH).map(p => {
+    const [a, b] = p.gen();
+    const ans = p.op === '+' ? a + b : p.op === '−' ? a - b : p.op === '×' ? a * b : a / b;
+    return { ...p, a, b, ans };
+  });
+  tm.i = 0; tm.c = 0; tm.w = 0;
+  document.getElementById('tm-total').textContent = tm.qs.length;
+  document.getElementById('tm-play').style.display = '';
+  document.getElementById('tm-end').style.display = 'none';
+  showScreen('tm-screen');
+  tmLoad();
+}
+
+function tmLoad() {
+  const q = tm.qs[tm.i];
+  tm.tries = 0; tm.done = false;
+  document.getElementById('tm-n').textContent = tm.i + 1;
+  document.getElementById('tm-c').textContent = tm.c;
+  document.getElementById('tm-w').textContent = tm.w;
+  document.getElementById('tm-bar').style.width = (tm.i / tm.qs.length * 100) + '%';
+  document.getElementById('tm-emoji').textContent = q.icon;
+  document.getElementById('tm-text').innerHTML = q.t(q.a, q.b);
+  const inp = document.getElementById('tm-input');
+  inp.value = ''; inp.disabled = false;
+  document.getElementById('tm-actions').style.display = '';
+  document.getElementById('tm-help').style.display = 'none';
+  document.getElementById('tm-feedback').style.display = 'none';
+  document.getElementById('tm-next').style.display = 'none';
+}
+
+// Picture that illustrates the problem. solved=true also shows the answer.
+function tmHelpHTML(q, solved) {
+  const rpt = (e, n, goneFrom) => Array.from({length: n}, (_, i) =>
+    `<span${goneFrom !== undefined && i >= goneFrom ? ' class="tm-gone"' : ''}><i>${e}</i></span>`).join('');
+  const grp = (cls, inner, cnt) => `<div class="tm-grp ${cls}">${inner}<span class="tm-cnt">${cnt}</span></div>`;
+  let hint, pic;
+  if (q.op === '+') {
+    hint = `מחברים! סופרים את כל הציורים משתי הקבוצות ביחד`;
+    pic = grp('g1', rpt(q.e, q.a), q.a) + '<span class="tm-sign">+</span>' + grp('g2', rpt(q.e2 || q.e, q.b), q.b);
+  } else if (q.op === '−') {
+    hint = `מחסרים! היו ${q.a}, מחקנו ${q.b}. סופרים רק את מה שנשאר (בלי ה־✕)`;
+    pic = grp('g1 wide', rpt(q.e, q.a, q.a - q.b), `${q.a} פחות ${q.b}`);
+  } else if (q.op === '×') {
+    hint = `כפל! יש ${q.a} קבוצות, ובכל קבוצה ${q.b}. אפשר לספור בקפיצות של ${q.b}`;
+    pic = Array.from({length: q.a}, (_, i) => grp('small ' + (i % 2 ? 'g2' : 'g1'), rpt(q.e, q.b), q.b)).join('');
+  } else {
+    hint = `חילוק! מחלקים ${q.a} ל־${q.b} קבוצות שוות. סופרים כמה יש בקבוצה אחת`;
+    pic = Array.from({length: q.b}, (_, i) => grp('small ' + (i % 2 ? 'g2' : 'g1'), rpt(q.e, q.ans), solved ? q.ans : '?')).join('');
+  }
+  const eq = `${q.a} ${q.op} ${q.b} = ` + (solved ? `<span class="tm-ans">${q.ans}</span>` : '?');
+  return `<div class="tm-hint">${hint}</div><div class="tm-pic">${pic}</div><div class="tm-eq">${eq}</div>`;
+}
+
+function tmShowHelp(solved) {
+  const h = document.getElementById('tm-help');
+  h.innerHTML = tmHelpHTML(tm.qs[tm.i], solved);
+  h.style.display = '';
+}
+function tmToggleHelp() {
+  const h = document.getElementById('tm-help');
+  if (h.style.display === 'none') tmShowHelp(false); else h.style.display = 'none';
+}
+
+function tmCheck() {
+  if (tm.done) return;
+  const q = tm.qs[tm.i];
+  const inp = document.getElementById('tm-input');
+  if (inp.value.trim() === '') { inp.focus(); return; }
+  const fb = document.getElementById('tm-feedback');
+  const finish = () => {
+    tm.done = true; inp.disabled = true;
+    document.getElementById('tm-bar').style.width = ((tm.i + 1) / tm.qs.length * 100) + '%';
+    document.getElementById('tm-actions').style.display = 'none';
+    tmShowHelp(true);
+    const nx = document.getElementById('tm-next');
+    nx.textContent = tm.i === tm.qs.length - 1 ? 'סיום 🏁' : 'הבא ▶';
+    nx.style.display = '';
+  };
+  if (Number(inp.value) === q.ans) {
+    const first = tm.tries === 0;
+    if (first) { tm.c++; tXpAdd(T_XP_PER_ANSWER); }
+    const msgs = ['פגיעה בול! 🎯','אלוף! 🏆','מהלך אגדי! ⚡','כל הכבוד! ⭐','מעולה! 🔥'];
+    fb.innerHTML = `<span style="color:#1a7a4a;font-weight:700">${tPick(msgs)}${first ? T_XP_POP : ''}</span>`;
+    playSuccess(); launchConfetti();
+    finish();
+  } else {
+    playWrong();
+    tm.tries++;
+    if (tm.tries === 1) {
+      tm.w++;
+      fb.innerHTML = `<span style="color:#c0392b;font-weight:700">כמעט! הסתכל על הציור ונסה שוב 💪</span>`;
+      tmShowHelp(false);
+      inp.value = ''; inp.focus();
+    } else {
+      fb.innerHTML = `<span style="color:#c0392b;font-weight:700">התשובה הנכונה היא ${q.ans}. בוא נראה למה 👇</span>`;
+      finish();
+    }
+  }
+  fb.style.display = 'block';
+  document.getElementById('tm-c').textContent = tm.c;
+  document.getElementById('tm-w').textContent = tm.w;
+}
+
+function tmNext() {
+  tm.i++;
+  if (tm.i < tm.qs.length) { tmLoad(); return; }
+  document.getElementById('tm-play').style.display = 'none';
+  document.getElementById('tm-end').style.display = '';
+  tEndScreen('tm', tm.c, tm.qs.length);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || !document.getElementById('tm-screen').classList.contains('active')) return;
+  if (tm.done) tmNext(); else tmCheck();
+});
+
+// ----- 1. WORDS (left side of the test material) -----
+// c = category (distractors come from the same category), x = words that look alike (never shown together)
+const TOMMY_WORDS = [
+  {w:'boy',   p:'👦', h:'ילד',    c:'people', x:'brother'},
+  {w:'girl',  p:'👧', h:'ילדה',   c:'people', x:'sister'},
+  {w:'mom',   p:'👩‍👧', h:'אמא',  c:'people', x:'woman'},
+  {w:'man',   p:'👨', h:'איש',    c:'people'},
+  {w:'woman', p:'👩', h:'אישה',   c:'people', x:'mom'},
+  {w:'baby',  p:'👶', h:'תינוק',  c:'people'},
+  {w:'sister',p:'👭', h:'אחות',   c:'people', x:'girl'},
+  {w:'brother',p:'👬',h:'אח',     c:'people', x:'boy'},
+  {w:'dog',   p:'🐶', h:'כלב',    c:'things'},
+  {w:'cat',   p:'🐱', h:'חתול',   c:'things'},
+  {w:'apple', p:'🍎', h:'תפוח',   c:'things'},
+  {w:'bag',   p:'🎒', h:'תיק',    c:'things'},
+  {w:'book',  p:'📖', h:'ספר',    c:'things', x:'notebook'},
+  {w:'box',   p:'📦', h:'קופסה',  c:'things'},
+  {w:'notebook',p:'📓',h:'מחברת', c:'things', x:'book'},
+  {w:'computer',p:'💻',h:'מחשב',  c:'things'},
+  {w:'nose',  p:'👃', h:'אף',     c:'things'},
+  {w:'mouth', p:'👄', h:'פה',     c:'things'},
+  {w:'big',   p:'🐘', h:'גדול',   c:'size'},
+  {w:'small', p:'🐭', h:'קטן',    c:'size'},
+  {w:'black', p:'⚫', h:'שחור',   c:'colors'},
+  {w:'white', p:'⚪', h:'לבן',    c:'colors'},
+  {w:'red',   p:'🔴', h:'אדום',   c:'colors'},
+  {w:'blue',  p:'🔵', h:'כחול',   c:'colors'},
+  {w:'green', p:'🟢', h:'ירוק',   c:'colors'},
+  {w:'yellow',p:'🟡', h:'צהוב',   c:'colors'},
+  {w:'orange',p:'🟠', h:'כתום',   c:'colors'},
+  {w:'zero',  n:0,  h:'אפס',   c:'numbers'},
+  {w:'one',   n:1,  h:'אחת',   c:'numbers'},
+  {w:'two',   n:2,  h:'שתיים', c:'numbers'},
+  {w:'three', n:3,  h:'שלוש',  c:'numbers'},
+  {w:'four',  n:4,  h:'ארבע',  c:'numbers'},
+  {w:'five',  n:5,  h:'חמש',   c:'numbers'},
+  {w:'six',   n:6,  h:'שש',    c:'numbers'},
+  {w:'seven', n:7,  h:'שבע',   c:'numbers'},
+  {w:'eight', n:8,  h:'שמונה', c:'numbers'},
+  {w:'nine',  n:9,  h:'תשע',   c:'numbers'},
+  {w:'ten',   n:10, h:'עשר',   c:'numbers'},
+  {w:'eleven',n:11, h:'אחת עשרה', c:'numbers'},
+  {w:'twelve',n:12, h:'שתים עשרה', c:'numbers'},
+];
+
+function twOptHTML(o) {
+  const pic = o.n !== undefined ? `<span class="tq-opt-num">${o.n}</span>` : `<span class="tq-opt-pic">${o.p}</span>`;
+  return `${pic}<span class="tq-opt-heb">${o.h}</span>`;
+}
+
+function buildTommyWords() {
+  return tShuffle(TOMMY_WORDS).slice(0, 10).map(cur => {
+    const ok = o => o.w !== cur.w && o.w !== cur.x && o.x !== cur.w;
+    let pool = TOMMY_WORDS.filter(o => ok(o) && o.c === cur.c);
+    if (pool.length < 2) pool = TOMMY_WORDS.filter(ok);
+    const wrong = tShuffle(pool).slice(0, 2);
+    return {
+      instr: 'מה המילה? בחר את התמונה הנכונה',
+      prompt: cur.w, speak: cur.w,
+      opts: [{html: twOptHTML(cur), ok: true}, ...wrong.map(o => ({html: twOptHTML(o), ok: false}))],
+      answer: twOptHTML(cur).replace(/<[^>]+>/g, ' '),
+    };
+  });
+}
+function startTommyWords() { tqStart('מילים 🖼️', buildTommyWords); }
+
+// ----- 2. LETTERS A, B, N -----
+const TL_LETTERS = {
+  A: { name: 'אֵיי', sound: 'אַ', color: '#3b82f6',
+       tip: '<b>A</b> גדולה נראית כמו אוהל עם קו באמצע ⛺<br><b>a</b> קטנה היא עיגול קטן עם קו קטן בצד ימין',
+       words: [['🍎','apple'],['➕','and']] },
+  B: { name: 'בִּי', sound: 'בּ', color: '#22c55e',
+       tip: '<b>B</b> גדולה: קו ישר ושתי בטנים לצד ימין<br><b>b</b> קטנה: קו גבוה ובטן אחת למטה, גם היא פונה ימינה →',
+       words: [['👦','boy'],['👶','baby'],['🎒','bag'],['📖','book'],['📦','box'],['🔵','blue']] },
+  N: { name: 'אֶן', sound: 'נ', color: '#f97316',
+       tip: '<b>N</b> גדולה: שני קווים ישרים וקו אלכסון ביניהם<br><b>n</b> קטנה: נראית כמו קשת קטנה או גשר 🌉',
+       words: [['👃','nose'],['📓','notebook'],['9️⃣','nine'],['🚫','no']] },
+};
+
+const tlWordHTML = (e, w) =>
+  `<button class="tl-word" onclick="tSpeak('${w}')">${e} <span><b>${w[0]}</b>${w.slice(1)}</span></button>`;
+
+function tlLetterStep(L) {
+  const d = TL_LETTERS[L], l = L.toLowerCase();
+  return `
+    <div class="tl-title">האות <bdi dir="ltr" class="eng-font">${L} ${l}</bdi></div>
+    <div class="tl-letters">
+      <div class="tl-letter"><button class="tl-cap" onclick="tSpeak('${L}')">${L}</button><span>אות גדולה</span></div>
+      <div class="tl-letter"><button class="tl-low" onclick="tSpeak('${L}')">${l}</button><span>אות קטנה</span></div>
+    </div>
+    <div class="tl-info">
+      שם האות: <b>${d.name}</b><br>
+      הצליל שלה: <b>${d.sound}</b> — כמו בהתחלה של <bdi dir="ltr" class="eng-font"><b>${d.words[0][1]}</b></bdi>
+    </div>
+    <div class="tl-tip">💡 ${d.tip}</div>
+    <div style="font-size:0.95rem;color:#888;margin-bottom:6px">מילים שמתחילות ב־${l} (לחץ כדי לשמוע):</div>
+    <div class="tl-words">${d.words.map(([e,w]) => tlWordHTML(e, w)).join('')}</div>`;
+}
+
+const TL_STEPS = [
+  () => `
+    <div class="tl-title">היום נלמד 3 אותיות! 🎓</div>
+    <div class="tl-pairs">
+      <button class="tl-pair" onclick="tSpeak('A')">A</button>
+      <button class="tl-pair" onclick="tSpeak('B')">B</button>
+      <button class="tl-pair" onclick="tSpeak('N')">N</button>
+    </div>
+    <div class="tl-info">
+      לכל אות באנגלית יש <b>שתי צורות</b>:<br>
+      🔵 <b>אות גדולה</b> (Capital) — בתחילת משפט ובשמות<br>
+      🟠 <b>אות קטנה</b> — בכל שאר המקומות
+    </div>
+    <div class="tl-tip">💡 באנגלית כותבים משמאל לימין ←</div>`,
+  () => tlLetterStep('A'),
+  () => tlLetterStep('B'),
+  () => tlLetterStep('N'),
+  () => `
+    <div class="tl-title">סיכום: גדולה וקטנה 🤝</div>
+    <div class="tl-pairs">
+      <button class="tl-pair" onclick="tSpeak('A')">A a</button>
+      <button class="tl-pair" onclick="tSpeak('B')">B b</button>
+      <button class="tl-pair" onclick="tSpeak('N')">N n</button>
+    </div>
+    <div class="tl-tip">💡 טריק לזכור: <b>b</b> קטנה — הקו למעלה והבטן למטה. <b>n</b> קטנה — בלי קו למעלה, רק גשר.</div>
+    <div class="btn-row" style="margin:14px 0 6px"><button class="btn btn-next" onclick="startTommyLetterQuiz()">לקרב! 🎯</button></div>`,
+];
+let tlIdx = 0;
+
+function startTommyLetters() { tlIdx = 0; tlRender(); showScreen('tl-screen'); }
+function tlGo(d) { tlIdx = Math.max(0, Math.min(TL_STEPS.length - 1, tlIdx + d)); tlRender(); }
+function tlRender() {
+  document.getElementById('tl-body').innerHTML = TL_STEPS[tlIdx]();
+  document.getElementById('tl-progress').textContent = `שלב ${tlIdx + 1} מתוך ${TL_STEPS.length}`;
+  document.getElementById('tl-prev').style.visibility = tlIdx === 0 ? 'hidden' : 'visible';
+  document.getElementById('tl-next').style.visibility = tlIdx === TL_STEPS.length - 1 ? 'hidden' : 'visible';
+}
+
+function buildTommyLetterQuiz() {
+  const Ls = ['A','B','N'];
+  const startWords = Object.entries(TL_LETTERS).flatMap(([L, d]) => d.words.map(([e, w]) => ({L, e, w}))).filter(t => t.w.length >= 3);
+  const opts = (L, lower) => Ls.map(x => ({html: lower ? x.toLowerCase() : x, ok: x === L}));
+  const makers = [
+    () => { const L = tPick(Ls); return { instr: 'מצא את האות הקטנה של', prompt: L, speak: L, letters: true,
+            opts: opts(L, true), answer: `<bdi class="eng-font">${L.toLowerCase()}</bdi>` }; },
+    () => { const L = tPick(Ls); return { instr: 'מצא את האות הגדולה של', prompt: L.toLowerCase(), speak: L, letters: true,
+            opts: opts(L, false), answer: `<bdi class="eng-font">${L}</bdi>` }; },
+    () => { const t = tPick(startWords); return { instr: 'איזו אות חסרה בהתחלה?',
+            prompt: `<span class="tq-pic">${t.e}</span>_${t.w.slice(1)}`, speak: t.w, letters: true,
+            opts: opts(t.L, true), answer: `<bdi class="eng-font">${t.w}</bdi>` }; },
+    () => { const L = tPick(Ls), lower = Math.random() < 0.5; return { instr: 'איזו אות שמעת? 👂',
+            prompt: '<span class="tq-pic">🔊</span>', speak: L, autoSpeak: true, letters: true,
+            opts: opts(L, lower), answer: `<bdi class="eng-font">${lower ? L.toLowerCase() : L}</bdi>` }; },
+  ];
+  return Array.from({length: 10}, (_, i) => makers[i % makers.length]()).sort(() => Math.random() - 0.5);
+}
+function startTommyLetterQuiz() { tqStart('תרגול אותיות 🎯', buildTommyLetterQuiz, 'tl-screen'); }
+
+// ----- 3. PHRASES (right side of the test material) -----
+const TOMMY_PHRASES = [
+  ['Hello', 'שלום'],
+  ["What's your name?", 'מה השם שלך?'],
+  ['My name is ...', 'השם שלי הוא ...'],
+  ['How are you?', 'מה שלומך?'],
+  ["I'm fine, thank you.", 'אני בסדר, תודה.'],
+  ['What is it?', 'מה זה?'],
+  ["It's a ...", 'זה ...'],
+  ['Look!', 'תסתכל!'],
+  ['What do you see?', 'מה אתה רואה?'],
+  ['I see ...', 'אני רואה ...'],
+  ['Thank you.', 'תודה.'],
+  ["You're welcome.", 'בבקשה / על לא דבר.'],
+  ['I am ...', 'אני ...'],
+  ['This is my ...', 'זה ה... שלי'],
+  ['Good morning', 'בוקר טוב'],
+  ['Goodbye', 'להתראות'],
+  ['I like ...', 'אני אוהב ...'],
+  ['I have ...', 'יש לי ...'],
+  ['yes', 'כן'],
+  ['no', 'לא'],
+  ['and', 'וְ / וגם'],
+];
+// Dialogues: [prompt picture, question, correct answer, two wrong answers]
+const TOMMY_DIALOGS = [
+  ['', "What's your name?", 'My name is Tommy.', ["I'm fine, thank you.", "It's a dog."]],
+  ['', 'How are you?', "I'm fine, thank you.", ['My name is Tommy.', 'I see a cat.']],
+  ['🐱', 'What is it?', "It's a cat.", ["It's a dog.", "I'm fine, thank you."]],
+  ['📖', 'Look! What do you see?', 'I see a book.', ['I see a box.', "You're welcome."]],
+  ['', 'Thank you.', "You're welcome.", ['Goodbye.', 'What is it?']],
+  ['', 'Good morning!', 'Good morning!', ['Goodbye!', 'Thank you.']],
+  ['', 'Hello!', 'Hello!', ["You're welcome.", 'No.']],
+];
+const tSay = t => t.replace(/\.\.\./g, '').trim();
+
+function buildTommyPhrases() {
+  const trans = tShuffle(TOMMY_PHRASES).slice(0, 7).map(([en, he]) => {
+    const wrong = tShuffle(TOMMY_PHRASES.filter(p => p[0] !== en)).slice(0, 2);
+    return { instr: 'מה הפירוש בעברית?', prompt: en, long: en.length > 12, speak: tSay(en),
+             opts: [{html: he, ok: true}, ...wrong.map(p => ({html: p[1], ok: false}))], answer: he };
+  });
+  const dial = tShuffle(TOMMY_DIALOGS).slice(0, 3).map(([pic, q, ans, wrong]) => ({
+    instr: 'מה עונים? 💬', prompt: (pic ? `<span class="tq-pic">${pic}</span>` : '') + q, long: true, speak: q, en: true,
+    opts: [{html: ans, ok: true}, ...wrong.map(w => ({html: w, ok: false}))],
+    answer: `<bdi dir="ltr" class="eng-font">${ans}</bdi>`,
+  }));
+  return tShuffle([...trans, ...dial]);
+}
+function startTommyPhrases() { tqStart('משפטים 💬', buildTommyPhrases); }
 
 function selectDiff(diff) {
   selectedDiff = diff;
@@ -3702,8 +4786,9 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   const homeItem = document.getElementById('home-item');
+  if (id === 'tommy-screen') tXpRender();
   if (id === 'welcome-screen') {
-    ['subj-math','subj-english','subj-hebrew'].forEach(s => document.getElementById('subj-'+s).className = 'subject-btn');
+    ['subj-math','subj-english','subj-hebrew','subj-test'].forEach(s => document.getElementById('subj-'+s).className = 'subject-btn');
     selectedSubject = '';
     homeItem.classList.remove('visible');
   } else {
@@ -3861,7 +4946,7 @@ function restartGame() {
   document.getElementById('score-correct').textContent = '0';
   document.getElementById('score-wrong').textContent  = '0';
   document.getElementById('score-num').textContent    = '1';
-  ['subj-math','subj-english','subj-hebrew'].forEach(id => document.getElementById(id).className = 'subject-btn');
+  ['subj-math','subj-english','subj-hebrew','subj-test'].forEach(id => document.getElementById(id).className = 'subject-btn');
   showScreen('welcome-screen');
 }
 
