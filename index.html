@@ -1801,6 +1801,62 @@
     }
     :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .btn-back-eng:hover { border-color: var(--fn-yellow) !important; color: var(--fn-yellow) !important; }
 
+    /* Tommy's own logo */
+    .fn-logo-wrap { margin: 2px 0 16px; transform: rotate(-3deg); }
+    .fn-logo {
+      font-family: 'Karantina', 'Secular One', sans-serif; font-weight: 700; font-size: 6.4rem; line-height: 0.82;
+      color: #fff; letter-spacing: 3px; transform: skewX(-8deg);
+      text-shadow:
+        -3px -3px 0 #071247, 3px -3px 0 #071247, -3px 3px 0 #071247, 3px 3px 0 #071247,
+        0 -4px 0 #071247, 0 4px 0 #071247, -4px 0 0 #071247, 4px 0 0 #071247,
+        0 9px 0 #ffe14d, 0 0 34px rgba(92,200,255,0.7);
+    }
+    .fn-logo-tag {
+      display: inline-block; margin-top: 16px; padding: 1px 18px 0;
+      font-family: 'Karantina', 'Secular One', sans-serif; font-size: 1.6rem; line-height: 1.15; letter-spacing: 2px;
+      background: #ffe14d; color: #14143a; border-radius: 3px; transform: skewX(-12deg);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+    }
+
+    /* Tommy's rocket school bus (original art, drawn in SVG) */
+    :is(#tommy-screen,#tommy-eng-screen,#tq-screen,#tl-screen,#tm-screen) .card { position: relative; z-index: 1; }
+    .fn-bus svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .fn-bus .fn-flame { animation: fn-flame 0.16s ease-in-out infinite alternate; transform-origin: 6px 66px; }
+    @keyframes fn-flame { from { transform: scaleX(0.75); } to { transform: scaleX(1.2); } }
+    .fn-bus-sky {
+      position: fixed; top: 84px; left: 0; width: 120px; z-index: 0; pointer-events: none;
+      animation: fn-bus-cruise 16s linear infinite;
+    }
+    .fn-bus-sky .fn-bus { animation: fn-bus-bob 1.6s ease-in-out infinite alternate; }
+    @keyframes fn-bus-cruise {
+      0%   { transform: translateX(-180px); }
+      55%  { transform: translateX(calc(100vw + 60px)); }
+      100% { transform: translateX(calc(100vw + 60px)); }
+    }
+    @keyframes fn-bus-bob { from { transform: translateY(-7px) rotate(-3deg); } to { transform: translateY(7px) rotate(2deg); } }
+    #fn-launch {
+      position: fixed; inset: 0; z-index: 500; pointer-events: none; overflow: hidden; display: none;
+    }
+    #fn-launch.go { display: block; }
+    #fn-launch::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.0) 30%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.0) 70%, transparent 100%);
+      transform: translateX(-100%); animation: fn-launch-flash 0.9s ease-in forwards;
+    }
+    #fn-launch .fn-bus {
+      position: absolute; top: 50%; left: 0; width: min(70vw, 420px); margin-top: -110px;
+      animation: fn-launch-bus 0.9s cubic-bezier(0.5, 0, 0.7, 0.4) forwards;
+    }
+    @keyframes fn-launch-bus {
+      0%   { transform: translateX(-110%) translateY(60px) rotate(-8deg) scale(0.7); }
+      100% { transform: translateX(calc(100vw + 20%)) translateY(-80px) rotate(-8deg) scale(1.15); }
+    }
+    @keyframes fn-launch-flash { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .fn-bus-sky, .fn-bus-sky .fn-bus, .fn-bus .fn-flame { animation: none; }
+      .fn-bus-sky { left: 16px; }
+    }
+
     /* Player card + XP */
     .fn-player {
       display: flex; align-items: center; gap: 12px; direction: rtl; text-align: right;
@@ -2023,7 +2079,7 @@
   <div class="card">
     <span class="mascot">🦁</span>
     <h1>לומדים עם אבון</h1>
-    <p>גרסה 1.5</p>
+    <p>גרסה 1.6</p>
     <div class="input-group">
       <div class="name-glow-wrap">
         <input type="text" id="name-input" placeholder="מה השם שלך?" maxlength="20" autocomplete="off" />
@@ -2510,9 +2566,16 @@
   </div>
 </div>
 
+<div id="fn-launch"><div class="fn-bus"></div></div>
+
 <!-- ======== STUDY FOR TEST: TOMMY (LOBBY) ======== -->
 <div class="screen" id="tommy-screen">
+  <div class="fn-bus-sky"><div class="fn-bus"></div></div>
   <div class="card">
+    <div class="fn-logo-wrap">
+      <div class="fn-logo">טומי</div>
+      <div class="fn-logo-tag">מבצע מבחן</div>
+    </div>
     <div class="fn-player">
       <div class="fn-avatar">🎮</div>
       <div class="fn-player-info">
@@ -2524,10 +2587,9 @@
         </div>
       </div>
     </div>
-    <div class="english-menu-title">הלובי של טומי</div>
     <div class="english-menu-sub">בחר משימה, צבור XP ועלה רמה!</div>
     <div class="fn-tiles two">
-      <button class="fn-tile legendary" onclick="startTommyMath()">
+      <button class="fn-tile legendary" onclick="tLaunch(startTommyMath)">
         <span class="fn-tile-rarity">אגדי</span>
         <span class="fn-tile-icon">🧮</span>
         <span class="fn-tile-plate">
@@ -2554,7 +2616,7 @@
     <div class="english-menu-title">משימות אנגלית</div>
     <div class="english-menu-sub">בחר משימה</div>
     <div class="fn-tiles three">
-      <button class="fn-tile uncommon" onclick="startTommyWords()">
+      <button class="fn-tile uncommon" onclick="tLaunch(startTommyWords)">
         <span class="fn-tile-rarity">מיוחד</span>
         <span class="fn-tile-icon">🖼️</span>
         <span class="fn-tile-plate">
@@ -2562,7 +2624,7 @@
           <span class="fn-tile-desc">קרא ובחר את התמונה</span>
         </span>
       </button>
-      <button class="fn-tile rare" onclick="startTommyLetters()">
+      <button class="fn-tile rare" onclick="tLaunch(startTommyLetters)">
         <span class="fn-tile-rarity">נדיר</span>
         <span class="fn-tile-icon">🅰️</span>
         <span class="fn-tile-plate">
@@ -2570,7 +2632,7 @@
           <span class="fn-tile-desc"><bdi dir="ltr">A · B · N</bdi> מדריך ותרגול</span>
         </span>
       </button>
-      <button class="fn-tile epic" onclick="startTommyPhrases()">
+      <button class="fn-tile epic" onclick="tLaunch(startTommyPhrases)">
         <span class="fn-tile-rarity">אפי</span>
         <span class="fn-tile-icon">💬</span>
         <span class="fn-tile-plate">
@@ -3337,6 +3399,43 @@ function selectSubject(subj) {
 
 // ===================== STUDY FOR TEST =====================
 function startTommy() { tXpRender(); showScreen('tommy-screen'); }
+
+// ----- Tommy's rocket school bus (original SVG art) -----
+const T_BUS_SVG = `<svg viewBox="-44 0 240 112" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g class="fn-flame">
+    <polygon points="6,66 -40,52 -22,66 -42,82" fill="#ff9f1c"/>
+    <polygon points="6,66 -24,58 -12,66 -26,76" fill="#ffe14d"/>
+  </g>
+  <polygon points="34,34 54,34 40,8 26,8" fill="#ff9f1c" stroke="#14143a" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="2" y="54" width="34" height="24" rx="5" fill="#9fb3d1" stroke="#14143a" stroke-width="4"/>
+  <rect x="26" y="30" width="146" height="54" rx="13" fill="#ffd21f" stroke="#14143a" stroke-width="4"/>
+  <rect x="146" y="52" width="44" height="32" rx="9" fill="#ffd21f" stroke="#14143a" stroke-width="4"/>
+  <rect x="140" y="55" width="20" height="26" fill="#ffd21f"/>
+  <rect x="28" y="63" width="160" height="6" fill="#14143a"/>
+  <g fill="#8fdcff" stroke="#14143a" stroke-width="3">
+    <rect x="40" y="38" width="22" height="18" rx="4"/>
+    <rect x="68" y="38" width="22" height="18" rx="4"/>
+    <rect x="96" y="38" width="22" height="18" rx="4"/>
+    <rect x="124" y="38" width="22" height="18" rx="4"/>
+    <rect x="152" y="38" width="15" height="14" rx="4"/>
+  </g>
+  <g fill="#14143a">
+    <circle cx="51" cy="50" r="5"/><circle cx="79" cy="50" r="5"/><circle cx="107" cy="50" r="5"/><circle cx="135" cy="50" r="5"/>
+  </g>
+  <polygon points="78,74 124,74 100,106 66,106" fill="#ff9f1c" stroke="#14143a" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="183" cy="74" r="4.5" fill="#fffbd0" stroke="#14143a" stroke-width="2"/>
+  <polygon points="150,14 153,22 162,22 155,27 158,36 150,31 142,36 145,27 138,22 147,22" fill="#ffe14d" stroke="#14143a" stroke-width="2.5" stroke-linejoin="round"/>
+</svg>`;
+document.querySelectorAll('.fn-bus').forEach(el => el.innerHTML = T_BUS_SVG);
+
+// Bus zooms across the screen, then the mission starts
+function tLaunch(start) {
+  const el = document.getElementById('fn-launch');
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { start(); return; }
+  el.classList.remove('go'); void el.offsetWidth; el.classList.add('go');
+  setTimeout(start, 420);
+  setTimeout(() => el.classList.remove('go'), 950);
+}
 
 // ----- XP & levels (saved on this device) -----
 const T_XP_KEY = 'tommyXP', T_XP_PER_ANSWER = 10, T_XP_PER_LEVEL = 100;
